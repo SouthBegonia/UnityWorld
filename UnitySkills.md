@@ -1,13 +1,5 @@
 # Unity3D
 
-移步：
-主要内容：
-- [C#学习](https://github.com/SouthBegonia/Codes_2018/tree/master/Unity3d/Csharp)
-- Unity项目
-	- 打砖块：[BreakBricks](https://github.com/SouthBegonia/Codes_2018/tree/master/Unity3d/BreakBricks) 
-- Unity操作
-
-
 **Unity操作**：
 * [调试](#1)
 * [碰撞体](#2)
