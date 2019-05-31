@@ -70,7 +70,7 @@ Version:2019.2b - [Order of Execution for Event Functions](https://docs.unity3d.
 
 - `GameObject.AddComponent(string className)`：将名为classname的组件类添加到游戏对象中
 - `GameObject.CompareTag(string tag)`：判断游戏对象的标签是否为 tag
-- `GameObject.GetComponent<T>()`：返回挂在在游戏物体上的 T 组件，这是访问组件的主要方式
+- `GameObject.GetComponent<T>()`：返回挂在在游戏物体上的 T 组件，这是访问组件的主要方式，也称为泛型方法(generic methods)
 	- `GameObject.GetComponentInChildren<T>()`：返回游戏对象或者其子物体上挂载的 T 组件（深度优先遍历，找到的对象必须为active状态）
 	- `GameObject.GetComponentInParent<>()`：返回游戏对象或者其父母物体上挂载的 T 组件（向上遍历，找到的对象必须为active状态）
 - `GameObject.SetActive(bool value)`：根据接收的布尔值 激活/取消激活物体的active状态

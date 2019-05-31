@@ -3,14 +3,14 @@
 - 《Unity5.x 从入门到精通》
 - [siki学院 - Unity中的C#编程](http://www.sikiedu.com/my/course/83)
 - [菜鸟教程 - C#教程](http://www.runoob.com/csharp/csharp-tutorial.html)
------------------
 
-# C#基本语法
+
 前提：
 - 环境：VS2017
 - 脚本默认绑定在空的游戏对象 **Player** 下
 - 保留核心代码，省略命名空间(特殊情况有备注)，原代码见对应文件
 
+-------------
 
 ## 命名空间
 C#文件头部 `using` 开头的代码即为命名空间，例如
@@ -36,13 +36,21 @@ public class Players : MonoBehaviour { }
 |private|不添加作用域则默认为 private |
 |protected| ...|
 
-## 数组
-C#只能使用内建数组。例如：
+## 数组与List
+
+- 数组：
+	- 存储单一数据类型(强类型)，速度快
+	- 定义时就必须确定长度，可以使用多维数组
+	- 允许包含空元素或者null，例如 arr[0]=1,arr[1]=2,arr[3]=3
+- List：
+	- 强类型
+	- 长度可变
+
 ```
 //CSharpArray.cs
 public class CSharpArray : MonoBehaviour {
 
-    public int[] array = new int[5];
+    public int[] array = new int[5];  //创建一个int型数组，长度为5
 
 	void Start () {
 	    for(int i=0;i<array.Length;i++)
@@ -53,10 +61,37 @@ public class CSharpArray : MonoBehaviour {
 	}
 }
 ```
-![](https://i.imgur.com/LfK6Mlp.png)
+
+**数组的其他方法**： `Arr = {"A","B","C","D"}`
+
+|方法|作用|
+|---|---|
+|`System.Array.IndexOf(Arr,"C")`|查找数组arr内第一个值为"C"的元素并返回下标，否则返回-1|
+|`System.Array.Resize(ref Arr, 6)`|调整Arr数组大小变为6，即 {"A","B","C","D",null,null}，同理，若调整后大小小于原数组大小，则多余元素舍弃；该方法仅用于一维数组|
+|`List<string> LArr = new List<string> (Arr)`|创建一个名为LArr的List，并复制数组Arr内元素|
+
+**交错数组**：允许子数组具有不同长度的多维数组
+```
+public string[][] jArray;
+
+void Start()
+{
+	jArray = new string[4][];
+	jArray[0] = new string[] {"A","B","C","D"};
+	jArray[1] = new string[] {"E","F"};
+	jArray[2] = new string[] {"G","H","I"};
+	jArray[3] = new string[] {"J"};
+
+	for(int i=0;i<jArray.Length;i++) {
+		for(int j=0;j<jArray.Length;j++)
+			str += " | " +jArray[i][j];
+		str += " | \n";
+	}
+}
+```
 
 
-也可使用**ArrayList、List**等容器实现数组：
+**ArrayList、List** 等容器实现数组：
 ```
 //CSharp2Array2.cs
 using System.Collections.Generic;   //使用List容器需要添加该命名空间
@@ -76,7 +111,59 @@ public class CSharpArray2 : MonoBehaviour {
 	}
 }
 ```
-![](https://i.imgur.com/hBmYWqD.png)
+
+**List的其他方法**：已知List = ["A","B","C","D"]
+
+|方法|作用|
+|---|---|
+|`List.Add("E")`|添加元素到末尾，即["A","B","C","D"]|
+|`List.Clear()`|清除List内的所有元素，使其变为空 []|
+|`List.IndexOf("A"）`|查找List内第一个为"A"的元素，返回其下标，不存在则返回-1|
+|`List.Insert(2,"b")`|插入元素 "b" 到List内下标为 2 的元素之前，即 ["A","B","b","C","D"]|
+|`List.Remove("C")`|移除List内指定元素 "C"|
+|`List.RemoveAt(0)`|移除指定小标的元素，即["B","C","D"]|
+|`List.ToArray()`|生成一个包含List所有元素的数组，数组内的元素类型与List内原数据类型一致，返回新的数组|
+
+**交错List**：
+```
+public List<List<string>> jaggedList;
+
+void Start()
+{
+	jaggedList = new List<List<string>>();
+	
+	//向 jaggedList 内添加两个 List<string>
+	jaggedList.Add(new List<string>());
+	jaggedList.Add(new List<string>());
+
+	//向 jaggedList[0] 内添加两个字符串
+	jaggedList[0].Add("Hello");
+	jaggedList[0].Add("World");
+
+	//向 jaggedList 内再添加一个 List<string>
+	jaggedList.Add(new List<string>(new string[] {"South","Begonia"}));
+
+	string str = "";
+	foreach(List<string> sL in jaggedList)
+	{
+		foreach(string stemp in sL)
+		{
+			if(sTemp != null)
+				str += " | " + sTemp;
+			else
+				str += " | ";
+			str += " | \n";
+		}
+		print(str);
+	}
+}
+
+输出内容：
+| Hello | World |
+|
+| south | begonia |
+```
+
 
 ## 运算、比较、逻辑操作符
 类似 C语言
@@ -85,7 +172,7 @@ public class CSharpArray2 : MonoBehaviour {
 |---|---|
 |算术运算符|`+`,`-`,`*`,`/`,`%`,`++`,`--`|
 |比较操作符|`>`,`<`,`>=`,`<=`,`==`,`!=`|
-|逻辑操作符|`!`,`||`, `&&`|
+|逻辑操作符| `!`, 或运算符, `&&`|
 |条件操作符|`?:`|
 
 ## 语句
@@ -126,7 +213,7 @@ public class CSLoop : MonoBehaviour {
 }
 //循环打印 0~9 三次
 ```
-其次还有**For-in**循环语句：
+**Foreach** 循环语句：可用于任何可枚举对象的自动for循环
 ```
 //CSLoop2.cs
 public class CSLoop2 : MonoBehaviour {
@@ -136,11 +223,11 @@ public class CSLoop2 : MonoBehaviour {
 		foreach(string str in nameArray)
         {
             Debug.Log(str);     //遍历数组并打印
+			/*注意：str 的作用域为foreach循环*/
         }
 	}
 }
 ```
-![](https://i.imgur.com/TLfGv8o.png)
 
 
 - **switch语句**：
@@ -212,7 +299,7 @@ public class CSharpOut : MonoBehaviour {
     }
 }
 ```
-![](https://i.imgur.com/goHgPIY.png)
+
 
 ## C#脚本
 1. 凡是需要添加到游戏对象的C#脚本类都需要直接或间接地从MonoBehaviour类继承。
@@ -267,6 +354,9 @@ script  =GetComponent<Example>();	//得到对象上的Example脚本组件
 
 ---------------
 # 常用脚本API
+
+详情移步：[UnityAPI](https://github.com/SouthBegonia/UnityWorld/tree/master/UnityAPI)
+
 ## TransForm组件
 > Transform组件控制游戏对象在Unity场景中的位置、旋转和大小比例，每个游戏对象都包含此组件。
 
