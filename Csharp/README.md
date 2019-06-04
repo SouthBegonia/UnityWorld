@@ -449,3 +449,16 @@ public class SmoothDamp : MonoBehaviour {
 ## Coroutine协同程序
 > Coroutine 也称为协同程序或者协程，协同程序可以和主程序并行运行，和多线程类似。
 
+## 类的实现与调用
+
+MoveAlong.cs:
+- 竞态条件
+- 同物体下的类调用
+
+EnemyExample.cs
+- 属性创建
+- 虚函数创建
+
+EnemyExampleZig.cs
+- 类继承
+- 重写虚函数
