@@ -6,6 +6,7 @@
 ## 目录
 
 - [C# 知识](https://github.com/SouthBegonia/UnityWorld/tree/master/Csharp)
-- [吃豆人 Pacman](https://github.com/SouthBegonia/UnityWorld/tree/master/Pacman)
 - [打砖块 BreakBricks](https://github.com/SouthBegonia/UnityWorld/tree/master/BreakBricks)
+- [捡苹果 Apple Picker](https://github.com/SouthBegonia/UnityWorld/tree/master/ApplePicker)
+- [吃豆人 Pacman](https://github.com/SouthBegonia/UnityWorld/tree/master/Pacman)
 - [集群模拟 Boids](https://github.com/SouthBegonia/UnityWorld/tree/master/Boids)
