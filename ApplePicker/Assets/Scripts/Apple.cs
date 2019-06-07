@@ -14,8 +14,12 @@ public class Apple : MonoBehaviour
          则此时 AppleTree脚本 就失去对象applePrefab，
          也就是说后续AppleTree脚本内无法再实例化产生苹果；
          同理后续篮筐也可能带来同样的bug
-         */
 
+        解决方案：保证场景内任意时刻存在一个applePrefab
+        - 调高树的高度(本例方案)
+        - 缩短实例化苹果的间隔
+        - 先隐藏再延时销毁苹果(理论可行，但感觉大材小用)
+         */
 
         //越线销毁，且判断到篮筐未接住
         if (transform.position.y < bottomY)
