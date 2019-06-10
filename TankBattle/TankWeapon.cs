@@ -15,18 +15,12 @@ public class TankWeapon : MonoBehaviour
         shootFiring = GetComponent<AudioSource>();
     }
 
-    private void Update()
-    {
-        //空格键射击
-        if (Input.GetKeyDown(KeyCode.Space))
-            Shoot();
-    }
-
-    void Shoot()
+    public void Shoot()
     {
         //Instantiate返回类型为 object，最好每次进行转换
         GameObject ShellGo = Instantiate(shell, shootPoint.position, shootPoint.rotation) as GameObject;
         Rigidbody ShellRigidbody = ShellGo.GetComponent<Rigidbody>();
+
 
         //实现炮弹射出方法：
         //1.赋予炮弹初速度

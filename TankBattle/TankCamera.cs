@@ -7,6 +7,7 @@ public class TankCamera : MonoBehaviour
 { 
     public GameObject tank;
     public float CameraRotateSpeed = 90f;     //视角旋转速度
+    public Transform target;
 
     private void Update()
     {
@@ -16,8 +17,12 @@ public class TankCamera : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow))
             transform.Rotate(Vector3.up * CameraRotateSpeed * Time.deltaTime);
     }
+
     private void LateUpdate()
     {
+        if (target == null)
+            return;
+
         //相机坐标跟随坦克坐标，实现第三人固定视角
         transform.position = tank.transform.position;
         
