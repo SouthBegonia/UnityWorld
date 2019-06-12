@@ -74,10 +74,10 @@ public class AITank : Unit
         timer += Time.fixedDeltaTime;
         float dist = Vector3.Distance(player.transform.position, transform.position);
 
-        //导航移动
+        //Navigation导航移动
         tankEnemyNMA.SetDestination(player.transform.position);
-        
-        //当距离够近：转向朝向玩家，若射击冷却完毕，敌人进行射击
+
+        //当敌人距离玩家足够近时
         if (dist <= tankEnemyNMA.stoppingDistance)
         {
             //产生问题：导航后敌人已经处于stoppingDistance范围内，假若玩家一直处于该范围内，则敌人不再导航移动，原地射击
@@ -85,21 +85,42 @@ public class AITank : Unit
             //解决方案：进入导航的目的地区域后，就开启方向跟踪，即下行代码
             transform.LookAt(player.transform.position);
 
-            //若可以射击，就进行射击
-            if(timer>shootCoolDown)
+
+            //射线检测碰撞：只有当敌人与玩家间无障碍物时才射击(避免怼墙)
+            //从敌人坦克位置发射一条射线
+            Ray ray = new Ray(transform.position, transform.forward);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                tw.Shoot();
-                timer = 0f;
+                //如果射线碰撞到玩家坦克
+                if ((hit.collider.tag == "Player") && (timer > shootCoolDown))
+                {
+                    //输出碰撞对象，在场景视图中绘制射线
+                    Debug.Log("碰撞对象: " + hit.collider.name);
+                    Debug.DrawLine(ray.origin, hit.point, Color.red);
+
+                    //射击
+                    tw.Shoot();
+                    timer = 0f;
+                }
             }
         }
-        else
-        {
-            //产生问题：若将导航移动 tankEnemyNMA.SetDestination(player.transform.position) 写于此处
-            //         会在导航触碰到边界时被弹开，而后一直在规划导航，然而敌人坦克却不断被弹来弹去
-            //问题分析：
-            //解决方案：写在外部Update内
-        }
-       //其他问题：挖油机Navigation baking不了
-       //
+
+        ////若可以射击，就进行射击
+        //if (timer>shootCoolDown)
+        //{
+        //    tw.Shoot();
+        //    timer = 0f;
+        //}
+        //}
+        //else
+        //{
+        //    //产生问题：若将导航移动 tankEnemyNMA.SetDestination(player.transform.position) 写于此处
+        //    //         会在导航触碰到边界时被弹开，而后一直在规划导航，然而敌人坦克却不断被弹来弹去
+        //    //问题分析：
+        //    //解决方案：写在外部Update内
+        //}
+        //其他问题：挖油机Navigation baking不了
+        //
     }
 }
