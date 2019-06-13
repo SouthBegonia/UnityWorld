@@ -9,7 +9,9 @@ public class shell : MonoBehaviour
     public float explotionRadius = 2f;  //爆炸半径
     public float explotionForce = 500f; //爆炸威力
 
-    public int shellDamage = 15;      //炮弹造成的伤害
+    public int shellDamage = 10;      //炮弹造成的伤害
+
+    private LayerMask lm;
 
     private void Start()
     {
@@ -40,7 +42,8 @@ public class shell : MonoBehaviour
 
 
             //炮弹接触物体，产生局部冲击力
-            Collider[] cols = Physics.OverlapSphere(transform.position, explotionRadius);
+            //第三个参数 lm :使得炮弹仅对敌人阵营(敌人所在图层)造成伤害
+            Collider[] cols = Physics.OverlapSphere(transform.position, explotionRadius, lm);
             if (cols.Length > 0)
             {
                 for (int i = 0; i < cols.Length; i++)
@@ -60,5 +63,10 @@ public class shell : MonoBehaviour
 
         //由爆炸范围产生问题：
         //自己或者AI敌人紧贴墙壁射击由于爆炸范围的影响而伤血
+    }
+
+    public void Init(LayerMask enemyLayer)
+    {
+        lm = enemyLayer;
     }
 }

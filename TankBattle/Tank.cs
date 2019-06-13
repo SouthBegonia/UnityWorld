@@ -12,9 +12,10 @@ public class Tank : Unit
     
 
     private TankWeapon tw;              //武器脚本
-    private float timer;
-    public float shootCoolDown;         //玩家的射击冷却时间
-    private bool canShoot;              //玩家是否可以射击
+    //private float timer;
+    //public float shootCoolDown;         //玩家的射击冷却时间
+    //private bool canShoot;              //玩家是否可以射击
+
 
     private void Start()
     {
@@ -22,30 +23,37 @@ public class Tank : Unit
 
         tw = GetComponent<TankWeapon>();    //取得武器脚本
 
-        timer = 0f;                 //初始化涉及射击冷却时间参数
-        shootCoolDown = 1f;
-        canShoot = true;
+        //timer = 0f;                 //初始化涉及射击冷却时间参数
+        //shootCoolDown = 1f;
+        //canShoot = true;
+
+        tw.Init(team);              //设置玩家的敌人
     }
 
     private void Update()
     {
-        timer += Time.deltaTime;
+        ////冷却计时方法1(弃用，改在TanjWeapon内)：timer
+        //timer += Time.deltaTime;
 
-        //检测射击冷却时间是否完毕
-        if (timer > shootCoolDown)
-        {
-            canShoot = true;
-            timer = 0f;
-        }
+        ////检测射击冷却时间是否完毕
+        //if (timer > shootCoolDown)
+        //{
+        //    canShoot = true;
+        //    timer = 0f;
+        //}
 
-        //空格键射击
-        //问题：当在FixedUpdate()内进行射击判定时，不可实现连续快速键入空格
-        if (Input.GetKeyDown(KeyCode.Space) && canShoot)
+        ////空格键射击
+        ////问题：当在FixedUpdate()内进行射击判定时，不可实现连续快速键入空格
+        //if (Input.GetKeyDown(KeyCode.Space) && canShoot)
+        //{
+        //    tw.Shoot();
+        //    canShoot = false;
+        //}
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             tw.Shoot();
-            canShoot = false;
         }
-            
     }
 
     private void FixedUpdate()

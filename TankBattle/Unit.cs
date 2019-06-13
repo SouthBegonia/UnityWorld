@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Team
+{
+    Blue,Green,Red
+}
+
 //生命值系统 被其他类继承
 public class Unit : MonoBehaviour
 {
@@ -9,6 +14,8 @@ public class Unit : MonoBehaviour
     public GameObject deadEffect;           //死亡特效(爆炸火花，坦克残骸)
     public float explotionForce = 7000f;    //死后爆炸威力(不影响其他物体的生命值)
     public float explotionRadius = 2f;      //死后爆炸范围(不影响其他物体的生命值)
+
+    public Team team;                       //阵营
 
     //产生问题：本想在此处设置坦克被摧毁后的爆炸声，但在下面Destruct()内play时报错(未设置物体)
     //解决方案：将TankExplotion 声音挂载于死亡特效deadEffect 下即可实现功能
