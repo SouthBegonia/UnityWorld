@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum Team
 {
-    Blue,Green,Red
+    Blue, Green, Red
 }
 
 //生命值系统 被其他类继承
@@ -43,7 +43,7 @@ public class Unit : MonoBehaviour
         //产生问题2：下列实例化 deadEffect 的if语句内，不可创建物体接收，需要在if外接收，显示嵌入语句不可声明或者标记
         //解决方法：if 外创建deGo对象，在实例化接收
 
-        GameObject deGo;
+        GameObject deGo = null;
         if (deadEffect != null)
             deGo = Instantiate(deadEffect, transform.position, transform.rotation) as GameObject;
 
@@ -67,3 +67,4 @@ public class Unit : MonoBehaviour
         //Destroy(deGo);    
     }
 }
+

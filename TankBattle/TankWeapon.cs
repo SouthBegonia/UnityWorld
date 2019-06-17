@@ -13,6 +13,8 @@ public class TankWeapon : MonoBehaviour
 
     private LayerMask enemyLayer;       //敌人层级
 
+    private float timer = 0;
+    private float shootCool = 2f;
 
     private void Start()
     {
@@ -48,13 +50,14 @@ public class TankWeapon : MonoBehaviour
 
         //重置射击冷却
         isWeaponready = false;
-        StartCoroutine(WeaponCoolDown(shootCoolDown));
+        StartCoroutine(WeaponCoolDown());
+
     }
 
     //协程延时
-    IEnumerator WeaponCoolDown(float t)
+    IEnumerator WeaponCoolDown()
     {
-        yield return new WaitForSeconds(t);
+        yield return new WaitForSeconds(shootCoolDown);
         isWeaponready = true;       //恢复射击冷却
         //Debug.Log("协程");
     }
@@ -64,4 +67,15 @@ public class TankWeapon : MonoBehaviour
     {
         enemyLayer = LayerManager.GetEnemyLayer(team);
     }
+
+    //private void FixedUpdate()
+    //{
+    //    timer += Time.deltaTime;
+
+    //    if (timer > shootCool)
+    //    {
+    //        isWeaponready = true;
+    //        timer = 0;
+    //    }    
+    //}
 }

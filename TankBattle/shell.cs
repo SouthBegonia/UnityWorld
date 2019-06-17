@@ -7,7 +7,7 @@ public class shell : MonoBehaviour
     public GameObject shellExplotion;   //爆炸特效
     private float explotionTime;        //爆炸特效的持续时间
     public float explotionRadius = 2f;  //爆炸半径
-    public float explotionForce = 500f; //爆炸威力
+    public float explotionForce = 100f; //爆炸威力
 
     public int shellDamage = 10;      //炮弹造成的伤害
 
@@ -20,7 +20,7 @@ public class shell : MonoBehaviour
         explotionTime = go.main.duration;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void OnCollisionEnter(Collision collision)
     {
         //当炮弹碰撞到物体则发生爆炸：
         //
@@ -33,31 +33,29 @@ public class shell : MonoBehaviour
         //解决方案：
         //
 
-        if (true)
+
+        //炮弹撞击，发生爆炸特效，随后子弹和特效销毁
+        GameObject seGo = Instantiate(shellExplotion, transform.position, transform.rotation) as GameObject;
+        Destroy(gameObject);
+        Destroy(seGo, explotionTime);
+
+
+        //炮弹接触物体，产生局部冲击力
+        //第三个参数 lm :使得炮弹仅对敌人阵营(敌人所在图层)造成伤害
+        Collider[] cols = Physics.OverlapSphere(transform.position, explotionRadius, lm);
+        if (cols.Length > 0)
         {
-            //炮弹撞击，发生爆炸特效，随后子弹和特效销毁
-            GameObject seGo = Instantiate(shellExplotion, transform.position, transform.rotation) as GameObject;
-            Destroy(gameObject);
-            Destroy(seGo, explotionTime);
-
-
-            //炮弹接触物体，产生局部冲击力
-            //第三个参数 lm :使得炮弹仅对敌人阵营(敌人所在图层)造成伤害
-            Collider[] cols = Physics.OverlapSphere(transform.position, explotionRadius, lm);
-            if (cols.Length > 0)
+            for (int i = 0; i < cols.Length; i++)
             {
-                for (int i = 0; i < cols.Length; i++)
-                {
-                    //向爆炸点的范围空间施加爆炸力
-                    Rigidbody r = cols[i].GetComponent<Rigidbody>();
-                    if (r != null)
-                        r.AddExplosionForce(explotionForce, transform.position, explotionRadius);
+                //向爆炸点的范围空间施加爆炸力
+                Rigidbody r = cols[i].GetComponent<Rigidbody>();
+                if (r != null)
+                    r.AddExplosionForce(explotionForce, transform.position, explotionRadius);
 
-                    //造成伤害
-                    Unit u = cols[i].GetComponent<Unit>();
-                    if (u != null)
-                        u.ApplyDamage(shellDamage);
-                }
+                //造成伤害
+                Unit u = cols[i].GetComponent<Unit>();
+                if (u != null)
+                    u.ApplyDamage(shellDamage);
             }
         }
 
