@@ -3,27 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/*
+ AItank脚本：实现npc坦克 设置阵营、搜索敌人、自动导航、攻击
+*/
 public class AITank : Unit
 {
     public float enemySearchRange = 99999;      //搜索敌人(玩家或者其他阵营的敌人)的范围
     private GameObject enemy;            //敌人(玩家或者其他阵营的敌人)
     private LayerMask enemyLayer;        //所在图层
 
-    public float attackRange;       //攻击范围
+    public float attackRange = 15;  //攻击范围
     public float moveSpeed = 8f;    //移动速度
     private TankWeapon tw;          //武器组件
-    //private float timer;
-    //public float shootCoolDown = 2f;//射击冷却时间
-    private NavMeshAgent tankEnemyNMA;
+
+    private NavMeshAgent tankEnemyNMA;  //AI坦克导航
+
+    private Collider[] cols;        //所有 敌人Collider 的数组
+    public float[] cols_dist;       //与所有 敌人的间距 的数组
+    private int EnemyNearest;       //最近敌人标记
 
     private void Start()
     {
-        //enemy = GameObject.FindGameObjectWithTag("Player");    //取得玩家标识
-        tw = GetComponent<TankWeapon>();                        //取得武器脚本
+        base.Start();   //Unit内的start()
+
+        tw = GetComponent<TankWeapon>();                //取得武器脚本
         tankEnemyNMA = GetComponent<NavMeshAgent>();
-   
+
         enemyLayer = LayerManager.GetEnemyLayer(team);
         tw.Init(team);      //初始化阵营设置
+
+        cols_dist = new float[20];      //初始化
+
+        
     }
 
 
@@ -62,19 +73,17 @@ public class AITank : Unit
             SearchEnemy();
             return;
         }
-        
-        //射击冷却计时，测量敌人与玩家间距
+
+        //射击冷却计时，测量敌人与自身间距
         //timer += Time.fixedDeltaTime;
         float dist = Vector3.Distance(enemy.transform.position, transform.position);
 
-        //Navigation导航移动(
-        //tankEnemyNMA.SetDestination(enemy.transform.position);
+        //Navigation导航移动(由于attackRange 和Stopping Distance都设为同值，故Update内导航与下面else内导航同效
+        tankEnemyNMA.SetDestination(enemy.transform.position);
 
         //当敌人距离玩家足够近时
         if (dist <= attackRange)
         {
-            //Debug.Log(gameObject.name + "target Enemy");
-            //tankEnemyNMA.ResetPath();
             //产生问题：导航后敌人已经处于stoppingDistance范围内，假若玩家一直处于该范围内，则敌人不再导航移动，原地射击
             //问题分析：导航进入范围内就不再导航(不再移动或旋转)
             //解决方案：进入导航的目的地区域后，就开启方向跟踪，即下行代码
@@ -108,36 +117,88 @@ public class AITank : Unit
             //    }
             //}
 
+            //开火攻击
             tw.Shoot();
         }
         else
         {
-            tankEnemyNMA.SetDestination(enemy.transform.position);
-            //Debug.Log(gameObject.name + "NMA");
+            //当锁定的敌人超出范围后，重新锁定最近的敌人
+            SearchEnemy();
+
+            //tankEnemyNMA.SetDestination(enemy.transform.position);
         }
-            
+
         //其他问题：挖油机Navigation baking不了
     }
 
-    //搜索范围内的敌人：选取最近一个敌人,直至击败才切换目标
+    ////搜索范围内的敌人：选取最近一个敌人,直至击败才切换目标
+    //public void SearchEnemy()
+    //{
+    //    cols = Physics.OverlapSphere(transform.position, enemySearchRange, enemyLayer);
+    //    if (cols.Length > 0)
+    //    {
+    //        float dist = 1000f;
+    //        for (int i = 0; i < cols.Length; i++)
+    //        {
+    //            float temp = Vector3.Distance(cols[i].gameObject.transform.position, transform.position);
+    //            if (temp < dist)
+    //                enemy = cols[i].gameObject;
+    //        }
+
+    //        //随机选取目标
+    //        //enemy = cols[Random.Range(0, cols.Length)].gameObject; 
+    //    }
+    //    //Debug.Log(gameObject.name);
+    //    for (int i = 0; i < cols.Length; i++)
+    //        Debug.Log(gameObject.name + " 's enemy is" + cols[i].name);
+    //}
+
+
+    //搜索范围内的敌人-改：优先攻击距离自己最近的敌人(即在attackRange范围内的敌人)
     public void SearchEnemy()
     {
-        Collider[] cols = Physics.OverlapSphere(transform.position, enemySearchRange, enemyLayer);
-        if (cols.Length > 0)
-        {    
-            float dist = 1000f;
-            for (int i = 0; i < cols.Length; i++)
-            {
-                float temp = Vector3.Distance(cols[i].gameObject.transform.position, transform.position);
-                if (temp < dist)
-                    enemy = cols[i].gameObject;
-            }
+        cols = Physics.OverlapSphere(transform.position, enemySearchRange, enemyLayer);
 
-            //随机选取目标
-            //enemy = cols[Random.Range(0, cols.Length)].gameObject; 
+        if (cols.Length > 0)
+        {
+            //将所有敌人的距离存入数组
+            for (int i = 0; i < cols.Length; i++)
+                cols_dist[i] = Vector3.Distance(cols[i].gameObject.transform.position, transform.position);
+
+            //Debug相关：
+            //Debug.Log("cols.length = " + cols.Length + "\n cols_dist.legth = " + cols_dist.Length);
+            //for (int i = 0; i < cols.Length; i++)
+            //    Debug.Log(gameObject.name + " Distance from " + cols[i].name + " " + cols_dist[i]);
+            //Debug.Log(cols[0].gameObject.name + cols[1].gameObject.name);
+            //Debug.Log(gameObject.name + "'s enemy array length is " + cols.Length);
+            //for (int i = 0; i < cols.Length; i++)
+            //    Debug.Log(i + " " + cols[i].gameObject.name + " " + cols_dist[i]);
+
+            //更新最近的敌人
+            EnemyNearest = ChooseNearestEnemy(cols_dist, cols.Length);
+            enemy = cols[EnemyNearest].gameObject;
+            //Debug.Log(gameObject.name + " 锁定的敌人是 " + enemy.name);
         }
 
+        //Debug.Log(gameObject.name);
         //for (int i = 0; i < cols.Length; i++)
-        //    print(gameObject.name + cols[i].name);
+        //    Debug.Log(gameObject.name + " 's enemy is " + cols[i].name);
+    }
+
+    //选择最近敌人，返回敌人在在数组内的标记
+    public int ChooseNearestEnemy(float[] temp, int length)
+    {
+        int k = 0;
+
+        ////检测敌人距离及编号
+        //for (int m = 0; m < length; m++)
+        //    Debug.Log(gameObject.name + " 的第 " + m + " 个敌人是距离它 " + temp[m] + " 远的 " + cols[m].gameObject.name);
+
+        for (int i = 0; i < length; i++)
+            for (int j = i + 1; j < length; j++)
+                if (temp[k] > temp[j])
+                    k = j;
+
+        return k;
     }
 }

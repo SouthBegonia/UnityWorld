@@ -19,6 +19,8 @@ public class Tank : Unit
 
     private void Start()
     {
+        base.Start();               //初始化生命值
+
         isCameraActive = true;      //初始化启动视角(第三人)
 
         tw = GetComponent<TankWeapon>();    //取得武器脚本

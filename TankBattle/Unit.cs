@@ -10,7 +10,8 @@ public enum Team
 //生命值系统 被其他类继承
 public class Unit : MonoBehaviour
 {
-    public int health = 100;                //生命值
+    public int health = 100;
+    private int curHealth;                  //当前生命值
     public GameObject deadEffect;           //死亡特效(爆炸火花，坦克残骸)
     public float explotionForce = 7000f;    //死后爆炸威力(不影响其他物体的生命值)
     public float explotionRadius = 2f;      //死后爆炸范围(不影响其他物体的生命值)
@@ -22,12 +23,22 @@ public class Unit : MonoBehaviour
     //public AudioSource explotionClip;      //死后爆炸声
 
 
+    public void Start()
+    {
+        curHealth = health;
+    }
+
+    public int GetCurHealth()
+    {
+        return curHealth;
+    }
+
     //造成伤害
     public void ApplyDamage(int damage)
     {
         //若生命值非零则减血，否则死亡
-        if (health > damage)
-            health -= damage;
+        if (curHealth > damage)
+            curHealth -= damage;
         else
             Destruct();
     }
