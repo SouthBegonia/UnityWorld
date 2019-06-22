@@ -11,7 +11,7 @@ public enum Team
 public class Unit : MonoBehaviour
 {
     public int health = 100;
-    private int curHealth;                  //当前生命值
+    public int curHealth;                  //当前生命值
     public GameObject deadEffect;           //死亡特效(爆炸火花，坦克残骸)
     public float explotionForce = 7000f;    //死后爆炸威力(不影响其他物体的生命值)
     public float explotionRadius = 2f;      //死后爆炸范围(不影响其他物体的生命值)
@@ -25,9 +25,11 @@ public class Unit : MonoBehaviour
 
     public void Start()
     {
+        //初始化开始生命值：满血100
         curHealth = health;
     }
 
+    //返回当前生命值
     public int GetCurHealth()
     {
         return curHealth;

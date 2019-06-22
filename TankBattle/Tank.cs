@@ -6,10 +6,6 @@ public class Tank : Unit
 {
     public float MoveSpeed = 8.0f;      //移动速度
     public float RotateSpeed = 90f;     //旋转速度
-    public GameObject CameraFirst;      //第一人视角
-    public GameObject CameraThird;      //第三人视角
-    private bool isCameraActive;        //是否启动视角
-    
 
     private TankWeapon tw;              //武器脚本
     //private float timer;
@@ -19,17 +15,20 @@ public class Tank : Unit
 
     private void Start()
     {
-        base.Start();               //初始化生命值
+        //初始化生命值
+        base.Start();
 
-        isCameraActive = true;      //初始化启动视角(第三人)
+        //取得武器脚本
+        tw = GetComponent<TankWeapon>();
 
-        tw = GetComponent<TankWeapon>();    //取得武器脚本
+        //设置玩家的敌人
+        tw.Init(team);
 
-        //timer = 0f;                 //初始化涉及射击冷却时间参数
+        //初始化涉及射击冷却时间参数
+        //timer = 0f;                 
         //shootCoolDown = 1f;
         //canShoot = true;
 
-        tw.Init(team);              //设置玩家的敌人
     }
 
     private void Update()
@@ -77,14 +76,5 @@ public class Tank : Unit
         float vertical = Input.GetAxis("Vertical1");
         transform.Translate(Vector3.forward * MoveSpeed * Time.deltaTime * vertical);
         transform.Rotate(Vector3.up * RotateSpeed * Time.deltaTime * horizontal);
-
-
-        //PageDown实现第一人和第三人视角的切换
-        if (Input.GetKeyDown(KeyCode.PageDown))
-        {
-            CameraFirst.SetActive(isCameraActive);  //true
-            isCameraActive = !isCameraActive;
-            CameraThird.SetActive(isCameraActive);  //false
-        }
     }
 }
