@@ -5,7 +5,7 @@ using UnityEngine;
 public class Slingshot : MonoBehaviour
 {
     public GameObject prefabProjectile; //弹丸预制体
-    public float velocityMult = 4f;     //弹丸初速度
+    public float velocityMult = 10f;    //弹丸初速度
     public bool ______________________;
     public GameObject launchPoint;      //激活状态高光
     public Vector3 launchPos;           //弹丸发射位置
@@ -69,6 +69,7 @@ public class Slingshot : MonoBehaviour
         float maxMagnitude = this.GetComponent<SphereCollider>().radius;
         if(mouseDelta.magnitude > maxMagnitude)
         {
+            //在保持MouseDelta方向不变的前提下将其长度变为1
             mouseDelta.Normalize();
             mouseDelta *= maxMagnitude;
         }
@@ -85,6 +86,11 @@ public class Slingshot : MonoBehaviour
             /*---弹射出弹丸的方法：施加初速度与施加力，效果相同---*/
             projectile.GetComponent<Rigidbody>().velocity = -mouseDelta * velocityMult;
             //projectile.GetComponent<Rigidbody>().AddForce(-mouseDelta * 400f);
+
+            //设置跟随相机的兴趣点(跟随点)
+            FollowCam.s.poi = projectile;
+
+            //留空projectile字段，以便下次发射时储存新的弹丸，并非销毁
             projectile = null;
         }
     }
