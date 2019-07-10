@@ -20,12 +20,30 @@ public class FollowCam : MonoBehaviour
     //物理模拟 50fps
     private void FixedUpdate()
     {
+        Vector3 destination;
+
         //若兴趣点不存在则返回
         if (poi == null)
-            return;
+            destination = Vector3.zero;
+        else
+        {
+            Debug.Log("A");
+            //获取兴趣点的位置
+            destination = poi.transform.position;
 
-        //获取兴趣点的位置
-        Vector3 destination = poi.transform.position;
+            //如果兴趣点是一个Projectile实例，检查它是否停止
+            if(poi.tag == "Projectile")
+            {
+                Debug.Log("B");
+                //如果它处于为移动sleeping状态，则返回默认视图
+                if (poi.GetComponent<Rigidbody>().IsSleeping())
+                {
+                    Debug.Log("C");
+                    poi = null;
+                    return;
+                }
+            }
+        }
 
         /*
         限定x和y的最小值：实现相机不会移动到x，y轴的负方向上，即不会显示地面以下
