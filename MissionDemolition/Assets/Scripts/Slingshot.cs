@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Slingshot : MonoBehaviour
 {
+    static public Slingshot S;
     public GameObject prefabProjectile; //弹丸预制体
     public float velocityMult = 10f;    //弹丸初速度
     public bool ______________________;
@@ -14,6 +15,8 @@ public class Slingshot : MonoBehaviour
 
     private void Awake()
     {
+        S = this;
+
         //初始化激活状态高光
         Transform launchPointTrans = transform.Find("LaunchPoint");
         launchPoint = launchPointTrans.gameObject;
