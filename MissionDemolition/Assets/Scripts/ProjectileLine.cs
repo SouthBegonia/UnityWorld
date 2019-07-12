@@ -38,8 +38,7 @@ public class ProjectileLine : MonoBehaviour
             {
                 //当把_poi设置为新对象时，将复位其所有内容
                 line.enabled = false;
-                points = new List<Vector3>();
-                
+                points = new List<Vector3>();               
             }
         }
     }
@@ -52,7 +51,6 @@ public class ProjectileLine : MonoBehaviour
         points = new List<Vector3>();
     }
 
-    //
     public void AddPoint()
     {
         Vector3 pt = _poi.transform.position;
@@ -121,10 +119,14 @@ public class ProjectileLine : MonoBehaviour
         //当兴趣点静止时，将其清空
         if (poi.GetComponent<Rigidbody>().IsSleeping())
             poi = null;
-        else if (Slingshot.S.time > Slingshot.S.timeLimit)
+
+        /*此处不宜实现尾拖重置，移步Slingshot.cs内，当发射出一发弹丸后，即可重置下一发尾拖
+          且此处相机坐标是动态变化的(见FollowCam.cs内线性插值法实现平滑移动)，用vector3判定是错误的
+        if (GameObject.FindWithTag("MainCamera").GetComponent<Transform>().position == new Vector3(0,0,-10))
         {
             //若timeLimit时限内未完成静止，则强制返回
-            poi = null;
+            //poi = null;
         }
+        */
     }
 }

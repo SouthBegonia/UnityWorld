@@ -38,19 +38,26 @@ public class FollowCam : MonoBehaviour
                 //如果它处于为移动sleeping状态，则返回默认视图
                 if (poi.GetComponent<Rigidbody>().IsSleeping())
                 {
+                    //重置计时
+                    Slingshot.S.time = 0;
+                    Slingshot.S.canTime = false;
+
+                    //重置Goal合法性
+                    Slingshot.S.canGetGoal = false;
+
                     poi = null;
                     return;
                 }
-                else
-                {
+                else if (Slingshot.S.time > Slingshot.S.timeLimit)
+                {   
                     //若timeLimit时限内未完成静止，则强制返回
-                    if (Slingshot.S.time >Slingshot.S.timeLimit)
-                    {
-                        Slingshot.S.time = 0;
-                        poi = null;
-                        return;
-                    }
+                    Slingshot.S.time = 0;
+                    Slingshot.S.canTime = false;
 
+                    Slingshot.S.canGetGoal = false;
+
+                    poi = null;
+                    return;
                 }
             }
         }
@@ -78,10 +85,5 @@ public class FollowCam : MonoBehaviour
 
         //设置相机的orthographicSize，使地面始终处于画面中
         GetComponent<Camera>().orthographicSize = destination.y + 10;
-    }
-
-    IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(4);
     }
 }

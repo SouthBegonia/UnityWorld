@@ -15,6 +15,8 @@ public class Slingshot : MonoBehaviour
 
     public float time;                  //计时器
     public float timeLimit = 7;         //时限(超过时限强制返回)
+    public bool canTime;                //是否开始计时(仅当发射弹丸时才开启计时)
+    public bool canGetGoal;             //是否可以碰撞到目标Goal(仅当发射中的弹丸可以触碰)
 
     private void Awake()
     {
@@ -27,6 +29,12 @@ public class Slingshot : MonoBehaviour
 
         //初始化弹丸发射位置为高光坐标
         launchPos = launchPointTrans.position;
+
+        //初始时不可计时
+        canTime = false;
+
+        //初始时Goal不可碰撞
+        canGetGoal = false;
     }
 
     //当鼠标进入Collider或GUIElement内才调用
@@ -58,7 +66,8 @@ public class Slingshot : MonoBehaviour
     private void Update()
     {
         //计时
-        time += Time.deltaTime;
+        if(canTime)
+            time += Time.deltaTime;
 
         //若弹弓未处于瞄准模式则返回
         if (!aimingMode)
@@ -86,6 +95,7 @@ public class Slingshot : MonoBehaviour
         //将弹丸projectile 移动到新的位置
         Vector3 projPos = launchPos + mouseDelta;
         projectile.transform.position = projPos;
+
         if (Input.GetMouseButtonUp(0))
         {
             //如果松开鼠标
@@ -102,7 +112,15 @@ public class Slingshot : MonoBehaviour
             //留空projectile字段，以便下次发射时储存新的弹丸，并非销毁
             projectile = null;
 
+            //弹丸已经发射，可以开始计时，且发射的弹丸可合法碰撞Goal
+            canTime = true;         
+            canGetGoal = true;
 
+            //重置下一发弹丸的尾拖
+            //此处可实现短时间内发射多个尾拖弹丸
+            ProjectileLine.S.poi = null;
+
+            MissionDemolition.ShotFired();
         }
     }
 }

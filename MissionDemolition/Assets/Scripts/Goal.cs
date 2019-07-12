@@ -8,13 +8,14 @@ public class Goal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Projectile")
+        //当发射中的Projectile触碰到Goal，才可判定抵达Goal
+        if (other.gameObject.tag == "Projectile" && Slingshot.S.canGetGoal)
         {
             Goal.goalmet = true;
-            //Color c = GetComponent<Renderer>().material.color;
+
+            //变更Goal颜色
             Color c = new Color(92, 250, 0, 64);
             GetComponent<Renderer>().material.color = c;
-            Debug.Log("AAA");
         }
     }
 }
