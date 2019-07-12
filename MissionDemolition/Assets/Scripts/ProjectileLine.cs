@@ -121,5 +121,10 @@ public class ProjectileLine : MonoBehaviour
         //当兴趣点静止时，将其清空
         if (poi.GetComponent<Rigidbody>().IsSleeping())
             poi = null;
+        else if (Slingshot.S.time > Slingshot.S.timeLimit)
+        {
+            //若timeLimit时限内未完成静止，则强制返回
+            poi = null;
+        }
     }
 }

@@ -11,11 +11,13 @@ public class FollowCam : MonoBehaviour
     public GameObject poi;          //兴趣点
     public float camZ;              //相机的Z坐标
 
+
     private void Awake()
     {
         s = this;
         camZ = this.transform.position.z;
     }
+
 
     //物理模拟 50fps
     private void FixedUpdate()
@@ -27,20 +29,28 @@ public class FollowCam : MonoBehaviour
             destination = Vector3.zero;
         else
         {
-            Debug.Log("A");
             //获取兴趣点的位置
             destination = poi.transform.position;
 
             //如果兴趣点是一个Projectile实例，检查它是否停止
             if(poi.tag == "Projectile")
             {
-                Debug.Log("B");
                 //如果它处于为移动sleeping状态，则返回默认视图
                 if (poi.GetComponent<Rigidbody>().IsSleeping())
                 {
-                    Debug.Log("C");
                     poi = null;
                     return;
+                }
+                else
+                {
+                    //若timeLimit时限内未完成静止，则强制返回
+                    if (Slingshot.S.time >Slingshot.S.timeLimit)
+                    {
+                        Slingshot.S.time = 0;
+                        poi = null;
+                        return;
+                    }
+
                 }
             }
         }
@@ -68,5 +78,10 @@ public class FollowCam : MonoBehaviour
 
         //设置相机的orthographicSize，使地面始终处于画面中
         GetComponent<Camera>().orthographicSize = destination.y + 10;
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(4);
     }
 }

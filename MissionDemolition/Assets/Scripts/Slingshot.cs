@@ -13,6 +13,9 @@ public class Slingshot : MonoBehaviour
     public GameObject projectile;       //实例化的弹丸
     public bool aimingMode;             //玩家是否在弹弓上单击鼠标左键
 
+    public float time;                  //计时器
+    public float timeLimit = 7;         //时限(超过时限强制返回)
+
     private void Awake()
     {
         S = this;
@@ -54,6 +57,9 @@ public class Slingshot : MonoBehaviour
 
     private void Update()
     {
+        //计时
+        time += Time.deltaTime;
+
         //若弹弓未处于瞄准模式则返回
         if (!aimingMode)
             return;
@@ -95,6 +101,8 @@ public class Slingshot : MonoBehaviour
 
             //留空projectile字段，以便下次发射时储存新的弹丸，并非销毁
             projectile = null;
+
+
         }
     }
 }
