@@ -23,7 +23,7 @@
 ![](https://img2018.cnblogs.com/blog/1688704/201907/1688704-20190713151333154-1164345528.gif)
 
 Github项目地址:[MissionDemolition 爆破任务](https://github.com/SouthBegonia/UnityWorld/tree/master/MissionDemolition/)
-
+试玩下载：[MissionDemolition 爆破任务 提取码3wq7](https://pan.baidu.com/s/1vRktj0c0ALS9F_WvfE1EhA)
 --------------------
 
 <h1 id="3">绘图资源</h1>
