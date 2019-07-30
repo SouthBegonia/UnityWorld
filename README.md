@@ -1,6 +1,8 @@
 ## Unity World
 本库用于发布**Unity3D**制作的游戏，由于Github上的文档格式较cnblog上的有所不同，故为了较好查看游戏开发文档，请移步个人博客： [SouthBegonia's  Blog](https://www.cnblogs.com/SouthBegonia/)
 
+此外，大部分游戏的试玩下载地址(提取码wekp)：[Unity Games](https://pan.baidu.com/s/1YhGINK1zqLKmD6bp1C29tA)
+
 ## Unity项目
 
 - [打砖块 BreakBricks](https://github.com/SouthBegonia/UnityWorld/tree/master/BreakBricks)
