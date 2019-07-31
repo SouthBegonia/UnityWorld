@@ -84,7 +84,7 @@ public class LayoutTiles : MonoBehaviour
         for(int y = 0; y < roomRows.Length; y++)
         {
             for (int x = 0; x < roomRows[y].Length - 1; x++)
-            {
+            {        
                 //设置默认值
                 height = 0;
                 tileTexStr = floorTexStr;
@@ -128,16 +128,22 @@ public class LayoutTiles : MonoBehaviour
                 ti.height = height;
                 ti.tex = tileTexStr;
 
+
                 //如果类型是rawType，则继续下一个操作
                 if (rawType == type)
                     continue;
 
                 //检查room中指定的对象实例
                 switch (rawType)
-                {                   
+                {
                     case "X":       //Mage的起始位置
-                        Mage.S.pos = ti.pos;
-                        break;
+                        {
+                            //出错代码：单例化无法设置
+                            //Mage.S.pos =  ti.pos;
+                            //目前解决措施：
+                            GameObject.FindWithTag("Mage").transform.position = ti.pos;
+                            break;
+                        }
                 }
             }
         }           
