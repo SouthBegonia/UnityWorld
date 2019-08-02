@@ -138,9 +138,9 @@ public class LayoutTiles : MonoBehaviour
                 {
                     case "X":       //Mage的起始位置
                         {
-                            //出错代码：单例化无法设置
-                            //Mage.S.pos =  ti.pos;
-                            //目前解决措施：
+                            //出错代码：Mage.S.pos =  ti.pos;
+                            //报错信息：单例化无法设置
+                            //解决措施：
                             GameObject.FindWithTag("Mage").transform.position = ti.pos;
                             break;
                         }
@@ -149,6 +149,7 @@ public class LayoutTiles : MonoBehaviour
         }           
     }
 
+    //下列代码在 book.prototools.net 上有补充说明
     public void BuildRoom(string rNumStr)
     {
         PT_XMLHashtable roomHT = null;
