@@ -11,6 +11,17 @@ public enum MPhase
     drag
 }
 
+//ElementType枚举
+public enum ElementType
+{
+    earth,      //0
+    water,      //1
+    air,        //2
+    fire,       //3
+    aether,     //4
+    none        //5
+}
+
 //储存鼠标在各个交互结构中的信息
 [System.Serializable]
 public class MouseInfo
@@ -45,7 +56,7 @@ public class Mage : PT_MonoBehaviour
     public GameObject tapIndicatorPrefab;//单击指示器的Prefab
     public float mDragDist = 5;         //定义拖动的最小像素距离
 
-    public float activeScreenWidth = 1; //屏幕使用的%
+    public float activeScreenWidth = 0.75f; //屏幕使用的%
 
     public float speed = 2;             //Mage的运动速度
     public bool _______________;
