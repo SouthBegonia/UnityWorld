@@ -59,6 +59,11 @@ public class Mage : PT_MonoBehaviour
     public float activeScreenWidth = 0.75f; //屏幕使用的%
 
     public float speed = 2;             //Mage的运动速度
+
+    public GameObject[] elementPrefabs; //Element_Sphere的预制体
+    public float elementRotDist = 0.5f; //旋转半径
+    public float elementRotSpeed = 0.5f;//旋转周期
+    public int maxNumSelectedElements = 1;//最大选择道具数为1
     public bool _______________;
 
     public MPhase mPhase = MPhase.idle;
@@ -67,6 +72,8 @@ public class Mage : PT_MonoBehaviour
     public bool walking = false;        //Mage的运动状态
     public Vector3 walkTarget;          //Mage目的地
     public Transform characterTrans;    //Mage的组件
+
+    public List<Element> selectedElements = new List<Element>();
 
     private void Awake()
     {
@@ -127,6 +134,10 @@ public class Mage : PT_MonoBehaviour
                 if(dragDist>=mDragDist)
                     mPhase = MPhase.drag;
             }
+
+            //如果道具没有被选中,则mTapTime一旦结束拖动就开始
+            if (selectedElements.Count == 0)
+                mPhase = MPhase.drag;
         }
 
         //如果鼠标被拖动
@@ -143,6 +154,7 @@ public class Mage : PT_MonoBehaviour
             else
                 MouseDrag();    //仍然处于拖动状态
         }
+        OrbitSelectedElements();
     }
     
     //提取Mouse信息，添加到mouseInfo并返回
@@ -189,15 +201,15 @@ public class Mage : PT_MonoBehaviour
     //鼠标单击内容(拖动或单击)
     void MouseDown()
     {
-        if (DEBUG)
-            print("Mage.MouseDown()");
+        //if (DEBUG)
+        //    print("Mage.MouseDown()");
     }
 
     //单击某对象(按钮)
     void MouseTap()
     {
-        if (DEBUG)
-            print("Mage.MouseTap()");
+        //if (DEBUG)
+        //    print("Mage.MouseTap()");
 
         //Mage移动到最新的mouseInfo位置
         WalkTo(lastMouseInfo.loc);
@@ -209,8 +221,8 @@ public class Mage : PT_MonoBehaviour
     //拖动鼠标穿过
     void MouseDrag()
     {
-        if (DEBUG)
-            print("Mage.MouseDrag()");
+        //if (DEBUG)
+        //    print("Mage.MouseDrag()");
 
         //继续前往当前mouseInfo位置
         WalkTo(mouseInfos[mouseInfos.Count - 1].loc);
@@ -219,8 +231,8 @@ public class Mage : PT_MonoBehaviour
     //鼠标拖动后释放
     void MouseDragUp()
     {
-        if (DEBUG)
-            print("Mage.MouseDragUp()");
+        //if (DEBUG)
+        //    print("Mage.MouseDragUp()");
 
         //当拖拽结束时停止前进
         StopWalking();
@@ -230,7 +242,7 @@ public class Mage : PT_MonoBehaviour
     public void WalkTo(Vector3 xTarget)
     {
         walkTarget = xTarget;       //设置当前目的地
-        walkTarget.z = 0;           //锁Z轴
+        walkTarget.z = 0;           //----------------------------------------锁Z轴
         walking = true;             //移动状态
         Face(walkTarget);           //面向walkTarget的方向
     }
@@ -301,5 +313,82 @@ public class Mage : PT_MonoBehaviour
     {
         GameObject go = Instantiate(tapIndicatorPrefab) as GameObject;
         go.transform.position = loc;
+    }
+
+    //选择elType的一个Element_Sphere并添加到selectedElements
+    public void SelectedElement(ElementType elType)
+    {
+        //如果没有道具,就清空所有道具
+        if(elType == ElementType.none)
+        {
+            ClearElements();
+            return;
+        }
+        
+        //如果只有一个可选,则清空该道具
+        if(maxNumSelectedElements == 1)
+        {
+            ClearElements();
+        }
+
+        //不可同时选择数量超过maxNumSelectedElements
+        if (selectedElements.Count >= maxNumSelectedElements)
+            return;
+
+        //可以添加当前道具
+        GameObject go = Instantiate(elementPrefabs[(int) elType]) as GameObject;
+        Element el = go.GetComponent<Element>();
+        el.transform.parent = this.transform;
+
+        //将el添加到selectedElements列表
+        selectedElements.Add(el);
+    }
+
+    //将selectedElements的所有道具清空并销毁他们的游戏对象
+    public void ClearElements()
+    {
+        foreach(Element el in selectedElements)
+        {
+            Destroy(el.gameObject);
+        }
+        selectedElements.Clear();
+    }
+
+    //调用每个Update方法使道具围绕旋转
+    void OrbitSelectedElements()
+    {
+        //如果没有则返回
+        if (selectedElements.Count == 0)
+            return;
+
+        Element el;
+        Vector3 vec;
+        float theta0, theta;
+        float tau = Mathf.PI * 2;
+
+        //将圆圈划分到各个旋转道具
+        float rotPreElement = tau / selectedElements.Count;
+
+        //基于时间来设置旋转基础角度
+        theta0 = elementRotSpeed * Time.time * tau;
+
+        for(int i = 0; i < selectedElements.Count; i++)
+        {
+            //确定每个道具的旋转角度
+            theta = theta0 + i * rotPreElement;
+            el = selectedElements[i];
+
+            //使用简单三角形将角度转换为单位矢量
+            vec = new Vector3(Mathf.Cos(theta), Mathf.Sin(theta), 0);
+
+            //用elementRotDist乘以单位矢量
+            vec *= elementRotDist;
+
+            //拉伸道具到腰部位置
+            vec.z = -0.5f;
+
+            //设置Element_Sphere的位置
+            el.lPos = vec;
+        }
     }
 }

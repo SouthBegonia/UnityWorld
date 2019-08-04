@@ -21,6 +21,6 @@ public class ElementInventoryButton : MonoBehaviour
     private void OnMouseUpAsButton()
     {
         //给Mage添加此类道具
-        //
+        Mage.S.SelectedElement(type);
     }
 }
