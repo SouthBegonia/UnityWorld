@@ -31,13 +31,13 @@ public class TapIndicator : PT_Mover
 
             //回调机制:一种函数授权机制,当移动停止时调用void function()函数
             //完成时调用Callbackmethod()
-            callback = CAllbackMethod;
+            callback = CallbackMethod;
 
             //通过贝赛尔曲线传递一系列PT_Locs和持续时间来初始化移动
             PT_StartMove(locs, lifeTime);
         }
 
-        void CAllbackMethod()
+        void CallbackMethod()
         {
             Destroy(gameObject);        //完成移动,销毁gameobject
         }

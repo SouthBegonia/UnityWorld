@@ -6,9 +6,9 @@ public class Tile : PT_MonoBehaviour
 {
     public string type;
 
-    private string _tex;
-    private int _height = 0;
-    private Vector3 _pos;
+    private string _tex;        //砖块类型,墙体/地面
+    private int _height = 0;    //砖块的相对高度,当hight>0即为墙体(不可穿过)
+    private Vector3 _pos;       //砖块的坐标
     
 
     public int height

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*-----根据XML文档创建迷宫(包括其位置,贴图,Mage初生地deng)-----*/
 [System.Serializable]
 public class TileTex
 {

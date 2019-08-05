@@ -6,9 +6,9 @@ using System.Linq;
 //枚举用于追踪鼠标交互的各个阶段
 public enum MPhase
 {
-    idle,
-    down,
-    drag
+    idle,       //空
+    down,       //按下
+    drag        //拖拽
 }
 
 //ElementType枚举
@@ -52,26 +52,27 @@ public class Mage : PT_MonoBehaviour
     static public Mage S;
     static public bool DEBUG = true;
 
-    public float mTapTime = 0.1f;       //定义单击长度
-    public GameObject tapIndicatorPrefab;//单击指示器的Prefab
-    public float mDragDist = 5;         //定义拖动的最小像素距离
+    public float mTapTime = 0.1f;           //定义单击长度
+    public GameObject tapIndicatorPrefab;   //单击指示器的Prefab
+    public float mDragDist = 5;             //定义拖动的最小像素距离
 
     public float activeScreenWidth = 0.75f; //屏幕使用的%
 
-    public float speed = 2;             //Mage的运动速度
+    public float speed = 2;                 //Mage的运动速度
 
-    public GameObject[] elementPrefabs; //Element_Sphere的预制体
-    public float elementRotDist = 0.5f; //旋转半径
-    public float elementRotSpeed = 0.5f;//旋转周期
-    public int maxNumSelectedElements = 1;//最大选择道具数为1
+    public GameObject[] elementPrefabs;     //Element_Sphere的预制体
+    public float elementRotDist = 0.5f;     //旋转半径
+    public float elementRotSpeed = 0.5f;    //旋转周期
+    public int maxNumSelectedElements = 1;  //最大选择道具数为1
     public bool _______________;
 
-    public MPhase mPhase = MPhase.idle;
+    public MPhase mPhase = MPhase.idle;     //鼠标初始状态为idle
     public List<MouseInfo> mouseInfos = new List<MouseInfo>();
-  
-    public bool walking = false;        //Mage的运动状态
-    public Vector3 walkTarget;          //Mage目的地
-    public Transform characterTrans;    //Mage的组件
+    public string actionStartTag;           //["Mage","Ground","Enemy"]
+
+    public bool walking = false;            //Mage的运动状态
+    public Vector3 walkTarget;              //Mage目的地
+    public Transform characterTrans;        //Mage的组件
 
     public List<Element> selectedElements = new List<Element>();
 
@@ -99,17 +100,17 @@ public class Mage : PT_MonoBehaviour
 
         //因为单击有时会发生在单结构中，故用if语句
         //如果鼠标轮为空
-        if(mPhase == MPhase.idle)
+        if (mPhase == MPhase.idle)
         {
             if (b0Down && inActiveArea)
             {
-                
                 mouseInfos.Clear();     //清空mouseInfo
                 AddmouseInfo();         //添加第一个MouseInfo
-                
+
                 //如果有东西被点中
                 if (mouseInfos[0].hit)
                 {
+                    //Debug.Log("有物体被鼠标点中");
                     MouseDown();
                     mPhase = MPhase.down;
                 }
@@ -119,6 +120,7 @@ public class Mage : PT_MonoBehaviour
         //如果鼠标左键按下
         if (mPhase == MPhase.down)
         {
+            //Debug.Log("执行mPhase=" + mPhase + "分支");
             AddmouseInfo();             //添加该结构的MouseInfo
 
             //如果左键释放
@@ -126,23 +128,26 @@ public class Mage : PT_MonoBehaviour
             {
                 MouseTap();             //单击动作
                 mPhase = MPhase.idle;
-            }else if (Time.time - mouseInfos[0].time > mTapTime)
+            }
+            else if (Time.time - mouseInfos[0].time > mTapTime)
             {
                 //如果按下长度超过单击的长度，则为拖动
                 float dragDist = (lastMouseInfo.screenLoc - mouseInfos[0].screenLoc).magnitude;
 
-                if(dragDist>=mDragDist)
+                if (dragDist >= mDragDist)
+                    mPhase = MPhase.drag;
+
+                //^^^易错处:若代码放在if(mPhase == MPhase.down)下则会将鼠标点击状态改变为拖动状态,造成无法单击移动只可拖动的问题
+                //如果道具没有被选中,则mTapTime一旦结束拖动就开始
+                if (selectedElements.Count == 0)
                     mPhase = MPhase.drag;
             }
-
-            //如果道具没有被选中,则mTapTime一旦结束拖动就开始
-            if (selectedElements.Count == 0)
-                mPhase = MPhase.drag;
         }
 
         //如果鼠标被拖动
         if (mPhase == MPhase.drag)
         {
+            //Debug.Log("执行mPhase=" + mPhase + "分支");
             AddmouseInfo();
 
             //鼠标左键释放
@@ -156,7 +161,7 @@ public class Mage : PT_MonoBehaviour
         }
         OrbitSelectedElements();
     }
-    
+
     //提取Mouse信息，添加到mouseInfo并返回
     MouseInfo AddmouseInfo()
     {
@@ -178,7 +183,7 @@ public class Mage : PT_MonoBehaviour
             float lastTime = mouseInfos[mouseInfos.Count - 1].time;
 
             //当最后一个mouseInfo超时
-            if(mInfo.time != lastTime)
+            if (mInfo.time != lastTime)
             {
                 mouseInfos.Add(mInfo);  //为mouseInfos添加mInfo
             }
@@ -242,7 +247,9 @@ public class Mage : PT_MonoBehaviour
     public void WalkTo(Vector3 xTarget)
     {
         walkTarget = xTarget;       //设置当前目的地
-        walkTarget.z = 0;           //----------------------------------------锁Z轴
+        walkTarget.z = -0.1f;       //固定Z方向
+        if (walkTarget.z == -0.1f)
+            Debug.LogWarning("succe");
         walking = true;             //移动状态
         Face(walkTarget);           //面向walkTarget的方向
     }
@@ -258,6 +265,7 @@ public class Mage : PT_MonoBehaviour
     //停止Mage前进
     public void StopWalking()
     {
+        //Debug.Log("执行StopWalking(),walking=" + walking);
         walking = false;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
@@ -268,19 +276,22 @@ public class Mage : PT_MonoBehaviour
         if (walking)
         {
             //若Mage非常靠近目的地，则停在当前坐标
-            if((walkTarget-pos).magnitude < speed * Time.fixedDeltaTime)
+            if ((walkTarget - pos).magnitude < speed * Time.fixedDeltaTime)
             {
+                //Debug.Log("已靠近目的地,故停止");
                 pos = walkTarget;
                 StopWalking();
             }
             else
             {   //否则向目的地移动
                 GetComponent<Rigidbody>().velocity = (walkTarget - pos).normalized * speed;
+                //Debug.Log("未靠近目的地,故继续运动");
             }
         }
         else
         {   //否则静止
             GetComponent<Rigidbody>().velocity = Vector3.zero;
+            //Debug.Log("非walking状态,故静止");
         }
         /* 向目的地运动过程出现的bug：
         问题描述：点击了有效的目的地后，Mage仅移动了较短距离后就仿佛被碰撞阻碍运动，最终停止
@@ -290,6 +301,8 @@ public class Mage : PT_MonoBehaviour
                  总之，很可能就是Mage模型与TileAnchor物体的碰撞器细微接触问题。
         解决方案：稍微调节Mage高度使其不与TileAnchor接触；
                  或稍微缩小Mage->CharacterTrans->View_Character->legs的collider的范围
+        后续问题1:貌似没有根治该问题,有可能是读取鼠标的目的地与Mage运动不在统一z平面,似的Mage的运动受阻
+        问题分析: 是在写添加道具代码时位置出错,出错地位于Update()的if内标记处
          
          
          */
@@ -304,7 +317,11 @@ public class Mage : PT_MonoBehaviour
         {
             //height>0说明为墙壁，无法穿过
             if (ti.height > 0)
+            {
+                //Debug.Log("墙壁,无法穿过");
                 StopWalking();
+            }
+
         }
     }
 
@@ -319,14 +336,14 @@ public class Mage : PT_MonoBehaviour
     public void SelectedElement(ElementType elType)
     {
         //如果没有道具,就清空所有道具
-        if(elType == ElementType.none)
+        if (elType == ElementType.none)
         {
             ClearElements();
             return;
         }
-        
+
         //如果只有一个可选,则清空该道具
-        if(maxNumSelectedElements == 1)
+        if (maxNumSelectedElements == 1)
         {
             ClearElements();
         }
@@ -336,7 +353,7 @@ public class Mage : PT_MonoBehaviour
             return;
 
         //可以添加当前道具
-        GameObject go = Instantiate(elementPrefabs[(int) elType]) as GameObject;
+        GameObject go = Instantiate(elementPrefabs[(int)elType]) as GameObject;
         Element el = go.GetComponent<Element>();
         el.transform.parent = this.transform;
 
@@ -347,7 +364,7 @@ public class Mage : PT_MonoBehaviour
     //将selectedElements的所有道具清空并销毁他们的游戏对象
     public void ClearElements()
     {
-        foreach(Element el in selectedElements)
+        foreach (Element el in selectedElements)
         {
             Destroy(el.gameObject);
         }
@@ -372,7 +389,7 @@ public class Mage : PT_MonoBehaviour
         //基于时间来设置旋转基础角度
         theta0 = elementRotSpeed * Time.time * tau;
 
-        for(int i = 0; i < selectedElements.Count; i++)
+        for (int i = 0; i < selectedElements.Count; i++)
         {
             //确定每个道具的旋转角度
             theta = theta0 + i * rotPreElement;
