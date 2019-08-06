@@ -63,8 +63,20 @@ public class Mage : PT_MonoBehaviour
     public GameObject[] elementPrefabs;     //Element_Sphere的预制体
     public float elementRotDist = 0.5f;     //旋转半径
     public float elementRotSpeed = 0.5f;    //旋转周期
+
     public int maxNumSelectedElements = 1;  //最大选择道具数为1
-    public bool _______________;
+
+    public Color[] elementColors;           //线条颜色
+    public float lineMinDelta = 0.1f;       //线条2坐标之间的最大最小距离
+    public float lineMaxDelta = 0.5f;
+    public float lineMaxLength = 8f;
+
+    public bool ____________________________________;
+
+    public float totalLineLength;
+    public List<Vector3> linePts;           //线条显示的坐标点
+    protected LineRenderer liner;           //应用LineRenderer组件
+    protected float lineZ = -0.1f;          //线条的Z depth
 
     public MPhase mPhase = MPhase.idle;     //鼠标初始状态为idle
     public List<MouseInfo> mouseInfos = new List<MouseInfo>();
@@ -83,6 +95,10 @@ public class Mage : PT_MonoBehaviour
 
         //查询characterTrans以轮转Face()
         characterTrans = transform.Find("CharacterTrans");
+
+        //获取LineRenderer组件并禁用
+        liner = GetComponent<LineRenderer>();
+        liner.enabled = false;
     }
 
     private void Update()
@@ -208,6 +224,15 @@ public class Mage : PT_MonoBehaviour
     {
         //if (DEBUG)
         //    print("Mage.MouseDown()");
+
+        //取得鼠标单击的对象
+        GameObject clickeddGO = mouseInfos[0].hitInfo.collider.gameObject;
+
+        //判断是Ground/MageEnemy
+        GameObject taggedParent = Utils.FindTaggedParent(clickeddGO);
+        if (taggedParent == null)
+            actionStartTag = "";
+        else actionStartTag = taggedParent.tag;
     }
 
     //单击某对象(按钮)
@@ -216,11 +241,22 @@ public class Mage : PT_MonoBehaviour
         //if (DEBUG)
         //    print("Mage.MouseTap()");
 
+        //检测什么对象呗单击
+        switch (actionStartTag)
+        {
+            case "Mage":
+                break;
+            case "Ground":
+                WalkTo(lastMouseInfo.loc);  //前进道第一个mouseInfo位置
+                ShowTap(lastMouseInfo.loc);
+                break;
+        }
+
         //Mage移动到最新的mouseInfo位置
-        WalkTo(lastMouseInfo.loc);
+        //WalkTo(lastMouseInfo.loc);
 
         //显示玩家单击的地方
-        ShowTap(lastMouseInfo.loc);
+        //ShowTap(lastMouseInfo.loc);
     }
 
     //拖动鼠标穿过
@@ -229,8 +265,26 @@ public class Mage : PT_MonoBehaviour
         //if (DEBUG)
         //    print("Mage.MouseDrag()");
 
+        //只有鼠标从地面开始拖动的情况才有效
+        if (actionStartTag != "Ground")
+            return;
+
+        //如果道具没有被选中,玩家应该随着鼠标移动
+        if (selectedElements.Count == 0)
+        {
+            //继续前往当前mouseInfo位置
+            WalkTo(mouseInfos[mouseInfos.Count - 1].loc);
+        }
+        else
+        {
+            //地面法术,绘制线条
+            AddPointToLiner(mouseInfos[mouseInfos.Count - 1].loc);
+
+        }
+        
+
         //继续前往当前mouseInfo位置
-        WalkTo(mouseInfos[mouseInfos.Count - 1].loc);
+        //WalkTo(mouseInfos[mouseInfos.Count - 1].loc);
     }
 
     //鼠标拖动后释放
@@ -239,8 +293,23 @@ public class Mage : PT_MonoBehaviour
         //if (DEBUG)
         //    print("Mage.MouseDragUp()");
 
-        //当拖拽结束时停止前进
-        StopWalking();
+        //只有鼠标从地面开始拖动的情况才有效
+        if (actionStartTag != "Ground")
+            return;
+
+        //如果没有道具被选中,则马上停止
+        if (selectedElements.Count == 0)
+        {
+            //当拖拽结束时停止前进
+            StopWalking();
+        }
+        else
+        {
+            //释放法术
+        }
+
+        //清除绘制器
+        ClearLiner();
     }
 
     //前进到指定位置，z=0
@@ -248,8 +317,6 @@ public class Mage : PT_MonoBehaviour
     {
         walkTarget = xTarget;       //设置当前目的地
         walkTarget.z = -0.1f;       //固定Z方向
-        if (walkTarget.z == -0.1f)
-            Debug.LogWarning("succe");
         walking = true;             //移动状态
         Face(walkTarget);           //面向walkTarget的方向
     }
@@ -407,5 +474,82 @@ public class Mage : PT_MonoBehaviour
             //设置Element_Sphere的位置
             el.lPos = vec;
         }
+    }
+
+    //为线条添加新坐标:如果太靠近已存在的坐标则忽略
+    void AddPointToLiner(Vector3 pt)
+    {
+        //使pt与地面存在距离
+        pt.z = lineZ;
+
+        //如果LinePts为空则添加坐标
+        if (linePts.Count == 0)
+        {
+            linePts.Add(pt);
+            totalLineLength = 0;
+            return;
+        }
+
+        //如果线条超过最大长度则返回
+        if (totalLineLength>lineMaxLength)
+           return;
+
+        //如果有闲钱坐标pt0,那么查找pt与其距离
+        //获取LinePts中的最新坐标
+        Vector3 pt0 = linePts[linePts.Count - 1];
+        Vector3 dir = pt - pt0;
+        float delta = dir.magnitude;
+        dir.Normalize();
+
+        totalLineLength += delta;
+
+        //如果小于最小距离则返回
+        if (delta < lineMinDelta)
+            return;
+
+        //如果大于最大距离则添加坐标
+        if (delta > lineMaxDelta)
+        {
+            //在二者之间添加坐标
+            float numToAdd = Mathf.Ceil(delta / lineMaxDelta);
+            float midDelta = delta / numToAdd;
+            Vector3 ptMid;
+            for(int i = 1; i < numToAdd; i++)
+            {
+                ptMid = pt0 + (dir * midDelta * i);
+                linePts.Add(ptMid);
+            }
+        }
+
+        //添加坐标,更新线条
+        linePts.Add(pt);
+        UpdateLiner();
+    }
+
+    //使用新的坐标更新LineRenderer
+    public void UpdateLiner()
+    {
+        int el = (int)selectedElements[0].type;
+
+        //基于该类型设置线条颜色
+        liner.startColor = elementColors[el];
+        liner.endColor = elementColors[el];
+        //liner.SetColors(elementColors[el], elementColors[el]);
+
+        //更新简要释放法术的外观
+        //设置顶点数
+        liner.positionCount = linePts.Count;
+        //设置各顶点
+        for(int i = 0; i < linePts.Count; i++)
+            liner.SetPosition(i, linePts[i]);
+        //启用LinerRenderer
+        liner.enabled = true;
+    }
+
+    //清除绘制器
+    public void ClearLiner()
+    {
+        liner.enabled = false;
+        linePts.Clear();
     }
 }
