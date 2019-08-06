@@ -69,9 +69,13 @@ public class Mage : PT_MonoBehaviour
     public Color[] elementColors;           //线条颜色
     public float lineMinDelta = 0.1f;       //线条2坐标之间的最大最小距离
     public float lineMaxDelta = 0.5f;
-    public float lineMaxLength = 8f;
+    public float lineMaxLength = 8f;        //线条最大长度(限制法术施放长度)
+
+    public GameObject fireGroundSpellPrefab;//火焰特效
 
     public bool ____________________________________;
+
+    protected Transform spellAnchor;        //所有法术的父transform
 
     public float totalLineLength;
     public List<Vector3> linePts;           //线条显示的坐标点
@@ -99,6 +103,10 @@ public class Mage : PT_MonoBehaviour
         //获取LineRenderer组件并禁用
         liner = GetComponent<LineRenderer>();
         liner.enabled = false;
+
+        //创建空游戏对象命名为 Spell Anchor
+        GameObject saGo = new GameObject("Spell Anchor");
+        spellAnchor = saGo.GetComponent<Transform>();
     }
 
     private void Update()
@@ -306,10 +314,36 @@ public class Mage : PT_MonoBehaviour
         else
         {
             //释放法术
+            CastGroundSpell();
         }
 
         //清除绘制器
         ClearLiner();
+    }
+
+    void CastGroundSpell()
+    {
+        //若未选择道具则无法施放法术
+        if (selectedElements.Count == 0)
+            return;
+
+        //
+        switch (selectedElements[0].type)
+        {
+            case ElementType.fire:
+                GameObject fireGo;
+                foreach(Vector3 pt in linePts)
+                {
+                    //为LinePts中每个vector3创建一个fireGroundSpellPrefab实例
+                    fireGo = Instantiate(fireGroundSpellPrefab) as GameObject;
+                    fireGo.transform.parent = spellAnchor;
+                    fireGo.transform.position = pt;
+                }
+                break;
+                //其他法术
+        }
+        //清除selectedElements
+        ClearElements();
     }
 
     //前进到指定位置，z=0
