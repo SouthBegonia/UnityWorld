@@ -391,7 +391,8 @@ public class Utils : MonoBehaviour {
 		for (int i=1; i<objs.Length; i++) {
 			s += "\t"+objs[i].ToString();
 		}
-		print (s);
+        Debug.LogWarning(s);
+		//print (s);
 	}
 
 	static public void trd(params object[] objs) {

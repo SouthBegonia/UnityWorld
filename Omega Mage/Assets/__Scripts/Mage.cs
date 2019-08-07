@@ -49,7 +49,7 @@ public class MouseInfo
 
 public class Mage : PT_MonoBehaviour
 {
-    static public Mage S;
+    static public Mage S = new Mage();
     static public bool DEBUG = true;
 
     public float mTapTime = 0.1f;           //定义单击长度
@@ -585,5 +585,11 @@ public class Mage : PT_MonoBehaviour
     {
         liner.enabled = false;
         linePts.Clear();
+    }
+
+    //停止任何的有效拖动或鼠标输入
+    public void ClearInput()
+    {
+        mPhase = MPhase.idle;
     }
 }

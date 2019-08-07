@@ -15,11 +15,13 @@ public class LayoutTiles : MonoBehaviour
     static public LayoutTiles S;
 
     public TextAsset roomsText;         //Rooms.xml文件
-    public string roomNumber = "0";    //当前room #作为一个字符串
+    public string roomNumber = "0";     //当前room #作为一个字符串
     public GameObject tilePrefab;       //
     public TileTex[] tileTextures;      //Tiles的已命名文本列表
+    public GameObject portalPrefab;     //房间之间入口的预制体
     public bool __________________________;
 
+    private bool firstRoom = true;      //是否是第一个创建的房间
     public PT_XMLReader roomsXMLR;
     public PT_XMLHashList roomsXML;
     public Tile[,] tiles;
@@ -49,7 +51,7 @@ public class LayoutTiles : MonoBehaviour
     public Texture2D GetTileTex(string tStr)
     {
         //遍历所有的tileTextures查找指定字符串
-        foreach(TileTex tTex in tileTextures)
+        foreach (TileTex tTex in tileTextures)
         {
             if (tTex.str == tStr)
                 return (tTex.tex);
@@ -57,9 +59,22 @@ public class LayoutTiles : MonoBehaviour
         return (null);
     }
 
+
     //从XML<room>入口建立一个room对象
     public void BuildRoom(PT_XMLHashtable room)
     {
+        //销毁旧的Tiles
+        foreach (Transform t in tileAnchor)
+            Destroy(t.gameObject);
+
+        //Mage离开
+        //Mage.S.pos = Vector3.left * 1000;
+        GameObject.FindWithTag("Mage").transform.position = Vector3.left * 1000;
+        Mage.S.ClearInput();
+        //----------------------------------------------------------------
+
+        string rNumStr = room.att("num");
+
         //从<room>属性获取floors和walls的文本名
         string floorTexStr = room.att("floor");
         string wallTexStr = room.att("wall");
@@ -80,12 +95,13 @@ public class LayoutTiles : MonoBehaviour
         GameObject go;
         int height;
         float maxY = roomRows.Length - 1;
+        List<Portal> portals = new List<Portal>();
 
         //循环遍历每个room的每行中的tile
-        for(int y = 0; y < roomRows.Length; y++)
+        for (int y = 0; y < roomRows.Length; y++)
         {
-            for (int x = 0; x < roomRows[y].Length - 1; x++)
-            {        
+            for (int x = 0; x < roomRows[y].Length; x++)
+            {
                 //设置默认值
                 height = 0;
                 tileTexStr = floorTexStr;
@@ -93,15 +109,15 @@ public class LayoutTiles : MonoBehaviour
                 //获取代表tile的字符
                 type = rawType = roomRows[y][x].ToString();
                 switch (rawType)
-                {                   
+                {
                     case " ":       //跳过空格
                     case "_":
-                        continue;                    
+                        continue;
                     case ".":       //默认floor
-                        break;                   
+                        break;
                     case "|":       //默认wall
                         height = 1;
-                        break;                  
+                        break;
                     default:        //其他任何都作为floor
                         type = ".";
                         break;
@@ -136,18 +152,72 @@ public class LayoutTiles : MonoBehaviour
 
                 //检查room中指定的对象实例
                 switch (rawType)
-                {
-                    case "X":       //Mage的起始位置
+                {              
+                    //Mage的起始位置
+                    case "X":
+                        //出错代码：Mage.S.pos =  ti.pos;
+                        //报错信息：单例化无法设置
+                        //解决措施：
+                        //GameObject.FindWithTag("Mage").transform.position = ti.pos;
+                        if (firstRoom)
                         {
-                            //出错代码：Mage.S.pos =  ti.pos;
-                            //报错信息：单例化无法设置
-                            //解决措施：
+                            //Mage.S.pos = ti.pos;
                             GameObject.FindWithTag("Mage").transform.position = ti.pos;
-                            break;
+                            roomNumber = rNumStr;
+                            firstRoom = false;
                         }
+                        break;
+                    case "0":
+                    case "1":
+                    case "2":
+                    case "3":
+                    case "4":
+                    case "5":
+                    case "6":
+                    case "7":
+                    case "8":
+                    case "9":
+                    case "A":
+                    case "B":
+                    case "C":
+                    case "D":
+                    case "E":
+                    case "F":
+                        //实例化Portal,设置地点,归于tileAnchor下,赋通向房间的值,
+                        GameObject pGo = Instantiate(portalPrefab) as GameObject;
+                        //Debug.Log(pGo.name + pGo.transform.position);
+                        Portal p = pGo.GetComponent<Portal>();
+                        p.pos = ti.pos;
+                        p.transform.parent = tileAnchor;
+                        p.toRoom = rawType;
+                        portals.Add(p);
+                        break;
                 }
+                //
             }
-        }           
+        }
+
+        //定位Mage
+        foreach (Portal p in portals)
+        {
+            //如果p.toRoom与Mage刚离开的房间号相同,则Mage应从该入口交替进入房间
+            //此外,若firstroom==true且房间内无X坐标,则应该让Mage移动到该入口作为备用手段
+            if (p.toRoom == roomNumber || firstRoom)
+            {
+                //若房间内没有X坐标,则将firstroom设置为false
+                Mage.S.StopWalking();
+                Mage.S.pos = p.pos;
+
+                //Mage保持面向先前的房间
+                p.justArrived = true;
+
+                //通知Portal,Mage刚进入
+                firstRoom = false;
+                //
+            }
+        }
+        //最后分配roomNumber
+        roomNumber = rNumStr;
     }
 
     //下列代码在 book.prototools.net 上有补充说明
