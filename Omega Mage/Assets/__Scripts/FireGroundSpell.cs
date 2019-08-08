@@ -9,6 +9,8 @@ public class FireGroundSpell : PT_MonoBehaviour
     public float fadeTime = 1f;             //衰减时间长度
     public float timeStart;                 //游戏对象开始时间
 
+    public float damagePreSecond = 10;      //
+
     private void Start()
     {
         timeStart = Time.time;
@@ -48,5 +50,17 @@ public class FireGroundSpell : PT_MonoBehaviour
             go = other.gameObject;
 
         Utils.tr("Flame hit", go.name);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        //获取EnemyBug脚本其他组件的引用
+        EnemyBug recipient = other.GetComponent<EnemyBug>();
+
+        //如果有EnemyBug组件,使用火法术消灭它
+        if (recipient != null)
+        {
+            recipient.Damage(damagePreSecond,ElementType.fire, true);
+        }
     }
 }
