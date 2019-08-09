@@ -69,7 +69,7 @@ public class Mage : PT_MonoBehaviour
     public Color[] elementColors;           //线条颜色
     public float lineMinDelta = 0.1f;       //线条2坐标之间的最大最小距离
     public float lineMaxDelta = 0.5f;
-    public float lineMaxLength = 8f;        //线条最大长度(限制法术施放长度)
+    public float lineMaxLength = 6f;        //线条最大长度(限制法术施放长度)
 
     public GameObject fireGroundSpellPrefab;//火焰特效
 

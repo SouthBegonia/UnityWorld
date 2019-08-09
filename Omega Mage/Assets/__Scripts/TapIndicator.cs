@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TapIndicator : PT_Mover
 {
-    public float lifeTime = 0.4f;       //持续时间
+    public float lifeTime = 0.5f;       //持续时间
     public float[] scales;              //插入的比例
     public Color[] colors;              //插入的颜色
 

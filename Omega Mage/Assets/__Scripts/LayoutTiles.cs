@@ -185,9 +185,13 @@ public class LayoutTiles : MonoBehaviour
                     case "F":
                         //实例化Portal,设置地点,归于tileAnchor下,赋通向房间的值,
                         GameObject pGo = Instantiate(portalPrefab) as GameObject;
-                        //Debug.Log(pGo.name + pGo.transform.position);
+
+                        //魔法阵的z方向需为负值,否则与地面齐平被覆盖
+                        //产生问题:设置魔法阵后不可单击魔法门位置产生标记
+                        //问题分析:Mage.cs内关于魔法阵识别问题,即便MouseTap()内判断
+                        //解决方案:将魔法阵PortalPrefab_MagicCircle的tag设置为Ground,即可在MouseTap内将其归类于Ground进行识别
                         Portal p = pGo.GetComponent<Portal>();
-                        p.pos = ti.pos;
+                        p.pos = ti.pos + new Vector3(0, 0, -0.3f);
                         p.transform.parent = tileAnchor;
                         p.toRoom = rawType;
                         portals.Add(p);
