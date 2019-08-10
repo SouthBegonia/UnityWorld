@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 //枚举用于追踪鼠标交互的各个阶段
 public enum MPhase
@@ -73,7 +74,20 @@ public class Mage : PT_MonoBehaviour
 
     public GameObject fireGroundSpellPrefab;//火焰特效
 
+    public float health = 3;                //生命值
+    public List<GameObject> Allhealth;      //3个心形生命点
+    public float damageTime = -100;         //切换场景一定时间Mage不会受到攻击
+    public float knockbackDist = 1;         //后退距离
+    public float knockbackDur = 0.5f;       //后退秒数
+    public float invincibleDur = 0.5f;      //战斗秒数
+    public int invTimesToBlink = 4;         //战斗时闪烁
+
     public bool ____________________________________;
+
+    private bool invincibleBool = false;    //Mage是否在战斗
+    private bool knockbackBool = false;     //Mage被击退?
+    private Vector3 knockbarDir;            //击退距离
+    private Transform viewCharacterTrans;
 
     protected Transform spellAnchor;        //所有法术的父transform
 
@@ -107,6 +121,8 @@ public class Mage : PT_MonoBehaviour
         //创建空游戏对象命名为 Spell Anchor
         GameObject saGo = new GameObject("Spell Anchor");
         spellAnchor = saGo.GetComponent<Transform>();
+
+        viewCharacterTrans = characterTrans.Find("View_Character");
     }
 
     private void Update()
@@ -249,7 +265,7 @@ public class Mage : PT_MonoBehaviour
         //if (DEBUG)
         //    print("Mage.MouseTap()");
 
-        //检测什么对象呗单击
+        //检测什么对象的单击
         switch (actionStartTag)
         {
             case "Mage":
@@ -327,7 +343,7 @@ public class Mage : PT_MonoBehaviour
         if (selectedElements.Count == 0)
             return;
 
-        //
+        //释放不同法术:
         switch (selectedElements[0].type)
         {
             case ElementType.fire:
@@ -373,6 +389,35 @@ public class Mage : PT_MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (invincibleBool)
+        {
+            float blinkU = (Time.time - damageTime) / invincibleDur;
+            blinkU *= invTimesToBlink;
+            blinkU %= 1.0f;
+            bool visible = (blinkU > 0.5f);
+
+            if (Time.time - damageTime > invincibleDur)
+            {
+                invincibleBool = false;
+                visible = true;
+            }
+
+            //设置游戏对象失效使其隐身
+            viewCharacterTrans.gameObject.SetActive(visible);
+        }
+
+        if (knockbackBool)
+        {
+            if (Time.time - damageTime > knockbackDur)
+            {
+                knockbackBool = false;
+            }
+            float knockbackSpeed = knockbackDist / knockbackDur;
+            vel = knockbarDir * knockbackSpeed;
+
+            return;
+        }
+
         //若Mage前进
         if (walking)
         {
@@ -422,8 +467,49 @@ public class Mage : PT_MonoBehaviour
                 //Debug.Log("墙壁,无法穿过");
                 StopWalking();
             }
-
         }
+
+        //判断是否为EnemyBug
+        EnemyBug bug = coll.gameObject.GetComponent<EnemyBug>();
+
+        //如果otherGO为EnemyBug,则将其传递给CollisionDamage()
+        if (bug != null)
+            CollisionDamage(otherGo);
+    }
+
+    void CollisionDamage(GameObject enemy)
+    {
+        //如果在闪烁就不进行攻击
+        if (invincibleBool)
+            return;
+
+        //Mage被敌人击中
+        StopWalking();
+        ClearInput();
+
+        //减少生命值
+        health -= 1;
+        //Allhealth.Remove(Allhealth[(int)health-1]);
+        Allhealth[(int)health].gameObject.SetActive(false);
+
+        if (health <= 0)
+        {
+            Die();
+            return;
+        }
+
+        damageTime = Time.time;
+        knockbackBool = true;
+        knockbarDir = (pos - enemy.transform.position).normalized;
+        invincibleBool = true;
+    }
+    
+    //Mage死亡
+    void Die()
+    {
+        //重载场景
+        //Application.LoadLevel(0);
+        SceneManager.LoadScene(0);
     }
 
     //显示玩家单击的地方

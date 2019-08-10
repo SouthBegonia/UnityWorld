@@ -99,7 +99,7 @@ MonoBehaviour:
   ptm_easing: ',InOut|'
   ptm_u: 0
   ptm_u2: 0
-  lifeTime: 0.4
+  lifeTime: 0.5
   scales:
   - 0
   - 0.8

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*-----单击指示标记-----*/
 public class TapIndicator : PT_Mover
 {
     public float lifeTime = 0.5f;       //持续时间

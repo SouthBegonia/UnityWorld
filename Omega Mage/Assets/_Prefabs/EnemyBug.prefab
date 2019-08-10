@@ -947,6 +947,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 991917fe7aa9fed4aa5df32f490685f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0.5
+  health: 20
+  damageScale: 0.8
+  damageScaleDuration: 0.25
+  ____________________: 0
+  _maxHealth: 0
+  walkTarget: {x: 0, y: 0, z: 0}
+  walking: 0
+  characterTrans: {fileID: 0}
 --- !u!1 &100026
 GameObject:
   m_ObjectHideFlags: 0
