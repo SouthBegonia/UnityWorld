@@ -454,6 +454,7 @@ public class Mage : PT_MonoBehaviour
          */
     }
 
+    //EnemyBug的碰撞伤害
     private void OnCollisionEnter(Collision coll)
     {
         GameObject otherGo = coll.gameObject;
@@ -477,6 +478,17 @@ public class Mage : PT_MonoBehaviour
             CollisionDamage(otherGo);
     }
 
+    //EnemySpiker的触发伤害
+    private void OnTriggerEnter(Collider other)
+    {
+        EnemySpiker spiker = other.GetComponent<EnemySpiker>();
+        if (spiker != null)
+        {
+            CollisionDamage(other.gameObject);
+        }
+    }
+
+    //Mage受到伤害计算
     void CollisionDamage(GameObject enemy)
     {
         //如果在闪烁就不进行攻击

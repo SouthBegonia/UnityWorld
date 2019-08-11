@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 400002}
   - component: {fileID: 13600000}
   - component: {fileID: 5400000}
+  - component: {fileID: 2504851737342645334}
   m_Layer: 0
   m_Name: EnemySpiker
   m_TagString: Enemy
@@ -94,6 +95,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
+--- !u!114 &2504851737342645334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: f090ddc18651146429446e27ebe26771, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  roomXMLString: '{'
+  _________________: 0
+  moveDir: {x: 0, y: 0, z: 0}
+  characterTrans: {fileID: 0}
 --- !u!1 &100004
 GameObject:
   m_ObjectHideFlags: 0
