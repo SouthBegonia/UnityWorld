@@ -2,8 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBug : PT_MonoBehaviour
+public class EnemyBug : PT_MonoBehaviour,Enemy
 {
+    //EnemyBug扩展PT_MonoBehaviour类并实现了Enemy接口
+    //EnemyBug类的实例作为Enemy接口的实例
+    [SerializeField]
+    private float _touchDamage = 1;     //EnemyBug每次造成伤害1
+    public float touchDamage
+    {
+        get { return (_touchDamage); }
+        set { _touchDamage = value; }
+    }
+
     public float speed = 0.5f;          //EnemyBug的移动速度
     public float health = 10;           //EnemyBug的生命值
     public float damageScale = 0.8f;

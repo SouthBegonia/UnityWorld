@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 //枚举用于追踪鼠标交互的各个阶段
 public enum MPhase
@@ -75,7 +76,10 @@ public class Mage : PT_MonoBehaviour
     public GameObject fireGroundSpellPrefab;//火焰特效
 
     public float health = 3;                //生命值
-    public List<GameObject> Allhealth;      //3个心形生命点
+    private float healthMax = 3;
+    //public List<GameObject> Allhealth;      //3个心形生命点
+    public Image healthUI;                  //单个心型血条UI    
+
     public float damageTime = -100;         //切换场景一定时间Mage不会受到攻击
     public float knockbackDist = 1;         //后退距离
     public float knockbackDur = 0.5f;       //后退秒数
@@ -473,9 +477,14 @@ public class Mage : PT_MonoBehaviour
         //判断是否为EnemyBug
         EnemyBug bug = coll.gameObject.GetComponent<EnemyBug>();
 
-        //如果otherGO为EnemyBug,则将其传递给CollisionDamage()
+        //如果otherGO为EnemyBug,则将bug传递给CollisionDamage()
+        //if (bug != null)
+        //    CollisionDamage(otherGo);
+
+        //如果otherGO为EnemyBug,则将bug传递给CollisionDamage()
+        //该方法将bug解释为Enemy:
         if (bug != null)
-            CollisionDamage(otherGo);
+            CollisionDamage(bug);
     }
 
     //EnemySpiker的触发伤害
@@ -484,12 +493,15 @@ public class Mage : PT_MonoBehaviour
         EnemySpiker spiker = other.GetComponent<EnemySpiker>();
         if (spiker != null)
         {
-            CollisionDamage(other.gameObject);
+            //CollisionDamage(other.gameObject);
+
+            //CollisionDamage()将攻击者视为Enemy
+            CollisionDamage(spiker);
         }
     }
 
     //Mage受到伤害计算
-    void CollisionDamage(GameObject enemy)
+    void CollisionDamage(Enemy enemy)
     {
         //如果在闪烁就不进行攻击
         if (invincibleBool)
@@ -500,9 +512,13 @@ public class Mage : PT_MonoBehaviour
         ClearInput();
 
         //减少生命值
-        health -= 1;
-        //Allhealth.Remove(Allhealth[(int)health-1]);
-        Allhealth[(int)health].gameObject.SetActive(false);
+        //health -= 1;
+        health -= enemy.touchDamage;
+
+        //3心型血条减少
+        //Allhealth[(int)health].gameObject.SetActive(false);
+        //单心型血条减少
+        healthUI.fillAmount = (float)health / (float)healthMax;
 
         if (health <= 0)
         {
@@ -512,7 +528,7 @@ public class Mage : PT_MonoBehaviour
 
         damageTime = Time.time;
         knockbackBool = true;
-        knockbarDir = (pos - enemy.transform.position).normalized;
+        knockbarDir = (pos - enemy.pos).normalized;
         invincibleBool = true;
     }
     
