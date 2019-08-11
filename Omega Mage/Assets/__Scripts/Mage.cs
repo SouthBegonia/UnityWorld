@@ -73,10 +73,13 @@ public class Mage : PT_MonoBehaviour
     public float lineMaxDelta = 0.5f;
     public float lineMaxLength = 6f;        //线条最大长度(限制法术施放长度)
 
-    public GameObject fireGroundSpellPrefab;//火焰特效
+    public GameObject fireGroundSpellPrefab;//火焰魔法
+    public GameObject waterGroundSpellPrefab;//水魔法
+    public GameObject airGroundSpellPrefab; //雷魔法
+    public GameObject earthGroundSpellPrefab;//恢复魔法
 
     public float health = 3;                //生命值
-    private float healthMax = 3;
+    public float healthMax = 3;             //最大生命值
     //public List<GameObject> Allhealth;      //3个心形生命点
     public Image healthUI;                  //单个心型血条UI    
 
@@ -204,6 +207,9 @@ public class Mage : PT_MonoBehaviour
                 MouseDrag();    //仍然处于拖动状态
         }
         OrbitSelectedElements();
+
+        //实时更新UI
+        healthUI.fillAmount = (float)health / (float)healthMax;
     }
 
     //提取Mouse信息，添加到mouseInfo并返回
@@ -275,6 +281,7 @@ public class Mage : PT_MonoBehaviour
             case "Mage":
                 break;
             case "Ground":
+            case "Magic":
                 WalkTo(lastMouseInfo.loc);  //前进道第一个mouseInfo位置
                 ShowTap(lastMouseInfo.loc);
                 break;
@@ -350,6 +357,7 @@ public class Mage : PT_MonoBehaviour
         //释放不同法术:
         switch (selectedElements[0].type)
         {
+            //火法术
             case ElementType.fire:
                 GameObject fireGo;
                 foreach(Vector3 pt in linePts)
@@ -360,7 +368,42 @@ public class Mage : PT_MonoBehaviour
                     fireGo.transform.position = pt;
                 }
                 break;
-                //其他法术
+
+            //水法术
+            case ElementType.water:
+                GameObject waterGo;
+                foreach(Vector3 pt in linePts)
+                {
+                    //为LinePts中每个vector3创建一个waterGroundSpellPrefab实例
+                    waterGo = Instantiate(waterGroundSpellPrefab) as GameObject;
+                    waterGo.transform.parent = spellAnchor;
+                    waterGo.transform.position = pt;
+                }
+                break;
+
+            //雷法术
+            case ElementType.air:
+                GameObject airGo;
+                foreach (Vector3 pt in linePts)
+                {
+                    //为LinePts中每个vector3创建一个waterGroundSpellPrefab实例
+                    airGo = Instantiate(airGroundSpellPrefab) as GameObject;
+                    airGo.transform.parent = spellAnchor;
+                    airGo.transform.position = pt;
+                }
+                break;
+
+            //恢复法术
+            case ElementType.earth:
+                GameObject earthGo;
+                foreach (Vector3 pt in linePts)
+                {
+                    //为LinePts中每个vector3创建一个waterGroundSpellPrefab实例
+                    earthGo = Instantiate(earthGroundSpellPrefab) as GameObject;
+                    earthGo.transform.parent = spellAnchor;
+                    earthGo.transform.position = pt;
+                }
+                break;
         }
         //清除selectedElements
         ClearElements();
@@ -518,7 +561,7 @@ public class Mage : PT_MonoBehaviour
         //3心型血条减少
         //Allhealth[(int)health].gameObject.SetActive(false);
         //单心型血条减少
-        healthUI.fillAmount = (float)health / (float)healthMax;
+        //healthUI.fillAmount = (float)health / (float)healthMax;
 
         if (health <= 0)
         {

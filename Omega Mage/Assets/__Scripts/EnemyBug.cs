@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*-----bug敌人:跟踪玩家,并造成伤害,可被消灭-----*/
 public class EnemyBug : PT_MonoBehaviour,Enemy
 {
     //EnemyBug扩展PT_MonoBehaviour类并实现了Enemy接口
@@ -13,6 +14,13 @@ public class EnemyBug : PT_MonoBehaviour,Enemy
         get { return (_touchDamage); }
         set { _touchDamage = value; }
     }
+    public string typeString
+    {
+        get { return (roomXMLString); }
+        set { roomXMLString = value; }
+    }
+
+    public string roomXMLString;
 
     public float speed = 0.5f;          //EnemyBug的移动速度
     public float health = 10;           //EnemyBug的生命值
@@ -115,17 +123,31 @@ public class EnemyBug : PT_MonoBehaviour,Enemy
         //分布式处理不同类型的攻击
         switch (eT)
         {
+            //火魔法对EnemyBug造成伤害
             case ElementType.fire:
                 damageDict[eT] = Mathf.Max(amt, damageDict[eT]);
                 break;
 
+            //水魔法无效,会恢复EnemyBug的生命
+            //case ElementType.water:
+            //damageDict[eT] = Mathf.Max(amt, damageDict[eT]);
+            //    break;
+
             case ElementType.air:
+                damageDict[eT] = Mathf.Max(amt, damageDict[eT]);
                 break;
 
             default:
                 damageDict[eT] += amt;
                 break;
         }
+    }
+
+    //对EnemyBug造成伤害函数
+    public void Recover()
+    {
+        //恢复EnemyBug全部生命
+        health = _maxHealth;
     }
 
     public void Die()

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2662309543462281043}
   m_Layer: 0
   m_Name: FireGroundSpellPrefab
-  m_TagString: Untagged
+  m_TagString: Magic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4716,3 +4716,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e2a670010360314bb26671dd94b4711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  duration: 4
+  durationVariance: 0.5
+  fadeTime: 1
+  timeStart: 0
+  damagePreSecond: 10

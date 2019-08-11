@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*-----火魔法:对bug造成成吨的伤害,但是对spiker无效-----*/
 public class FireGroundSpell : PT_MonoBehaviour
 {
     public float duration = 4;              //游戏对象的生命周期
@@ -9,7 +10,7 @@ public class FireGroundSpell : PT_MonoBehaviour
     public float fadeTime = 1f;             //衰减时间长度
     public float timeStart;                 //游戏对象开始时间
 
-    public float damagePreSecond = 10;      //
+    public float damagePreSecond = 10;      //每秒伤害量
 
     private void Start()
     {
@@ -44,12 +45,12 @@ public class FireGroundSpell : PT_MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        GameObject go = Utils.FindTaggedParent(other.gameObject);
+        //GameObject go = Utils.FindTaggedParent(other.gameObject);
 
-        if (go == null)
-            go = other.gameObject;
+        //if (go == null)
+        //    go = other.gameObject;
 
-        Utils.tr("Flame hit", go.name);
+        //Utils.tr("Flame hit", go.name);
     }
 
     private void OnTriggerStay(Collider other)

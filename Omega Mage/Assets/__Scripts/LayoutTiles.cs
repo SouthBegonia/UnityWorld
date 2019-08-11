@@ -10,6 +10,14 @@ public class TileTex
     public Texture2D tex;
 }
 
+[System.Serializable]
+public class EnemyDef
+{
+    //该类可定义各种敌人
+    public string str;
+    public GameObject go;
+}
+
 public class LayoutTiles : MonoBehaviour
 {
     static public LayoutTiles S;
@@ -19,6 +27,8 @@ public class LayoutTiles : MonoBehaviour
     public GameObject tilePrefab;       //
     public TileTex[] tileTextures;      //Tiles的已命名文本列表
     public GameObject portalPrefab;     //房间之间入口的预制体
+    public EnemyDef[] enemyDefinitions; //各类敌人的预制体
+
     public bool __________________________;
 
     private bool firstRoom = true;      //是否是第一个创建的房间
@@ -196,6 +206,17 @@ public class LayoutTiles : MonoBehaviour
                         p.toRoom = rawType;
                         portals.Add(p);
                         break;
+
+                    default:
+                        //确认是否有Enemy对应的字母
+                        Enemy en = EnemyFactory(rawType);
+                        if (en == null)
+                            break;
+                        //设置新的Enemy
+                        en.pos = ti.pos;
+                        en.transform.parent = tileAnchor;
+                        en.typeString = rawType;
+                        break;
                 }
                 //
             }
@@ -244,5 +265,30 @@ public class LayoutTiles : MonoBehaviour
             return;
         }
         BuildRoom(roomHT);
+    }
+
+    public Enemy EnemyFactory(string sType)
+    {
+        //查看sType是否带有EnemyDef
+        GameObject prefab = null;
+        foreach(EnemyDef ed in enemyDefinitions)
+        {
+            if (ed.str == sType)
+            {
+                prefab = ed.go;
+                break;
+            }
+        }
+        if (prefab == null)
+        {
+            Utils.tr("LayoutTiles.EnemyFactory()", "No EnemyDef for: " + sType);
+            return (null);
+        }
+        GameObject go = Instantiate(prefab) as GameObject;
+
+        //用于Enemy接口的GetComponent格式
+        Enemy en = (Enemy)go.GetComponent(typeof(Enemy));
+
+        return (en);
     }
 }

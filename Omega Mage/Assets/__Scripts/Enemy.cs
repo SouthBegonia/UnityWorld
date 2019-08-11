@@ -9,20 +9,10 @@ public interface Enemy
 
     //通过接触Enemy完成攻击
     float touchDamage { get; set; }
+
+    //从Room.xml获得类型字符串
+    string typeString { get; set; }
+
+    GameObject gameObject { get; }
+    Transform transform { get; }
 }
-
-
-//public class Enemy : MonoBehaviour
-//{
-//    // Start is called before the first frame update
-//    void Start()
-//    {
-        
-//    }
-
-//    // Update is called once per frame
-//    void Update()
-//    {
-        
-//    }
-//}

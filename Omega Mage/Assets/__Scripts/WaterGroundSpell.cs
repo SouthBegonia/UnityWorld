@@ -1,0 +1,84 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/*-----水魔法:会减速Spiker,但是会恢复bug生命值-----*/
+public class WaterGroundSpell : PT_MonoBehaviour
+{
+    public float duration = 4;              //游戏对象的生命周期
+    public float durationVariance = 0.5f;   //持续时间差值,使持续时间在3.5~4.5
+    public float fadeTime = 1f;             //衰减时间长度
+    public float timeStart;                 //游戏对象开始时间
+
+    public float damagePreSecond = 10;      //每秒伤害量
+
+    private EnemySpiker recipient_spiker;   //可接收的Spiker
+
+    private void Start()
+    {
+        timeStart = Time.time;
+        duration = Random.Range(duration - durationVariance, duration + durationVariance);
+    }
+
+    private void Update()
+    {
+        //u储存已消耗的的时间百分比(0~1)
+        float u = (Time.time - timeStart) / duration;
+
+        //u的值决定何时开始衰减
+        float fadePercent = 1 - (fadeTime / duration);
+
+        //如果大于开始衰减,就下落到地面
+        if (u > fadePercent)
+        {
+            float u2 = (u - fadePercent) / (1 - fadePercent);
+
+            Vector3 loc = pos;
+            loc.z = u2 * 2;
+            pos = loc;
+        }
+
+        //如果大于持续时间,则销毁
+        if (u > 1)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //GameObject go = Utils.FindTaggedParent(other.gameObject);
+
+        //if (go == null)
+        //    go = other.gameObject;
+
+        //Utils.tr("Flame hit", go.name);
+
+        //获取EnemyBug脚本其他组件的引用
+        EnemyBug recipient_bug = other.GetComponent<EnemyBug>();
+
+        //如果有EnemyBug组件,使用水魔法会恢复其生命值
+        if (recipient_bug != null)
+        {
+            //recipient.Damage(damagePreSecond, ElementType.water, true);
+            recipient_bug.Recover();
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        //获取EnemySpiker脚本
+        recipient_spiker = other.GetComponent<EnemySpiker>();
+
+        //如果有,则将其减速
+        if (recipient_spiker != null)
+            recipient_spiker.NormalMove = false;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        //当Spiker移除Trigger时恢复正常
+        if(recipient_spiker!=null)
+            recipient_spiker.NormalMove = true;
+    }
+}

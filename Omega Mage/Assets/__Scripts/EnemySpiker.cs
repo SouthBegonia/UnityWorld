@@ -2,17 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*-----Spiker敌人:只会在固定路径上往复运动,速度快,且无法被消灭-----*/
 public class EnemySpiker : PT_MonoBehaviour,Enemy
 {
     [SerializeField]
-    private float _touchDamage = 0.5f;     //EnemySpiker每次造成伤害0.5
+    private float _touchDamage = 1f;     //EnemySpiker每次造成伤害
     public float touchDamage
     {
         get { return (_touchDamage); }
         set { _touchDamage = value; }
     }
 
+    public string typeString
+    {
+        get { return (roomXMLString); }
+        set { roomXMLString = value; }
+    }
+
     public float speed = 5f;
+    public bool NormalMove = true;      //Spiker是否被正常愚弄电脑
     public string roomXMLString = "{";
 
     public bool _________________;
@@ -48,12 +56,18 @@ public class EnemySpiker : PT_MonoBehaviour,Enemy
     private void FixedUpdate()
     {
         //EnemySpiker往复运动过程
-        GetComponent<Rigidbody>().velocity = moveDir * speed;
+        //NormalMove标记其是否正常运动,否则即为被水魔法减速
+        Move(NormalMove);
     }
 
-    public void Damage(float amt,ElementType eT,bool damageOverTime = false)
+    //控制Spiker的运动状况
+    void Move(bool status)
     {
-        //EnemySpiker不收任何攻击
+        //如果spiker为被水魔法击中,则保持正常运动,否则减速运动
+        if (status)
+            GetComponent<Rigidbody>().velocity = moveDir * speed;
+        else
+            GetComponent<Rigidbody>().velocity = moveDir * speed / 4;
     }
 
     private void OnTriggerEnter(Collider other)
