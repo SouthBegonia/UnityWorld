@@ -49,6 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toRoom: 
   justArrived: 0
+  magicDoorMusic: {fileID: 8485506917083021134, guid: f1ff7006b33f00545ba6dfab8ae3fbb5,
+    type: 3}
 --- !u!135 &6351335039644045922
 SphereCollider:
   m_ObjectHideFlags: 0

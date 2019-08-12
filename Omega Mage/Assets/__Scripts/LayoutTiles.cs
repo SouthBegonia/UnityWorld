@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /*-----根据XML文档创建迷宫(包括其位置,贴图,Mage初生地deng)-----*/
 [System.Serializable]
@@ -28,6 +29,7 @@ public class LayoutTiles : MonoBehaviour
     public TileTex[] tileTextures;      //Tiles的已命名文本列表
     public GameObject portalPrefab;     //房间之间入口的预制体
     public EnemyDef[] enemyDefinitions; //各类敌人的预制体
+    public Text RoomNumberText;         //所在层数UI
 
     public bool __________________________;
 
@@ -55,7 +57,7 @@ public class LayoutTiles : MonoBehaviour
         roomsXML = roomsXMLR.xml["xml"][0]["room"];
 
         //建立第0个room
-        BuildRoom(roomNumber);
+        BuildRoom(roomNumber);       
     }
 
     public Texture2D GetTileTex(string tStr)
@@ -290,5 +292,11 @@ public class LayoutTiles : MonoBehaviour
         Enemy en = (Enemy)go.GetComponent(typeof(Enemy));
 
         return (en);
+    }
+
+    private void Update()
+    {
+        //更新所在层数UI
+        RoomNumberText.text = "Layer: " + roomNumber;
     }
 }

@@ -5,8 +5,14 @@ using UnityEngine;
 /*-----切换房间标识点,挂在于PortalPrefab-----*/
 public class Portal : PT_MonoBehaviour
 {
-    public string toRoom;
+    public string toRoom;               //通往房间
     public bool justArrived = false;
+    public GameObject magicCircleMusic; //传送音乐
+
+    private void Awake()
+    {
+        magicCircleMusic = GameObject.Find("MU_MagicCircle");
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,6 +28,9 @@ public class Portal : PT_MonoBehaviour
         //如果不是Mage,则返回
         if (go.tag != "Mage")
             return;
+
+        //播放魔法门传送bgm
+        magicCircleMusic.GetComponent<AudioSource>().Play();
 
         //继续创建下一个房间
         LayoutTiles.S.BuildRoom(toRoom);

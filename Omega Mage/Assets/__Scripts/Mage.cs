@@ -275,7 +275,7 @@ public class Mage : PT_MonoBehaviour
         //if (DEBUG)
         //    print("Mage.MouseTap()");
 
-        //检测什么对象的单击
+        //否则即为单击行走模式
         switch (actionStartTag)
         {
             case "Mage":
@@ -286,12 +286,6 @@ public class Mage : PT_MonoBehaviour
                 ShowTap(lastMouseInfo.loc);
                 break;
         }
-
-        //Mage移动到最新的mouseInfo位置
-        //WalkTo(lastMouseInfo.loc);
-
-        //显示玩家单击的地方
-        //ShowTap(lastMouseInfo.loc);
     }
 
     //拖动鼠标穿过
@@ -311,12 +305,8 @@ public class Mage : PT_MonoBehaviour
             WalkTo(mouseInfos[mouseInfos.Count - 1].loc);
         }
         else
-        {
             //地面法术,绘制线条
             AddPointToLiner(mouseInfos[mouseInfos.Count - 1].loc);
-
-        }
-        
 
         //继续前往当前mouseInfo位置
         //WalkTo(mouseInfos[mouseInfos.Count - 1].loc);
@@ -339,10 +329,8 @@ public class Mage : PT_MonoBehaviour
             StopWalking();
         }
         else
-        {
             //释放法术
             CastGroundSpell();
-        }
 
         //清除绘制器
         ClearLiner();
@@ -360,7 +348,7 @@ public class Mage : PT_MonoBehaviour
             //火法术
             case ElementType.fire:
                 GameObject fireGo;
-                foreach(Vector3 pt in linePts)
+                foreach (Vector3 pt in linePts)
                 {
                     //为LinePts中每个vector3创建一个fireGroundSpellPrefab实例
                     fireGo = Instantiate(fireGroundSpellPrefab) as GameObject;
@@ -372,10 +360,10 @@ public class Mage : PT_MonoBehaviour
             //水法术
             case ElementType.water:
                 GameObject waterGo;
-                foreach(Vector3 pt in linePts)
+                foreach (Vector3 pt in linePts)
                 {
                     //为LinePts中每个vector3创建一个waterGroundSpellPrefab实例
-                    waterGo = Instantiate(waterGroundSpellPrefab) as GameObject;
+                    waterGo = Instantiate(airGroundSpellPrefab) as GameObject;
                     waterGo.transform.parent = spellAnchor;
                     waterGo.transform.position = pt;
                 }
@@ -387,7 +375,7 @@ public class Mage : PT_MonoBehaviour
                 foreach (Vector3 pt in linePts)
                 {
                     //为LinePts中每个vector3创建一个waterGroundSpellPrefab实例
-                    airGo = Instantiate(airGroundSpellPrefab) as GameObject;
+                    airGo = Instantiate(waterGroundSpellPrefab) as GameObject;
                     airGo.transform.parent = spellAnchor;
                     airGo.transform.position = pt;
                 }
@@ -574,7 +562,7 @@ public class Mage : PT_MonoBehaviour
         knockbarDir = (pos - enemy.pos).normalized;
         invincibleBool = true;
     }
-    
+
     //Mage死亡
     void Die()
     {
@@ -682,8 +670,8 @@ public class Mage : PT_MonoBehaviour
         }
 
         //如果线条超过最大长度则返回
-        if (totalLineLength>lineMaxLength)
-           return;
+        if (totalLineLength > lineMaxLength)
+            return;
 
         //如果有闲钱坐标pt0,那么查找pt与其距离
         //获取LinePts中的最新坐标
@@ -705,7 +693,7 @@ public class Mage : PT_MonoBehaviour
             float numToAdd = Mathf.Ceil(delta / lineMaxDelta);
             float midDelta = delta / numToAdd;
             Vector3 ptMid;
-            for(int i = 1; i < numToAdd; i++)
+            for (int i = 1; i < numToAdd; i++)
             {
                 ptMid = pt0 + (dir * midDelta * i);
                 linePts.Add(ptMid);
@@ -731,7 +719,7 @@ public class Mage : PT_MonoBehaviour
         //设置顶点数
         liner.positionCount = linePts.Count;
         //设置各顶点
-        for(int i = 0; i < linePts.Count; i++)
+        for (int i = 0; i < linePts.Count; i++)
             liner.SetPosition(i, linePts[i]);
         //启用LinerRenderer
         liner.enabled = true;
