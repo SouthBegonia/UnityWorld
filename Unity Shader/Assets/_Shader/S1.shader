@@ -1,4 +1,4 @@
-﻿Shader "Custom/S_1"
+﻿Shader "Custom/S1"
 {
 	//材质的属性
 	Properties
