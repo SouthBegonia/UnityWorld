@@ -48,3 +48,6 @@ TagManager:
   - name: Actor
     uniqueID: 1756946531
     locked: 0
+  - name: Interactable
+    uniqueID: 1215660215
+    locked: 0
