@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public List<int> xpTable;
 
     public Player player;
+    public FloatingTextManager FloatingTextManager;
 
     public int pesos;
     public int experience;
@@ -57,5 +58,11 @@ public class GameManager : MonoBehaviour
 
         //SceneManager.sceneLoaded -= LoadState;
         //Debug.Log("LoadState");
+    }
+
+    //通用显示Text
+    public void ShowText(string msg, int fontSize, Color color, Vector3 position, Vector3 motion, float duration)
+    {
+        FloatingTextManager.Show(msg, fontSize, color, position, motion, duration);
     }
 }
