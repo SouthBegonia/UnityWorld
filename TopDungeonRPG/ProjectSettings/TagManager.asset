@@ -51,3 +51,6 @@ TagManager:
   - name: Interactable
     uniqueID: 1215660215
     locked: 0
+  - name: Weapon
+    uniqueID: 4010319819
+    locked: 0

@@ -15,7 +15,9 @@ public class Colliderable : MonoBehaviour
 
     protected virtual void Update()
     {
+        //获取与此Collider碰撞的所有碰撞器的表
         boxCollider.OverlapCollider(filter, hits);
+
         for(int i = 0; i < hits.Length; i++)
         {
             if (hits[i] == null)
