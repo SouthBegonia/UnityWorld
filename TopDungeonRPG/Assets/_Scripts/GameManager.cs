@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     public List<int> weaponPrices;
     public List<int> xpTable;
 
-    public Player player;
+    public Player player;               //玩家标识
     public FloatingTextManager FloatingTextManager;
 
     public int pesos;
