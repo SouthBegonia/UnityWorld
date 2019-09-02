@@ -305,6 +305,9 @@ TextureImporter:
   - first:
       213: 352713928470728827
     second: Trans_4_4
+  - first:
+      213: 3118169986250858628
+    second: Blank
   externalObjects: {}
   serializedVersion: 10
   mipmaps:

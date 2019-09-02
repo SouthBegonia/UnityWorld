@@ -12,14 +12,16 @@ public class Weapon : Colliderable
     public int weaponLevel = 0;
     public SpriteRenderer SpriteRenderer;
 
-    //武器冷却参数
-    private float coolDown = 0.5f;
+    //武器控制参数
+    private Animator animator;
+    private float coolDown = 0.5f;      //冷却时间
     private float lastSwing;
 
     protected override void Start()
     {
         base.Start();
         SpriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     protected override void Update()
@@ -58,6 +60,7 @@ public class Weapon : Colliderable
 
     private void Swing()
     {
-        Debug.Log("Swing");
+        //设置Animator状态参数
+        animator.SetTrigger("Swing");
     }
 }

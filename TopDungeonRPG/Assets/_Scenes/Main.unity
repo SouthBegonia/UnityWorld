@@ -8019,6 +8019,7 @@ GameObject:
   - component: {fileID: 261136918}
   - component: {fileID: 261136919}
   - component: {fileID: 261136920}
+  - component: {fileID: 261136921}
   m_Layer: 0
   m_Name: weapon_0
   m_TagString: Untagged
@@ -8145,6 +8146,25 @@ MonoBehaviour:
   pushForce: 4
   weaponLevel: 0
   SpriteRenderer: {fileID: 0}
+--- !u!95 &261136921
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261136916}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 14052a44133a1fc458a6bf4b518706f2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -8494,7 +8514,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1113856608}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.037, y: -0.455, z: 0}
+  m_LocalPosition: {x: -0.258, y: -0.455, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 261136917}
@@ -11750,7 +11770,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2068729422}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.446, y: -0.476, z: 0}
+  m_LocalPosition: {x: -0.869, y: -0.781, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -11769,7 +11789,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0052431077, y: 0}
+  m_Offset: {x: -0.0017788261, y: 0.0015988946}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -11780,7 +11800,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.11268756, y: 0.16161616}
+  m_Size: {x: 0.10042927, y: 0.15308869}
   m_EdgeRadius: 0
 --- !u!114 &2068729426
 MonoBehaviour:
