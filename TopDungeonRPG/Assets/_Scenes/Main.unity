@@ -7875,10 +7875,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSprites: []
-  weaponSprites: []
-  weaponPrices: 
+  weaponSprites:
+  - {fileID: 21300068, guid: bf00711bd0d0f9a42b4be7ce6a4e6b10, type: 3}
+  - {fileID: 21300070, guid: bf00711bd0d0f9a42b4be7ce6a4e6b10, type: 3}
+  - {fileID: 21300072, guid: bf00711bd0d0f9a42b4be7ce6a4e6b10, type: 3}
+  - {fileID: 21300074, guid: bf00711bd0d0f9a42b4be7ce6a4e6b10, type: 3}
+  - {fileID: 21300076, guid: bf00711bd0d0f9a42b4be7ce6a4e6b10, type: 3}
+  - {fileID: 21300078, guid: bf00711bd0d0f9a42b4be7ce6a4e6b10, type: 3}
+  - {fileID: 21300080, guid: bf00711bd0d0f9a42b4be7ce6a4e6b10, type: 3}
+  weaponPrices: 0a000000140000001e00000028000000320000003c000000
   xpTable: 
   player: {fileID: 1113856612}
+  weapon: {fileID: 261136920}
   FloatingTextManager: {fileID: 1500841397}
   pesos: 0
   experience: 0
@@ -8087,6 +8095,17 @@ MonoBehaviour:
           m_StringArgument: show
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 217200217}
+        m_MethodName: UpdateMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &216009077
@@ -8140,13 +8159,14 @@ GameObject:
   - component: {fileID: 217200211}
   - component: {fileID: 217200215}
   - component: {fileID: 217200216}
+  - component: {fileID: 217200217}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &217200211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8259,6 +8279,26 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &217200217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217200210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e45c38905e8145e4488c504bfc0fea78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelText: {fileID: 769550192}
+  hitpointText: {fileID: 1783620686}
+  pesosText: {fileID: 2092577950}
+  upgradeCostText: {fileID: 1410537633}
+  xpText: {fileID: 1261985733}
+  characterSprite: {fileID: 935267936}
+  weaponSprite: {fileID: 1696650815}
+  xpBar: {fileID: 512215787}
 --- !u!1 &218455382
 GameObject:
   m_ObjectHideFlags: 0
@@ -8583,10 +8623,16 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  damagePoint: 1
-  pushForce: 4
+  damagePoint: 01000000020000000300000004000000050000000600000007000000
+  pushForce:
+  - 2
+  - 2.2
+  - 2.5
+  - 3
+  - 3.3
+  - 3.6
+  - 4
   weaponLevel: 0
-  SpriteRenderer: {fileID: 0}
 --- !u!95 &261136921
 Animator:
   serializedVersion: 3
@@ -8687,7 +8733,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 311272734}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 217200217}
+        m_MethodName: OnUpgradeClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &311272734
@@ -9888,7 +9945,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.014295533, y: -0.024835244}
+  m_Offset: {x: 0.018768184, y: -0.025133416}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -9899,7 +9956,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.12292409, y: 0.15234971}
+  m_Size: {x: 0.11397879, y: 0.13386282}
   m_EdgeRadius: 0
 --- !u!114 &1113856612
 MonoBehaviour:
@@ -9913,8 +9970,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bcfcbded3c2bc46a40a139c159f2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoint: 10
-  maxHitPoint: 10
+  hitPoint: 100
+  maxHitPoint: 100
   pushRecoverySpeed: 0.2
 --- !u!1 &1167904252
 GameObject:
@@ -10005,7 +10062,7 @@ GameObject:
   - component: {fileID: 1261985734}
   - component: {fileID: 1261985733}
   m_Layer: 5
-  m_Name: Text
+  m_Name: XpText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10170,7 +10227,7 @@ GameObject:
   - component: {fileID: 1410537634}
   - component: {fileID: 1410537633}
   m_Layer: 5
-  m_Name: Text
+  m_Name: UpgradeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
