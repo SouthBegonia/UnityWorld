@@ -35,13 +35,14 @@ public class GameManager : MonoBehaviour
     public int pesos;
     public int experience;
 
+
     //通用显示Text
     public void ShowText(string msg, int fontSize, Color color, Vector3 position, Vector3 motion, float duration)
     {
         FloatingTextManager.Show(msg, fontSize, color, position, motion, duration);
     }
 
-    //
+    //判断武器是否能够升级
     public bool TryUpgradeWeapon()
     {
         //若武器等级已经达到最高,则无法再升级
@@ -57,6 +58,31 @@ public class GameManager : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    //XP升级系统
+    public int GetCurrentLevel()
+    {
+        int l = 0, add = 0;
+        while (experience >= add)
+        {
+            add += xpTable[l];
+            l++;
+
+            if (l == xpTable.Count)
+                return l;
+        }
+        return l;
+    }
+    public int GetXPToLevel(int level)
+    {
+        int l = 0, xp = 0;
+        while (l < level)
+        {
+            xp += xpTable[l];
+            l++;
+        }
+        return xp;
     }
 
     public void SaveState()
@@ -85,7 +111,7 @@ public class GameManager : MonoBehaviour
         pesos = int.Parse(data[1]);
         experience = int.Parse(data[2]);
         weapon.SetWeaponLevel(int.Parse(data[3]));
-
+        
         //SceneManager.sceneLoaded -= LoadState;
         //Debug.Log("LoadState");
     }

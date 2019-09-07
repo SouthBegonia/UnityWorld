@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class Player : Mover
 {
-    //private BoxCollider2D PlayerCollider;       //Player的碰撞器
-    //private Vector3 moveDelta;                  //
-    //private RaycastHit2D hit; 
+    private SpriteRenderer spriteRenderer;
 
-    //private void Start()
-    //{
-    //    PlayerCollider = GetComponent<BoxCollider2D>();
-    //}
+    protected override void Start()
+    {
+        base.Start();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     private void FixedUpdate()
     {
-        //获取移动值 
+        //获取移动值,使用公用移动函数UpdateMotor(),按 指定位置/移动速度倍数 进行移动
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
-        UpdateMotor(new Vector3(x, y, 0));
+        UpdateMotor(new Vector3(x, y, 0),1);
 
         //迁移至Mover类内通过UpdateMotor()实现下列代码
         //moveDelta = new Vector3(x, y, 0);
@@ -39,5 +38,10 @@ public class Player : Mover
         //if (hit.collider == null)
         //    transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
         ////Debug.Log("X :" + hit);
+    }
+
+    public void SwapSprite(int SkinID)
+    {
+        GetComponent<SpriteRenderer>().sprite = GameManager.instance.playerSprites[SkinID];
     }
 }

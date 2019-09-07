@@ -7874,7 +7874,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6930c6e5979eaed43950765b9ae7e606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSprites: []
+  playerSprites:
+  - {fileID: 6471941358250526302, guid: bf00711bd0d0f9a42b4be7ce6a4e6b10, type: 3}
+  - {fileID: -7446026091647042388, guid: bf00711bd0d0f9a42b4be7ce6a4e6b10, type: 3}
+  - {fileID: 21300034, guid: bf00711bd0d0f9a42b4be7ce6a4e6b10, type: 3}
+  - {fileID: 21300030, guid: bf00711bd0d0f9a42b4be7ce6a4e6b10, type: 3}
+  - {fileID: 5938012242645255967, guid: bf00711bd0d0f9a42b4be7ce6a4e6b10, type: 3}
   weaponSprites:
   - {fileID: 21300068, guid: bf00711bd0d0f9a42b4be7ce6a4e6b10, type: 3}
   - {fileID: 21300070, guid: bf00711bd0d0f9a42b4be7ce6a4e6b10, type: 3}
@@ -7884,7 +7889,7 @@ MonoBehaviour:
   - {fileID: 21300078, guid: bf00711bd0d0f9a42b4be7ce6a4e6b10, type: 3}
   - {fileID: 21300080, guid: bf00711bd0d0f9a42b4be7ce6a4e6b10, type: 3}
   weaponPrices: 0a000000140000001e00000028000000320000003c000000
-  xpTable: 
+  xpTable: 050000000a000000140000002300000037000000500000006e00000091000000b9000000e6000000
   player: {fileID: 1113856612}
   weapon: {fileID: 261136920}
   FloatingTextManager: {fileID: 1500841397}
@@ -8166,7 +8171,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &217200211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8402,7 +8407,7 @@ Transform:
   m_GameObject: {fileID: 218455382}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.93, y: -0.457, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 1277995606}
   m_Father: {fileID: 0}
@@ -8424,6 +8429,7 @@ MonoBehaviour:
   maxHitPoint: 3
   pushRecoverySpeed: 0.2
   xpValue: 1
+  speedMultiple: 0.7
   triggerLength: 1
   chaseLength: 1
   chasing: 0
@@ -8944,7 +8950,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 468857835}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 217200217}
+        m_MethodName: OnArrowClick
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &468857835
@@ -11995,7 +12012,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1700077033}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 217200217}
+        m_MethodName: OnArrowClick
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1700077033

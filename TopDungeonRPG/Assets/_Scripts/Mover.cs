@@ -18,10 +18,11 @@ public abstract class Mover : Fighter
         BoxCollider = GetComponent<BoxCollider2D>();
     }
 
-    //接受input而移动的函数
-    protected virtual void UpdateMotor(Vector3 input)
+    //接受input及速度倍数而移动的函数
+    protected virtual void UpdateMotor(Vector3 input,float SPMultiple)
     {
-        moveDelta = new Vector3(input.x * xSpeed, input.y * ySpeed, 0);
+        //移动坐标:各轴向方向x速度倍数
+        moveDelta = new Vector3(input.x * xSpeed * SPMultiple, input.y * ySpeed * SPMultiple, 0);
 
         //变更方向:正向/逆向
         if (moveDelta.x > 0)

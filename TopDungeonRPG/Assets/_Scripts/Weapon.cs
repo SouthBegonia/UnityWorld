@@ -77,7 +77,7 @@ public class Weapon : Colliderable
         SpriteRenderer.sprite = GameManager.instance.weaponSprites[weaponLevel];
     }
 
-    //
+    //设置武器等级
     public void SetWeaponLevel(int level)
     {
         weaponLevel = GameManager.instance.weapon.weaponLevel;
