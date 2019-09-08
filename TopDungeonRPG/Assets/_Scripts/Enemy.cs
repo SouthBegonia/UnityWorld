@@ -88,7 +88,7 @@ public class Enemy : Mover
         Destroy(gameObject);
 
         //玩家获得经验,显示+xp的UI
-        GameManager.instance.experience += xpValue;
+        GameManager.instance.GrantXP(xpValue);
         GameManager.instance.ShowText("+" + xpValue + " xp", 30, Color.magenta, transform.position, Vector3.up * 40, 1.0f);
     }
 }

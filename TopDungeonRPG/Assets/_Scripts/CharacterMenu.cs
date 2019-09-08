@@ -61,7 +61,7 @@ public class CharacterMenu : MonoBehaviour
 
         //更新人物等级
         levelText.text = GameManager.instance.GetCurrentLevel().ToString();
-        hitpointText.text = GameManager.instance.player.hitPoint.ToString();
+        hitpointText.text = GameManager.instance.player.hitPoint.ToString() + " /" + GameManager.instance.player.maxHitPoint;
         pesosText.text = GameManager.instance.pesos.ToString();
 
         //更新XpBar

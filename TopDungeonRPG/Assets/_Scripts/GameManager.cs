@@ -84,35 +84,69 @@ public class GameManager : MonoBehaviour
         }
         return xp;
     }
-
-    public void SaveState()
+    public void GrantXP(int xp)
     {
-        string s = "";
-
-        s += "0" + "|";
-        s += pesos.ToString() + "|";
-        s += experience.ToString() + "|";
-        //s += "0" + "|";
-        s += weapon.weaponLevel.ToString();
-
-        PlayerPrefs.SetString("SaveState", s);
+        int currentLevel = GetCurrentLevel();
+        experience += xp;
+        if (currentLevel < GetCurrentLevel())
+        {
+            OnLevelUp();
+        }
+    }
+    public void OnLevelUp()
+    {
+        Debug.Log("LevelUP");
+        player.OnLevelUp();
     }
 
+
+    //存储游戏数值信息函数:
+    public void SaveState()
+    {
+        Debug.Log("SaveState");
+
+        //游戏数值载体s
+        string s = "";
+
+        //以s字符串为载体储存游戏数值信息
+        //'|'为间隔符,区分开各类游戏数值
+        s += "0" + "|";                     //data[0]
+        s += pesos.ToString() + "|";        //data[1]
+        s += experience.ToString() + "|";   //data[2]
+        s += weapon.weaponLevel.ToString(); //data[3]
+
+        //存储游戏信息字符串
+        PlayerPrefs.SetString("SaveState", s);      
+    }
+
+    //加载存储的游戏数值的函数:金币,经验,等级,武器,场景出生地等
     public void LoadState(Scene s, LoadSceneMode sceneMode)
     {
-        if (!PlayerPrefs.HasKey("Savestate"))
+        Debug.Log("LoadState");
+
+        //备注:是Save不是Sava,千万别写错,否则找不到
+        if (!PlayerPrefs.HasKey("SaveState"))
             return;
 
-        string[] data = PlayerPrefs.GetString("SavaState").Split('|');
-        /* "10|20|30|5"
-         * => "10" "20" "30" "5"
-         */
+        //取得各游戏信息到data[]内
+        string[] data = PlayerPrefs.GetString("SaveState").Split('|');
+        /*
+            s: "10|20|30|5"
+                => "10" "20" "30" "5"
+        */
 
+        //加载金币
         pesos = int.Parse(data[1]);
+
+        //加载经验及等级
         experience = int.Parse(data[2]);
+        if (GetCurrentLevel() != 1)
+            player.SetLevel(GetCurrentLevel());
+
+        //加载武器
         weapon.SetWeaponLevel(int.Parse(data[3]));
-        
-        //SceneManager.sceneLoaded -= LoadState;
-        //Debug.Log("LoadState");
+
+        //加载场景出生地
+        player.transform.position = GameObject.Find("SpawnPoint").transform.position;
     }
 }

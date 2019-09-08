@@ -10,6 +10,8 @@ public class Player : Mover
     {
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        Player.DontDestroyOnLoad(gameObject);
     }
 
     private void FixedUpdate()
@@ -40,8 +42,25 @@ public class Player : Mover
         ////Debug.Log("X :" + hit);
     }
 
+    //替换Player上的Sprite
     public void SwapSprite(int SkinID)
     {
         GetComponent<SpriteRenderer>().sprite = GameManager.instance.playerSprites[SkinID];
+    }
+
+    //Player的升级效果函数:提高生命值上限,恢复当前生命值
+    public void OnLevelUp()
+    {
+        maxHitPoint += 10;
+        hitPoint = maxHitPoint;
+
+        //显示LevelUp的UI
+        GameManager.instance.ShowText("Level UP!", 40, new Color(1f,0.76f,0.15f), transform.position, Vector3.up * 10, 2.0f);
+    }
+
+    public void SetLevel(int level)
+    {
+        for (int i = 0; i < level; i++)
+            OnLevelUp();
     }
 }

@@ -9,6 +9,11 @@ public class CameraFollow : MonoBehaviour
     public float boundX = 0.3f;        //X轴差值范围
     public float boundY = 0.15f;        //Y轴差值范围
 
+    private void Start()
+    {
+        lookAt = GameObject.Find("Player").transform;
+    }
+
     private void LateUpdate()
     {
         //移动的差值delts
