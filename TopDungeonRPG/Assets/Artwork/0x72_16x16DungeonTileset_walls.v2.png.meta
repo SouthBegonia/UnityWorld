@@ -35,6 +35,42 @@ TextureImporter:
   - first:
       213: -3007209255048989822
     second: wall_left_4
+  - first:
+      213: 3247264387464332945
+    second: Door_Close_4
+  - first:
+      213: -1263960800602630669
+    second: Door_Close_3
+  - first:
+      213: -5685987594934843402
+    second: Door_Close_5
+  - first:
+      213: 6071116506575268734
+    second: Door_Close_6
+  - first:
+      213: 7104031811348439506
+    second: Door_Close_8
+  - first:
+      213: 8899034060776329086
+    second: Door_Close_7
+  - first:
+      213: 5530907874578870354
+    second: Door_Open_1
+  - first:
+      213: -24883992459980073
+    second: Door_Open_2
+  - first:
+      213: 6719121712099030412
+    second: Door_Open_3
+  - first:
+      213: -6845369187352317684
+    second: Door_Open_4
+  - first:
+      213: 7403498986500828486
+    second: Door_Close
+  - first:
+      213: -3621274516661052080
+    second: Door_Open
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -124,7 +160,7 @@ TextureImporter:
         serializedVersion: 2
         x: 96
         y: 208
-        width: 64
+        width: 16
         height: 16
       alignment: 9
       pivot: {x: 0.5, y: 0.5}
@@ -145,7 +181,7 @@ TextureImporter:
         serializedVersion: 2
         x: 96
         y: 224
-        width: 64
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -274,7 +310,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -295,7 +331,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -316,7 +352,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -337,7 +373,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -345,6 +381,258 @@ TextureImporter:
       bones: []
       spriteID: f46ff625f438c4847ba5d7b543747d1c
       internalID: -3007209255048989822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door_Close_4
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 174
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0172ffd3a3331bd4faed50cfacf6ff3b
+      internalID: 3247264387464332945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door_Close_3
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 190
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d010c42e9eacd6b40b78a4159fd18ca7
+      internalID: -1263960800602630669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door_Close_5
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 174
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fae2c05e5f859943b993e48a2504b7f
+      internalID: -5685987594934843402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door_Close_6
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 190
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 603500cb732e79442b73ea45de6ecc0c
+      internalID: 6071116506575268734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door_Close_8
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebdbaa4a6f1251f489fd4ad84a0b8164
+      internalID: 7104031811348439506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door_Close_7
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d75e6bb97f16b094fbf29b719d5234ed
+      internalID: 8899034060776329086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door_Open_1
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 185
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8103674f64bbcd648800d81350b903d4
+      internalID: 5530907874578870354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door_Open_2
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 237
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3958e764012bd14da45b02d86cbadbf
+      internalID: -24883992459980073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door_Open_3
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 226
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eaa758baf0decce4198ba0644cf9a6fd
+      internalID: 6719121712099030412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door_Open_4
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 201
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24646118f6242ce458f8c53edb9199cf
+      internalID: -6845369187352317684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door_Close
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 208
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04a86a7163361dc42bb9ed0f01b96da6
+      internalID: 7403498986500828486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door_Open
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 208
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f31cf28c30f290a43aa43741641374f7
+      internalID: -3621274516661052080
       vertices: []
       indices: 
       edges: []

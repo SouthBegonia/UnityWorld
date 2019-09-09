@@ -12,6 +12,7 @@ public class CharacterMenu : MonoBehaviour
     public Image weaponSprite;                          //Weapon的Sprite
     public RectTransform xpBar;                         //经验条组件
 
+
     //人物选择按钮:
     public void OnArrowClick(bool right)
     {

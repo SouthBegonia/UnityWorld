@@ -7,19 +7,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    private void Awake()
-    {
-        if (GameManager.instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        instance = this;
-        SceneManager.sceneLoaded += LoadState;
-        DontDestroyOnLoad(gameObject);
-    }
-
     //资源:玩家/武器Sprite,武器价格,xpTable
     public List<Sprite> playerSprites;
     public List<Sprite> weaponSprites;
@@ -35,6 +22,25 @@ public class GameManager : MonoBehaviour
     public int pesos;
     public int experience;
 
+
+    private void Awake()
+    {
+        if (GameManager.instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+
+        SceneManager.sceneLoaded += LoadState;
+
+        //保留的物体
+        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(GameObject.Find("FloatingTextManager").transform.parent);
+        DontDestroyOnLoad(GameObject.Find("Menu"));
+        DontDestroyOnLoad(GameObject.Find("HUD"));
+    }
 
     //通用显示Text
     public void ShowText(string msg, int fontSize, Color color, Vector3 position, Vector3 motion, float duration)

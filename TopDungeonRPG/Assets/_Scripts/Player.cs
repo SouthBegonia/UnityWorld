@@ -55,7 +55,7 @@ public class Player : Mover
         hitPoint = maxHitPoint;
 
         //显示LevelUp的UI
-        GameManager.instance.ShowText("Level UP!", 40, new Color(1f,0.76f,0.15f), transform.position, Vector3.up * 10, 2.0f);
+        //GameManager.instance.ShowText("Level UP!", 40, new Color(1f,0.76f,0.15f), transform.position, Vector3.up * 10, 2.0f);
     }
 
     public void SetLevel(int level)

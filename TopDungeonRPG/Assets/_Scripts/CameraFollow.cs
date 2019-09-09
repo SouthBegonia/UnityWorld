@@ -5,7 +5,7 @@ using UnityEngine;
 /*挂在于MainCamera*/
 public class CameraFollow : MonoBehaviour
 {
-    public Transform lookAt;            //相机跟随的目标(Player)
+    private Transform lookAt;            //相机跟随的目标(Player)
     public float boundX = 0.3f;        //X轴差值范围
     public float boundY = 0.15f;        //Y轴差值范围
 

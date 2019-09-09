@@ -29,6 +29,7 @@ public class Weapon : Colliderable
     {
         base.Update();
 
+        //读取输入,空格键实现普攻
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (Time.time - lastSwing > coolDown)

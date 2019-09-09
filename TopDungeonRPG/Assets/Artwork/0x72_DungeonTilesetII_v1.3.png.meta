@@ -1,7 +1,28 @@
 fileFormatVersion: 2
 guid: c320a1766d556334fa09a7e139213e06
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -5026381916736205260
+    second: healing_water_0
+  - first:
+      213: -6451673945525926718
+    second: healing_water_1
+  - first:
+      213: 2581157477179793480
+    second: healing_water_2
+  - first:
+      213: -4628821642650232607
+    second: Chest_Diamonds_1
+  - first:
+      213: -8245601474686339587
+    second: Chest_Diamonds_2
+  - first:
+      213: -5502898106380633460
+    second: Chest_Diamonds_0
+  - first:
+      213: 3833348978569025334
+    second: Chest_Enemy
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -84,7 +105,154 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: healing_water_0
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 444
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a33e14b1c8834b48b4f198801637125
+      internalID: -5026381916736205260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: healing_water_1
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 444
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71b2e7c5270397b4c982f663c39072e3
+      internalID: -6451673945525926718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: healing_water_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 444
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94479e927a0743f4382208010ac74d61
+      internalID: 2581157477179793480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_Diamonds_1
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b17b3e79a1934e48ab05c6405bdf905
+      internalID: -4628821642650232607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_Diamonds_2
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae5e7d55ba89a0e4cbf319f476c6878e
+      internalID: -8245601474686339587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_Diamonds_0
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e157deb4da1d8504b9f1384fb7c86dc6
+      internalID: -5502898106380633460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_Enemy
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f90f30a5ce8fbee42b372dd5ae50965a
+      internalID: 3833348978569025334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
