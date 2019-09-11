@@ -34,8 +34,8 @@ public class Movement : MonoBehaviour
 
     void OnMouseUp()
     {
-        //if (drag == true)
-        //    rigidbody2d.isKinematic = wasKinematic;
+        if (drag == true)
+            rigidbody2d.isKinematic = wasKinematic;
         drag = false;
     }
 

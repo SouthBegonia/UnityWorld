@@ -1,27 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Ball : MonoBehaviour {
+public class Ball : MonoBehaviour
+{
+    private Vector3 pos;
 
-    private Vector3 pos;                // Ball initial position
-
-	// Use this for initialization
-	void Start () {
-        // Save ball position
+    void Start()
+    {
         pos = transform.position;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        // If the ball gets off the screen
+    }
+
+    void Update()
+    {
+        //如果球被移动到一定范围外,则将其重新移动到初始位置及状态
         if (transform.position.y < -8)
         {
-            // stop forces affecting the rigidbody
             this.GetComponent<Rigidbody2D>().isKinematic = true;
-            // reset position
             transform.position = pos;
-            // activate forces affecting the rigidbody
             this.GetComponent<Rigidbody2D>().isKinematic = false;
+            this.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
-	}
+    }
 }
