@@ -17,11 +17,20 @@ public class Weapon : Colliderable
     private float coolDown = 0.5f;
     private float lastSwing;
 
+    private void Awake()
+    {
+        //出现BUG处: 竞态条件问题
+        //出现问题:若在start内写GetComponent<>则出现bug.
+        //问题分析:因为GameManger内awake就已经执行 SceneManager.sceneLoaded += LoadState, 即执行weapon.SetWeaponLevel(int.Parse(data[3])),
+        //        然而此时Weapon取得SpriteRenderer组件却是在Start内,晚于GameManager内的Awake, 即还没取得组件就进行设置,产生bug
+        //解决方案:留意Awake和Start先后
+        SpriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     protected override void Start()
     {
         base.Start();
-        SpriteRenderer = GetComponent<SpriteRenderer>();
+        //SpriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
 
@@ -81,6 +90,7 @@ public class Weapon : Colliderable
     //设置武器等级
     public void SetWeaponLevel(int level)
     {
-        weaponLevel = GameManager.instance.weapon.weaponLevel;
+        weaponLevel = level;
+        SpriteRenderer.sprite = GameManager.instance.weaponSprites[weaponLevel];      
     }
 }

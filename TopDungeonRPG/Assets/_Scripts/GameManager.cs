@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 
         instance = this;
 
+        //执行加载存档
         SceneManager.sceneLoaded += LoadState;
 
         //保留的物体
@@ -136,10 +137,8 @@ public class GameManager : MonoBehaviour
 
         //取得各游戏信息到data[]内
         string[] data = PlayerPrefs.GetString("SaveState").Split('|');
-        /*
-            s: "10|20|30|5"
-                => "10" "20" "30" "5"
-        */
+        //    s: "10|20|30|5"   => "10" "20" "30" "5"
+        //Debug.Log("data:" + data[0] + "|" + data[1] + "|" + data[2] + "|" + data[3]);
 
         //加载金币
         pesos = int.Parse(data[1]);
@@ -151,7 +150,7 @@ public class GameManager : MonoBehaviour
 
         //加载武器
         weapon.SetWeaponLevel(int.Parse(data[3]));
-
+              
         //加载场景出生地
         player.transform.position = GameObject.Find("SpawnPoint").transform.position;
     }

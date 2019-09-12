@@ -1,4 +1,7 @@
 # Unity2D中的物理关节
+
+> 注:本项目移步至新库 [Physics-Joints-in-Unity2D](https://github.com/SouthBegonia/Physics-Joints-in-Unity2D)
+
 - **本文概述:** 分析Unity中几个**2D物理关节组件**的基本功能、使用方法、运用场景等
 - **开发环境:**Unity2019.3.0a2 / VS2017
 - **项目资源包:** [2D Joints Starter](https://www.raywenderlich.com/1766-physics-joints-in-unity-2d)
