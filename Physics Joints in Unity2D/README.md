@@ -3,10 +3,11 @@
 - **开发环境:**Unity2019.3.0a2 / VS2017
 - **项目资源包:** [2D Joints Starter](https://www.raywenderlich.com/1766-physics-joints-in-unity-2d)
 - **说明:** 较比于源项目,我自行做了如下设置
+	- 主场景为Demo
 	- 对Unity新版本下的新参数进行解释
 	- 简单做了新的UI
 	- 对各脚本的注释及修改
-	- 对场景下物体有序归类: 将各组件的示例物体归于对应组件名称的空物体下,如涉及DistanecJoint2D组件的物体存放于Distance Joint 2D物体下等
+	- 对场景下物体有序归类: 将各组件的示例物体归于对应组件名称的空物体下,例如涉及DistanecJoint2D组件的物体存放于Distance Joint 2D物体下等
 
 ----------------
 
@@ -40,7 +41,7 @@
 	- **Connected Anchor**:主物体锚点的坐标
 	- **Auto Configure Distance**:自动计算并设置两物体的距离,即在运行时拖拽环绕物体则会改变Distance,若关闭则Distance始终为预设值
 	- **Distance**:两物体的距离
-	- **Damping Ratio**:阻尼系数,值范围[0,1]
+	- **Damping Ratio**:阻尼比,值范围[0,1]
 	- **Frequency**:震动频率,单位Hz,值范围[0,1000000],但个人认为[0,10]较为常用
 - **实现用途:**
 	- 弹簧
@@ -74,12 +75,37 @@
 	- **Auto Configure Connected**:自动配置锚点与世界空间中的锚点匹配
 	- **Anchor**:滑动物体的锚点,默认0为物体中心
 	- **Connected Anchor**:物体滑向的锚点
+	- **Auto Configure Angle**:根据当前Scene内的坐标,自动调节物体起始的角度
+	- **Angle**:自行设置并固定物体起始时的角度
 	- **Use Motor**:是否使用马达.若使用,则可自动滑动到终点
 		- **Motor Speed**:滑动速度,单位同上.可正可负
 		- **Maximum Motor Force**:最大扭矩值,含义同上
 	- **Use Limits**:是否使用距离限制,限制滑块两端的距离.也就是说,Connected Anchor锚点始终在Lower Translation和Upper Translation两端内,就在这样一个范围内进行滑动.
 - **实现用途:**
 	- 自动或者手动的滑块(机关)
+
+
+## Wheel Joint 2D 车轮关节
+- **基本功能:**
+	- 模拟实现车轮的运动状态,即车轮以车轴为圆心旋转
+- **使用方法:** 
+	- **Enable Collision**:被关节连接的两个物体是否能相互碰撞
+	- **Connected Rigid Body**:定义车轮的锚点到车轴上
+	- **Auto Configure Connected**:自动配置车轮锚点与世界空间中的锚点匹配
+	- **Anchor**:车轮锚点的坐标
+	- **Connected Anchor**:车轴锚点的坐标
+	- **Suspension**:悬架,用于配置车轮震动效果等
+		- **Damping Ratio**:阻尼比,值范围[0,1]
+		- **Frequency**:震动频率,单位Hz,值范围[0,1000000],此处建议(0,10]
+		- **Angle**:可以调节车轮的角度,但尚未知晓具体作用
+	- **Use Motor**:是否使用马达.若使用,则可实现自动旋转
+		- **Motor Speed**:转动速度,单位同上.可正可负
+		- **Maximum Motor Force**:最大扭矩值,含义同上
+- **实现用途:**
+	- 汽车车轮
+	- 不规则自转
+	- 某些旋转特效
+- **备注**:在demo2场景下还有一个Wheel Joint2D的实例,详细配置过程不再赘述
 
 --------------
 
