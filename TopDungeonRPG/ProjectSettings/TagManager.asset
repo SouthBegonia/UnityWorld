@@ -57,3 +57,6 @@ TagManager:
   - name: Screen
     uniqueID: 4006234187
     locked: 0
+  - name: Wall
+    uniqueID: 3412484007
+    locked: 0

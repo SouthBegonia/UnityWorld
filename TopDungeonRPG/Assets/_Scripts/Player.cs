@@ -14,6 +14,12 @@ public class Player : Mover
         Player.DontDestroyOnLoad(gameObject);
     }
 
+    protected override void ReceiveDamage(Damag dmg)
+    {
+        base.ReceiveDamage(dmg);
+        GameManager.instance.OnHitpointChange();
+    }
+
     private void FixedUpdate()
     {
         //获取移动值,使用公用移动函数UpdateMotor(),按 指定位置/移动速度倍数 进行移动
@@ -57,10 +63,24 @@ public class Player : Mover
         //显示LevelUp的UI
         //GameManager.instance.ShowText("Level UP!", 40, new Color(1f,0.76f,0.15f), transform.position, Vector3.up * 10, 2.0f);
     }
-
     public void SetLevel(int level)
     {
         for (int i = 0; i < level; i++)
             OnLevelUp();
+    }
+
+    //恢复生命值函数:
+    public void Heal(int healingAmount)
+    {
+        if (hitPoint == maxHitPoint)
+            return;
+
+        hitPoint += healingAmount;
+        if (hitPoint > maxHitPoint)
+            hitPoint = maxHitPoint;
+
+        //更新UI
+        GameManager.instance.ShowText("+" + healingAmount.ToString() + "hp", 25, Color.green, transform.position, Vector3.up * 30, 1.0f);
+        GameManager.instance.OnHitpointChange();
     }
 }

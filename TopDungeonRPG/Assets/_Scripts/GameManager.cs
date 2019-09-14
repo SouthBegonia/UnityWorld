@@ -16,7 +16,10 @@ public class GameManager : MonoBehaviour
     //各类引用:玩家,武器,floatingTextManager
     public Player player;
     public Weapon weapon;
+    public CharacterMenu menu;
     public FloatingTextManager FloatingTextManager;
+    public RectTransform hitpointBar;
+    //public RectTransform xpBar;
 
     //金钱,经验
     public int pesos;
@@ -28,6 +31,8 @@ public class GameManager : MonoBehaviour
         if (GameManager.instance != null)
         {
             Destroy(gameObject);
+            Destroy(player.gameObject);
+            Destroy(FloatingTextManager.gameObject);
             return;
         }
 
@@ -95,6 +100,9 @@ public class GameManager : MonoBehaviour
     {
         int currentLevel = GetCurrentLevel();
         experience += xp;
+
+        menu.UpdateMenu();
+
         if (currentLevel < GetCurrentLevel())
         {
             OnLevelUp();
@@ -102,8 +110,17 @@ public class GameManager : MonoBehaviour
     }
     public void OnLevelUp()
     {
-        Debug.Log("LevelUP");
+        ShowText("LEVEL UP!", 30, Color.yellow, player.transform.position, Vector3.up * 30, 2.0f);
+        //("+" + healingAmount.ToString() + "hp", 25, Color.green, transform.position, Vector3.up * 30, 1.0f);
+        //Debug.Log("LevelUP");
         player.OnLevelUp();
+    }
+
+    //生命值Bar
+    public void OnHitpointChange()
+    {
+        float ratio = (float)player.hitPoint / (float)player.maxHitPoint;
+        hitpointBar.localScale = new Vector3(ratio, 1, 1);
     }
 
 

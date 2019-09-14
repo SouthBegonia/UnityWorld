@@ -10,8 +10,14 @@ public class CharacterMenu : MonoBehaviour
     private int currentCharacterSelection = 0;          //当前选择的PlayerSprite序号
     public Image characterSprite;                       //Player的Sprite
     public Image weaponSprite;                          //Weapon的Sprite
-    public RectTransform xpBar;                         //经验条组件
+    public RectTransform xpBar;                         //经验条组件(现变为左上角的,即HUD内的而非Menu内的)
 
+
+    private void Start()
+    {
+        //初始时刷新1次,否则出现经验值等于存档不符
+        UpdateMenu();
+    }
 
     //人物选择按钮:
     public void OnArrowClick(bool right)
@@ -49,27 +55,29 @@ public class CharacterMenu : MonoBehaviour
             UpdateMenu();
     }
 
-    //Menu更新函数:
+    //Menu菜单更新函数:
     public void UpdateMenu()
     {
         //更新武器sprite及升级所需金币
         weaponSprite.sprite = GameManager.instance.weaponSprites[GameManager.instance.weapon.weaponLevel];
+
         //若当前武器的等级已经达到武器价格表长度,即说明已经升级到最高等级,否则更新显示升级当前武器所需价格
         if (GameManager.instance.weapon.weaponLevel == GameManager.instance.weaponPrices.Count)
             upgradeCostText.text = "MAX";
         else
             upgradeCostText.text = GameManager.instance.weaponPrices[GameManager.instance.weapon.weaponLevel].ToString();
 
-        //更新人物等级
+        //更新人物等级,生命值,金币
         levelText.text = GameManager.instance.GetCurrentLevel().ToString();
         hitpointText.text = GameManager.instance.player.hitPoint.ToString() + " /" + GameManager.instance.player.maxHitPoint;
         pesosText.text = GameManager.instance.pesos.ToString();
 
         //更新XpBar
+        //下列注释掉的xpText为原Menu下xpBar,但现采用HUD下的xpBar
         int currentLevel = GameManager.instance.GetCurrentLevel();
         if (currentLevel == GameManager.instance.xpTable.Count)
         {
-            xpText.text = GameManager.instance.experience.ToString() + " total exprience points";
+            //xpText.text = GameManager.instance.experience.ToString() + " total exprience points";
             xpBar.localScale = Vector3.one;
         }
         else
@@ -82,7 +90,7 @@ public class CharacterMenu : MonoBehaviour
 
             float completionRatio = (float)currXpIntoLevel / (float)diff;
             xpBar.localScale = new Vector3(completionRatio, 1, 1);
-            xpText.text = currXpIntoLevel.ToString() + " / " + diff;
+            //xpText.text = currXpIntoLevel.ToString() + " / " + diff;
         }
     }
 }
