@@ -111,8 +111,8 @@ public class GameManager : MonoBehaviour
     public void OnLevelUp()
     {
         ShowText("LEVEL UP!", 30, Color.yellow, player.transform.position, Vector3.up * 30, 2.0f);
-        //("+" + healingAmount.ToString() + "hp", 25, Color.green, transform.position, Vector3.up * 30, 1.0f);
-        //Debug.Log("LevelUP");
+
+        OnHitpointChange();
         player.OnLevelUp();
     }
 
