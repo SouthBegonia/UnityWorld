@@ -21,7 +21,7 @@ public class HealingFountain : Colliderable
             healingTotal--;
 
             GameManager.instance.player.Heal(healingAmount);
-            Debug.Log("healingAmount");
+            //Debug.Log("healingAmount");
         }
     }
 }

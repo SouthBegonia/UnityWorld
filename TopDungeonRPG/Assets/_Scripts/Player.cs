@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : Mover
 {
     private SpriteRenderer spriteRenderer;
+    public bool isAlive = true;
 
     protected override void Start()
     {
@@ -16,6 +17,8 @@ public class Player : Mover
 
     protected override void ReceiveDamage(Damag dmg)
     {
+        if (!isAlive)
+            return;
         base.ReceiveDamage(dmg);
         GameManager.instance.OnHitpointChange();
     }
@@ -23,9 +26,14 @@ public class Player : Mover
     private void FixedUpdate()
     {
         //获取移动值,使用公用移动函数UpdateMotor(),按 指定位置/移动速度倍数 进行移动
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
-        UpdateMotor(new Vector3(x, y, 0),1);
+        if (isAlive)
+        {
+            float x = Input.GetAxisRaw("Horizontal");
+            float y = Input.GetAxisRaw("Vertical");
+
+            UpdateMotor(new Vector3(x, y, 0), 1);
+        }
+
 
         //迁移至Mover类内通过UpdateMotor()实现下列代码
         //moveDelta = new Vector3(x, y, 0);
@@ -60,6 +68,8 @@ public class Player : Mover
         maxHitPoint += 10;
         hitPoint = maxHitPoint;
 
+        //GameManager.instance.menu.UpdateMenu();
+        GameManager.instance.OnHitpointChange();
         //显示LevelUp的UI
         //GameManager.instance.ShowText("Level UP!", 40, new Color(1f,0.76f,0.15f), transform.position, Vector3.up * 10, 2.0f);
     }
@@ -82,5 +92,19 @@ public class Player : Mover
         //更新UI
         GameManager.instance.ShowText("+" + healingAmount.ToString() + "hp", 25, Color.green, transform.position, Vector3.up * 30, 1.0f);
         GameManager.instance.OnHitpointChange();
+    }
+
+    protected override void Death()
+    {
+        isAlive = false;
+        GameManager.instance.deathMenuAnim.SetTrigger("Show");
+    }
+
+    public void Respawn()
+    {
+        Heal(maxHitPoint);
+        isAlive = true;
+        //ImmuneTime = Time.time;
+       
     }
 }

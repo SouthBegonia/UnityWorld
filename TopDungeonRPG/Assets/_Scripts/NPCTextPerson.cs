@@ -13,10 +13,12 @@ public class NPCTextPerson : Colliderable
 
     public bool ______________;
 
+    public bool canLookAtPlayer = false;//是否启用始终面朝玩家功能(毕竟不是所有NPC都喜欢转来转去
     private float posDelta;             //玩家与NPC的距离差(仅用x轴的)
 
     protected override void Start()
     {
+        //初始化冷却时间
         base.Start();
         lastShout = -coolDown;
     }
@@ -25,15 +27,20 @@ public class NPCTextPerson : Colliderable
     {
         base.Update();
 
-        //切换NPC方向始终朝向Player
-        posDelta = GameManager.instance.player.transform.position.x - transform.position.x;
-        if (posDelta > 0)
-            transform.localScale = new Vector3(1, 1, 1);
-        else if (posDelta < 0)
-            transform.localScale = new Vector3(-1, 1, 1);
+        //若开启朝向玩家功能:
+        if (canLookAtPlayer)
+        {
+            //切换NPC方向始终朝向Player
+            posDelta = GameManager.instance.player.transform.position.x - transform.position.x;
+            if (posDelta > 0)
+                transform.localScale = new Vector3(1, 1, 1);
+            else if (posDelta < 0)
+                transform.localScale = new Vector3(-1, 1, 1);
+        }
+
     }
 
-    //碰撞触发NPC对话函数:
+    //碰撞触发NPC对话函数:实现多段对话循环播放
     protected override void OnCollide(Collider2D coll)
     {
         if (coll.name != "Player")
@@ -46,8 +53,8 @@ public class NPCTextPerson : Colliderable
 
             if (msgNow == messages.Length)
                 msgNow = 0;
-            Debug.Log("msgNow = " + msgNow);
+            //Debug.Log("msgNow = " + msgNow);
         }
-        
+
     }
 }

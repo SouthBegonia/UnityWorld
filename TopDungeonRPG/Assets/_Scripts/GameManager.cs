@@ -13,10 +13,11 @@ public class GameManager : MonoBehaviour
     public List<int> weaponPrices;
     public List<int> xpTable;
 
-    //各类引用:玩家,武器,floatingTextManager
+    //各类引用:玩家,武器,装备菜单Menu,死亡界面,字符显示floatingTextManager,左上角生命条
     public Player player;
     public Weapon weapon;
     public CharacterMenu menu;
+    public Animator deathMenuAnim;
     public FloatingTextManager FloatingTextManager;
     public RectTransform hitpointBar;
     //public RectTransform xpBar;
@@ -121,6 +122,14 @@ public class GameManager : MonoBehaviour
     {
         float ratio = (float)player.hitPoint / (float)player.maxHitPoint;
         hitpointBar.localScale = new Vector3(ratio, 1, 1);
+    }
+
+    //死亡UI及其respawn
+    public void Respawn()
+    {
+        deathMenuAnim.SetTrigger("Hide");
+        SceneManager.LoadScene("Main");
+        player.Respawn();
     }
 
 
