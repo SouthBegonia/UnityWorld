@@ -95,17 +95,32 @@ public class Player : Mover
         GameManager.instance.OnHitpointChange();
     }
 
+    //Player死亡函数:
     protected override void Death()
     {
+        //变更生命状态
         isAlive = false;
+
+        //显示死亡面板
         GameManager.instance.deathMenuAnim.SetTrigger("Show");
+
+        //等待一定时间后复活并重新开始
+        StartCoroutine("WaitingForRespawn");      
     }
 
+    //Player复活函数:
     public void Respawn()
     {
+        //配置复活时的参数
         Heal(maxHitPoint);
         isAlive = true;
         ImmuneTime = Time.time;
         pushDirection = Vector3.zero;
+    }
+
+    IEnumerator WaitingForRespawn()
+    {
+        yield return new WaitForSeconds(6);
+        GameManager.instance.Respawn();
     }
 }

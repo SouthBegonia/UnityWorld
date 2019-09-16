@@ -13,9 +13,13 @@ public abstract class Mover : Fighter
     protected float ySpeed = 0.75f;         
     protected float xSpeed = 1.0f;
 
+    //记录物体的原始大小(因为部分敌人初始时即被放大或缩小)
+    private Vector3 originalSize;
+
     protected virtual void Start()
     {
         BoxCollider = GetComponent<BoxCollider2D>();
+        originalSize = transform.localScale;
     }
 
     //接受input及速度倍数而移动的函数
@@ -26,9 +30,9 @@ public abstract class Mover : Fighter
 
         //变更方向:正向/逆向
         if (moveDelta.x > 0)
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = originalSize;
         else if (moveDelta.x < 0)
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(originalSize.x * -1, originalSize.y, originalSize.y);
 
         //被击退移动
         //该距离受pushRecoverSpeed系数呈线性减小

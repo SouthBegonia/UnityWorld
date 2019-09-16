@@ -49,7 +49,8 @@ public class Weapon : Colliderable
         }
     }
 
-    //检验武器碰撞到的物体
+    //武器碰撞造成伤害函数:
+    //注当为idle状态下BoxCollider被禁用,故只有在Swing状态下才可检测
     protected override void OnCollide(Collider2D coll)
     {
         //必须为可被伤害类物体才可进行伤害检验
