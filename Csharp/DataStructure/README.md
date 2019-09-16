@@ -133,3 +133,56 @@ current = current.Previous;
 sentence.Reverse();
 
 ```
+
+## Queue`<T>` 队列
+
+**特性:**
+- 前进先出,FIFO
+- 可动态调节长度(但扩展是重新分配数组空间)
+- 默认下初始容量32
+
+**机理:**
+`Queue<T>`由类型为T的对象的环形数组组成,head标记队首,tail标记队尾.
+
+
+**示例:**
+```
+//声明
+Queue<string> numbers = new Queue<string>();
+
+//元素入队
+numbers.Enqueue("H");
+numbers.Enqueue("i");
+
+//元素出队
+Debug.log("出列: {0}",numbers.Dequeue());
+
+//复制队列
+Queue<string> queueCopy = new Queue<string>(numbers.ToArray());
+```
+
+## Stack`<T>` 栈
+
+**特性:**
+- 后进后出LILO
+- 扩展也是重新分配数组空间
+
+**机理:**
+`Stack<T>`由类型为T的对象的数组组成,具备入栈Push和出栈Pop操作
+
+
+**示例:**
+```
+//声明
+Stack<string> numbers = new Stack<string>();
+
+//元素入栈
+numbers.Push("Z");
+numbers.Push("W");
+
+//元素出栈
+Debug.log("出栈: {0}",numbers.Pop());
+
+//复制栈
+Stack<string> stackCopy = new Stack<string>(numbers.ToArray());
+```
