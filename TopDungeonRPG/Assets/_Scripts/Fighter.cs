@@ -11,7 +11,7 @@ public class Fighter : MonoBehaviour
     public float pushRecoverySpeed = 0.2f;
 
     //免疫时间参数
-    protected float ImmuneTime = 1.0f;
+    protected float ImmuneTime = 0.75f;
     protected float lastImmune;
 
     //被击退坐标
@@ -34,7 +34,7 @@ public class Fighter : MonoBehaviour
         }
 
         //显示造成伤害UI
-        GameManager.instance.ShowText(dmg.damageAmount.ToString(), 25, Color.red, transform.position, Vector3.zero, 0.5f);
+        //GameManager.instance.ShowText(dmg.damageAmount.ToString(), 25, Color.red, transform.position, Vector3.zero, 0.5f);
 
         //如果对象血量低于0,则死亡
         if (hitPoint <= 0)

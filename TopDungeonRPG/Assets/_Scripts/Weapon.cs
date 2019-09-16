@@ -39,7 +39,7 @@ public class Weapon : Colliderable
         base.Update();
 
         //读取输入,空格键实现普攻
-        if (Input.GetKeyDown(KeyCode.Space) && GameManager.instance.player.isAlive)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && GameManager.instance.player.isAlive)
         {
             if (Time.time - lastSwing > coolDown)
             {
@@ -75,7 +75,20 @@ public class Weapon : Colliderable
 
     //设置Animator状态函数:武器挥动swing
     private void Swing()
-    {       
+    {
+        //----------------------------------
+        //关于Swing动画的一些建议:
+        //1. 武器的Swing动画时间建议大于0.3s,否则间隔过短即便每次都能攻击到敌人但不足以有效推开敌人而被攻击
+        //2. 且武器劈砍至水平的时间建议在前半时间内完成,因为涉及武器的碰撞伤害:
+        //   水平下的武器碰撞器范围较长,利于和敌人保持距离,并造成伤害
+        //
+        //后续:补充
+        //3. 最好模拟真实情况下的劈砍动作,我将其分为以下几部分:
+        //   p1:武器抬起并后仰.此过程速度适中
+        //   p2:从90'到0'进行主劈砍动作.此过程前半速度快,后半速度极快
+        //   p3:0'到-20'最终劈砍动作.此过程不在于速度,而在于保持帧数(时间)
+        //以上设置也可根据难度而刻意为之
+        //----------------------------------
         animator.SetTrigger("Swing");
     }
 

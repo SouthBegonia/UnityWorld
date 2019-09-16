@@ -12,6 +12,7 @@ public class Player : Mover
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        ImmuneTime = 0.75f;
         Player.DontDestroyOnLoad(gameObject);
     }
 
@@ -104,7 +105,7 @@ public class Player : Mover
     {
         Heal(maxHitPoint);
         isAlive = true;
-        //ImmuneTime = Time.time;
-       
+        ImmuneTime = Time.time;
+        pushDirection = Vector3.zero;
     }
 }

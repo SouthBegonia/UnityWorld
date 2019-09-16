@@ -35,6 +35,10 @@ public class FloatingText
         if (Time.time - lastshown > duration)
             Hide();
 
+        //如何实现Text文本固定在某物体处,而不是Player移动时也跟随移动
+        //Debug.Log("go.pos= " + go.transform.position);
+        //go.transform.position = Camera.main.WorldToScreenPoint(position);
+
         //Text显示速度
         go.GetComponent<Transform>().position += motion * Time.deltaTime;
     }

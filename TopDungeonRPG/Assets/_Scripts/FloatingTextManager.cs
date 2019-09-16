@@ -15,7 +15,10 @@ public class FloatingTextManager : MonoBehaviour
     {
         //实时刷新Text
         foreach (FloatingText txt in floatingTexts)
+        {
+            
             txt.UpdateFloatingText();
+        }          
     }
 
     //配置Text信息的函数
