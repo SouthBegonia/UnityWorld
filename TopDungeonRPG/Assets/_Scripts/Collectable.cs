@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//可收集类的脚本:
 public class Collectable : Colliderable
 {
     protected bool collected;

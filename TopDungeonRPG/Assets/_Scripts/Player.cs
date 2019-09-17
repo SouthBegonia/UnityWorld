@@ -4,24 +4,17 @@ using UnityEngine;
 
 public class Player : Mover
 {
-    private SpriteRenderer spriteRenderer;
-    public bool isAlive = true;
+    private SpriteRenderer spriteRenderer;      //玩家当前Sprite
+    public bool isAlive = true;                 //玩家是否存活
 
     protected override void Start()
     {
         base.Start();
-        spriteRenderer = GetComponent<SpriteRenderer>();
 
+        //初始化参数及其组件
+        spriteRenderer = GetComponent<SpriteRenderer>();
         ImmuneTime = 0.75f;
         Player.DontDestroyOnLoad(gameObject);
-    }
-
-    protected override void ReceiveDamage(Damag dmg)
-    {
-        if (!isAlive)
-            return;
-        base.ReceiveDamage(dmg);
-        GameManager.instance.OnHitpointChange();
     }
 
     private void FixedUpdate()
@@ -34,7 +27,6 @@ public class Player : Mover
 
             UpdateMotor(new Vector3(x, y, 0), 1);
         }
-
 
         //迁移至Mover类内通过UpdateMotor()实现下列代码
         //moveDelta = new Vector3(x, y, 0);
@@ -57,10 +49,22 @@ public class Player : Mover
         ////Debug.Log("X :" + hit);
     }
 
-    //替换Player上的Sprite
+    //替换Sprite函数:
     public void SwapSprite(int SkinID)
     {
         GetComponent<SpriteRenderer>().sprite = GameManager.instance.playerSprites[SkinID];
+    }
+
+    //Player受伤函数:
+    protected override void ReceiveDamage(Damag dmg)
+    {
+        if (!isAlive)
+            return;
+        //造成伤害
+        base.ReceiveDamage(dmg);
+
+        //更新UI
+        GameManager.instance.OnHitpointChange();
     }
 
     //Player的升级效果函数:提高生命值上限,恢复当前生命值
@@ -69,10 +73,8 @@ public class Player : Mover
         maxHitPoint += 10;
         hitPoint = maxHitPoint;
 
-        //GameManager.instance.menu.UpdateMenu();
         GameManager.instance.OnHitpointChange();
-        //显示LevelUp的UI
-        //GameManager.instance.ShowText("Level UP!", 40, new Color(1f,0.76f,0.15f), transform.position, Vector3.up * 10, 2.0f);
+      
     }
     public void SetLevel(int level)
     {
@@ -98,8 +100,13 @@ public class Player : Mover
     //Player死亡函数:
     protected override void Death()
     {
-        //变更生命状态
+        //变更生命状态并倒地
         isAlive = false;
+        transform.localEulerAngles = new Vector3(0, 0, 90);
+
+        //死亡惩罚:当前所持金币清零
+        GameManager.instance.pesos = 0;
+        GameManager.instance.SaveState();
 
         //显示死亡面板
         GameManager.instance.deathMenuAnim.SetTrigger("Show");
@@ -114,13 +121,14 @@ public class Player : Mover
         //配置复活时的参数
         Heal(maxHitPoint);
         isAlive = true;
-        ImmuneTime = Time.time;
-        pushDirection = Vector3.zero;
+        transform.localEulerAngles = Vector3.zero;       
     }
 
     IEnumerator WaitingForRespawn()
     {
         yield return new WaitForSeconds(6);
         GameManager.instance.Respawn();
+        GameManager.instance.menu.UpdateMenu();
+        GameManager.instance.hud.UpdateHUD();
     }
 }

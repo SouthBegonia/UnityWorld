@@ -2,24 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/*挂在于MainCamera*/
+//相机跟随脚本:
 public class CameraFollow : MonoBehaviour
 {
-    private Transform lookAt;            //相机跟随的目标(Player)
-    public float boundX = 0.3f;        //X轴差值范围
+    private Transform lookAt;           //相机跟随的目标(Player)
+    public float boundX = 0.3f;         //X轴差值范围
     public float boundY = 0.15f;        //Y轴差值范围
 
     private void Start()
     {
         lookAt = GameObject.Find("Player").transform;
-        //DontDestroyOnLoad(gameObject);
     }
 
     private void LateUpdate()
     {
-        //移动的差值delts
+        //移动的差值delts:
         //实现在一定范围内Player移动时相机不跟随,但是当超出一定范围时相机跟随移动
-        //即,根据相机与Player的间距值,判断相机距离
+        //也就是说:根据相机与Player的间距值,判断是否跟随移动
         Vector3 delts = Vector3.zero;
 
         //X轴的差值:若相机与Player间距超过范围值,则对差值delts赋值

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//宝箱脚本:玩家触碰获得金币
 public class Chest : Collectable
 {
-    public Sprite emptyChest;
-    public int pesosAmount = 5;
+    public Sprite emptyChest;       //宝箱的Sprite
+    public int pesosAmount = 5;     //宝箱内的金币数
 
     protected override void OnCollect()
     {

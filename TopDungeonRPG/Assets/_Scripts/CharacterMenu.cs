@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//装备菜单的UI:包括武器升级,人物切换,显示生命值/等级/金币,经验值
 public class CharacterMenu : MonoBehaviour
 {
-    public Text levelText, hitpointText, pesosText, upgradeCostText, xpText;
+    public Text levelTextMenu, hitpointText, pesosText, upgradeCostText, xpText;
 
     private int currentCharacterSelection = 0;          //当前选择的PlayerSprite序号
     public Image characterSprite;                       //Player的Sprite
     public Image weaponSprite;                          //Weapon的Sprite
-    public RectTransform xpBar;                         //经验条组件(现变为左上角的,即HUD内的而非Menu内的)
+    public RectTransform xpBar;                         //经验条
 
 
     private void Start()
@@ -19,7 +20,7 @@ public class CharacterMenu : MonoBehaviour
         UpdateMenu();
     }
 
-    //人物选择按钮:
+    //人物切换按钮:
     public void OnArrowClick(bool right)
     {
         if (right)
@@ -68,16 +69,15 @@ public class CharacterMenu : MonoBehaviour
             upgradeCostText.text = GameManager.instance.weaponPrices[GameManager.instance.weapon.weaponLevel].ToString();
 
         //更新人物等级,生命值,金币
-        levelText.text = GameManager.instance.GetCurrentLevel().ToString();
+        levelTextMenu.text = GameManager.instance.GetCurrentLevel().ToString();
         hitpointText.text = GameManager.instance.player.hitPoint.ToString() + " /" + GameManager.instance.player.maxHitPoint;
         pesosText.text = GameManager.instance.pesos.ToString();
 
         //更新XpBar
-        //下列注释掉的xpText为原Menu下xpBar,但现采用HUD下的xpBar
         int currentLevel = GameManager.instance.GetCurrentLevel();
         if (currentLevel == GameManager.instance.xpTable.Count)
         {
-            //xpText.text = GameManager.instance.experience.ToString() + " total exprience points";
+            xpText.text = GameManager.instance.experience.ToString() + " total exprience points";
             xpBar.localScale = Vector3.one;
         }
         else
@@ -90,7 +90,7 @@ public class CharacterMenu : MonoBehaviour
 
             float completionRatio = (float)currXpIntoLevel / (float)diff;
             xpBar.localScale = new Vector3(completionRatio, 1, 1);
-            //xpText.text = currXpIntoLevel.ToString() + " / " + diff;
+            xpText.text = currXpIntoLevel.ToString() + " / " + diff;
         }
     }
 }

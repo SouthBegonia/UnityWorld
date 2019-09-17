@@ -160,7 +160,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300026, guid: bf00711bd0d0f9a42b4be7ce6a4e6b10, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.16161616, y: 0.16161616}
@@ -211,6 +211,7 @@ MonoBehaviour:
   maxHitPoint: 3
   pushRecoverySpeed: 0.2
   xpValue: 10
+  _________: 0
   speedMultiple: 0.7
   triggerLength: 1
   chaseLength: 1

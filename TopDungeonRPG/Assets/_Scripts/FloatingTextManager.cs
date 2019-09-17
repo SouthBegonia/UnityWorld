@@ -6,22 +6,21 @@ using UnityEngine.UI;
 public class FloatingTextManager : MonoBehaviour
 {
     public GameObject textContainer;        //FloatingTextManager自身(Panel)
-    public GameObject textPrefab;           //宝箱Chest所带的Text,即FloatingText
+    public GameObject textPrefab;           //FloatingText
 
-    private List<FloatingText> floatingTexts = new List<FloatingText>();
+    private List<FloatingText> floatingTexts = new List<FloatingText>();    //当前显示的所有FloatingText
 
 
     private void Update()
     {
         //实时刷新Text
         foreach (FloatingText txt in floatingTexts)
-        {
-            
+        {         
             txt.UpdateFloatingText();
         }          
     }
 
-    //配置Text信息的函数
+    //配置Text信息的函数:
     public void Show(string msg,int fontSize, Color color, Vector3 position,Vector3 motion,float duration)
     {
         //取得Text
@@ -41,7 +40,7 @@ public class FloatingTextManager : MonoBehaviour
         FloatingText.Show();
     }
 
-    //取得Text函数
+    //取得Text函数:
     private FloatingText GetFloatingText()
     {
         FloatingText txt = floatingTexts.Find(t => !t.active);

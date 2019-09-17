@@ -23,6 +23,12 @@ public class Boss0 : Enemy
             fireballs[i].position = transform.position + new Vector3(-Mathf.Cos(Time.time * fireballSpeed[i]) * distance, Mathf.Sin(Time.time * fireballSpeed[i]) * distance, 0);
         }
 
-        
+        //当boss半血以下时,绕身的火球加速,boss移速增加
+        if (((float)hitPoint / (float)maxHitPoint) <= 0.5f)
+        {
+            fireballSpeed[0] = 4f;
+            fireballSpeed[1] = -4f;
+            speedMultiple = 1f;
+        }
     }
 }

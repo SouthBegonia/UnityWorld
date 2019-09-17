@@ -5,41 +5,47 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    //单例
     public static GameManager instance;
 
-    //资源:玩家/武器Sprite,武器价格,xpTable
-    public List<Sprite> playerSprites;
-    public List<Sprite> weaponSprites;
-    public List<int> weaponPrices;
-    public List<int> xpTable;
+    //资源:
+    public List<Sprite> playerSprites;              //玩家Sprite
+    public List<Sprite> weaponSprites;              //武器Sprite
+    public bool _____________________;
 
-    //各类引用:玩家,武器,装备菜单Menu,死亡界面,字符显示floatingTextManager,左上角生命条
-    public Player player;
-    public Weapon weapon;
-    public CharacterMenu menu;
-    public Animator deathMenuAnim;
-    public FloatingTextManager FloatingTextManager;
-    public RectTransform hitpointBar;
-    //public RectTransform xpBar;
+    //游戏数值:
+    public int pesos;                               //金币
+    public int experience;                          //经验
+    public List<int> weaponPrices;                  //武器价格表
+    public List<int> xpTable;                       //升级经验表
+    public bool ______________________;
 
-    //金钱,经验
-    public int pesos;
-    public int experience;
+    //各类引用:
+    public Player player;                           //玩家
+    public Weapon weapon;                           //武器
+    public CharacterMenu menu;                      //装备菜单(左下角)
+    public CharacterHUD hud;                        //生命值经验值菜单(左上角)
+    public Animator deathMenuAnim;                  //死亡界面动画
+    public FloatingTextManager FloatingTextManager; //文本显示
+
 
 
     private void Awake()
     {
+        //防止部分不销毁物体重复在场景重载后重复
         if (GameManager.instance != null)
         {
             Destroy(gameObject);
             Destroy(player.gameObject);
             Destroy(FloatingTextManager.gameObject);
+            Destroy(menu.gameObject);
+            Destroy(hud.gameObject);
             return;
         }
 
         instance = this;
 
-        //执行加载存档
+        //加载存档
         SceneManager.sceneLoaded += LoadState;
 
         //保留的物体
@@ -49,13 +55,13 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(GameObject.Find("HUD"));
     }
 
-    //通用显示Text
+    //通用显示Text信息函数:
     public void ShowText(string msg, int fontSize, Color color, Vector3 position, Vector3 motion, float duration)
     {
         FloatingTextManager.Show(msg, fontSize, color, position, motion, duration);
     }
 
-    //判断武器是否能够升级
+    //判断武器是否能够升级函数:
     public bool TryUpgradeWeapon()
     {
         //若武器等级已经达到最高,则无法再升级
@@ -73,7 +79,7 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    //XP升级系统
+    //XP升级系统:
     public int GetCurrentLevel()
     {
         int l = 0, add = 0;
@@ -117,23 +123,26 @@ public class GameManager : MonoBehaviour
         player.OnLevelUp();
     }
 
-    //生命值Bar
+    //更新生命值UI信息函数:
     public void OnHitpointChange()
     {
-        float ratio = (float)player.hitPoint / (float)player.maxHitPoint;
-        hitpointBar.localScale = new Vector3(ratio, 1, 1);
+        menu.UpdateMenu();
+        hud.UpdateHUD();
     }
 
-    //死亡UI及其respawn
+    //复活函数:
     public void Respawn()
     {
+        //隐藏死亡UI,重载主场景
         deathMenuAnim.SetTrigger("Hide");
         SceneManager.LoadScene("Main");
+
+        //配置重生信息
         player.Respawn();
     }
 
 
-    //存储游戏数值信息函数:
+    //存储存档的函数:
     public void SaveState()
     {
         Debug.Log("SaveState");
@@ -141,18 +150,17 @@ public class GameManager : MonoBehaviour
         //游戏数值载体s
         string s = "";
 
-        //以s字符串为载体储存游戏数值信息
-        //'|'为间隔符,区分开各类游戏数值
+        //以s字符串为载体储存游戏数值信息, '|'为间隔符,区分开各类游戏数值
         s += "0" + "|";                     //data[0]
-        s += pesos.ToString() + "|";        //data[1]
-        s += experience.ToString() + "|";   //data[2]
-        s += weapon.weaponLevel.ToString(); //data[3]
+        s += pesos.ToString() + "|";        //data[1] 金币
+        s += experience.ToString() + "|";   //data[2] 经验值
+        s += weapon.weaponLevel.ToString(); //data[3] 武器等级
 
         //存储游戏信息字符串
         PlayerPrefs.SetString("SaveState", s);      
     }
 
-    //加载存储的游戏数值的函数:金币,经验,等级,武器,场景出生地等
+    //加载存档的函数:
     public void LoadState(Scene s, LoadSceneMode sceneMode)
     {
         Debug.Log("LoadState");
@@ -169,7 +177,7 @@ public class GameManager : MonoBehaviour
         //加载金币
         pesos = int.Parse(data[1]);
 
-        //加载经验及等级
+        //加载经验及玩家等级
         experience = int.Parse(data[2]);
         if (GetCurrentLevel() != 1)
             player.SetLevel(GetCurrentLevel());
@@ -177,7 +185,7 @@ public class GameManager : MonoBehaviour
         //加载武器
         weapon.SetWeaponLevel(int.Parse(data[3]));
               
-        //加载场景出生地
+        //设置场景出生地
         player.transform.position = GameObject.Find("SpawnPoint").transform.position;
     }
 }

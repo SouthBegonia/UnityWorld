@@ -101,6 +101,7 @@ MonoBehaviour:
   maxHitPoint: 10
   pushRecoverySpeed: 0.5
   xpValue: 10
+  _________: 0
   speedMultiple: 0.5
   triggerLength: 1
   chaseLength: 1
@@ -140,7 +141,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.003533233, y: -0.021016896}
+  m_Offset: {x: -0.008309551, y: -0.019934356}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -151,7 +152,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.18269429, y: 0.18914309}
+  m_Size: {x: 0.22740124, y: 0.22270897}
   m_EdgeRadius: 0
 --- !u!1 &8400066305750144969
 GameObject:
@@ -166,7 +167,7 @@ GameObject:
   - component: {fileID: 8400066305750144974}
   - component: {fileID: 8400066305750144973}
   m_Layer: 9
-  m_Name: enemy_2
+  m_Name: fireball_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -302,7 +303,7 @@ GameObject:
   - component: {fileID: 8400066306346234705}
   - component: {fileID: 8400066306346234704}
   m_Layer: 9
-  m_Name: enemy_2 (1)
+  m_Name: fireball_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -470,7 +471,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.008125469, y: -0.024511129}
+  m_Offset: {x: 0.01211381, y: -0.029962748}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -481,7 +482,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.34220126, y: 0.3448633}
+  m_Size: {x: 0.33921838, y: 0.3322503}
   m_EdgeRadius: 0
 --- !u!114 &8400066306637618246
 MonoBehaviour:

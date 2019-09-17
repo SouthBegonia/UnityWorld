@@ -2,19 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//敌人公用脚本:包括击杀获得经验值,追逐Player功能等
+/*更多可加入的功能:
+ *  - 敌人未追逐Player时随机走动
+ *  - 敌人间的相互厮杀
+ * 
+ */
 public class Enemy : Mover
 {
-    //经验值
-    public int xpValue = 1;
+    public int xpValue = 1;                 //击杀获得经验值
+    public bool _________;
 
-    //追逐逻辑    
-    public float speedMultiple = 0.75f;      //Enemy的速度为正常速度的speedMultiple倍
+    //追逐逻辑  :  
+    public float speedMultiple = 0.75f;     //Enemy的速度为正常速度的speedMultiple倍
     public float triggerLength = 1.0f;      //在多少距离内能触发追逐
     public float chaseLength = 1.0f;        //能追逐到多远的距离
     public bool chasing;                    //是否追逐
-    public bool collidingWithPlayer;
+    public bool collidingWithPlayer;        //是否与玩家碰撞中
 
-    private Transform playTransform;        //追逐玩家标识
+    private Transform playTransform;        //玩家标识
     private Vector3 startingPosition;       //Enemy原始坐标
 
     //碰撞器

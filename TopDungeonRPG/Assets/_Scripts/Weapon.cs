@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//武器攻击脚本:实现读取键位发动攻击
 public class Weapon : Colliderable
 {
-    //各等级武器伤害参数:伤害,推力
-    public int[] damagePoint = { 1, 2, 3, 4, 5, 6, 7 };
-    public float[] pushForce = { 2.0f, 2.2f, 2.5f, 3.0f, 3.3f, 3.6f, 4.0f };
+    //各等级武器伤害参数:
+    public int[] damagePoint = { 1, 2, 3, 4, 5, 6, 7 };     //武器造成伤害
+    public float[] pushForce = { 2.0f, 2.2f, 2.5f, 3.0f, 3.3f, 3.6f, 4.0f };    //武器推力
 
-    //武器等级参数:武器等级,武器sprite
-    public int weaponLevel = 0;
-    private SpriteRenderer SpriteRenderer;
+    //武器等级参数:
+    public int weaponLevel = 0;             //当前武器等级
+    private SpriteRenderer SpriteRenderer;  //当前武器的Spite
 
-    //武器控制参数:动画控制,冷却时间
-    private Animator animator;
-    private float coolDown = 0.5f;
+    //武器控制参数:
+    private Animator animator;              //动画组件
+    private float coolDown = 0.5f;          //武器攻击冷却时间
     private float lastSwing;
 
     private void Awake()
@@ -30,7 +31,6 @@ public class Weapon : Colliderable
     protected override void Start()
     {
         base.Start();
-        //SpriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
 
@@ -38,8 +38,8 @@ public class Weapon : Colliderable
     {
         base.Update();
 
-        //读取输入,空格键实现普攻
-        if (Input.GetKeyDown(KeyCode.Mouse0) && GameManager.instance.player.isAlive)
+        //读取输入:空格键/鼠标左键实现普攻
+        if ((Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Space)) && GameManager.instance.player.isAlive)
         {
             if (Time.time - lastSwing > coolDown)
             {
