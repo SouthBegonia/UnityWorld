@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     //资源:
     public List<Sprite> playerSprites;              //玩家Sprite
     public List<Sprite> weaponSprites;              //武器Sprite
+    public AudioSource audioSource;
     public bool _____________________;
 
     //游戏数值:

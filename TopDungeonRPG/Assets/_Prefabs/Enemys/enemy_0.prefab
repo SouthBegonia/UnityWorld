@@ -84,7 +84,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  damage: 5
+  damage: 1
   pushForce: 1.5
 --- !u!1 &3880996376149345812
 GameObject:
@@ -207,8 +207,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 385937308750bed4f8bc9a51162fc148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoint: 3
-  maxHitPoint: 3
+  hitPoint: 2
+  maxHitPoint: 2
   pushRecoverySpeed: 0.2
   xpValue: 10
   _________: 0
