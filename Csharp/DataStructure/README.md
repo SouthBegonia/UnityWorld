@@ -186,3 +186,42 @@ Debug.log("出栈: {0}",numbers.Pop());
 //复制栈
 Stack<string> stackCopy = new Stack<string>(numbers.ToArray());
 ```
+
+## Hash Table 哈希表
+
+**特性:**
+- 散列表
+- 根据关键码/值直接进行访问
+
+**机理:**
+通过吧关键码/值映射到表中的一个位置来进行访问,进而替代Array数组的遍历查找特性.
+
+**一些概念:**
+- 哈希转换(Hasing):又称为哈希函数压缩序列.即为减少关键码/值得区间跨度,对其进行特征片段截取的方法.
+- 哈希冲突(Hash Collision):即通过哈希计算后,得到同一个结果,进而导致元素入表异常的情况.
+	- 出现原因:哈希转换
+	- 解决方法:
+		- 冲突避免机制(Collision Avoidance):优化哈希函数,尽量选择数据非均匀分布的片段作为关键码/值
+		- 冲突解决机制(Collision Resolution):将哈希位置被占用的待插入元素存放到另一块空间. 常用的方法有开放寻址法(Open Addressing)、二次探查(Quadratic Probing)及二度哈希(double hashing)
+- C#中的Hashtable类:定义在System.Cdlections命名空间.添加元素时需给定元素Item及其键Key,进而通过Key检索Item.
+
+**示例:**
+```
+//创建哈希表
+Hashtable itemDic = new Hashtable();
+
+//向实例内添加数据,格式 hashtable.Add(Key,Item)
+itemDic.Add("11-1234","Item1");
+itemDic.Add("12-1234","Item2");
+itemDic.Add("13-1237","Item3");
+itemDic.Add("14-1235","Item4");
+itemDic.Add("15-1235","Item5");
+
+//通过Key访问数据
+if(itemDic.ContainsKey("11-1234"))
+{
+	string itemName = (string)itemDic["11-1234"];
+	Debug.log("编号为11-1234的物品是: " + itemName);
+}else
+	Debug.log("未找到编号为11-1234的物品");
+```
