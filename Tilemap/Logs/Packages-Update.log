@@ -1,0 +1,20 @@
+
+=== Tue Sep 24 16:17:36 2019
+
+Packages were changed.
+Update Mode: mergeDefaultDependencies
+
+The following packages were added:
+  com.unity.analytics@3.2.2
+  com.unity.purchasing@2.0.6
+  com.unity.ads@2.0.8
+  com.unity.package-manager-ui@2.2.0
+  com.unity.ext.nunit@1.0.0
+  com.unity.test-framework@1.0.12
+  com.unity.ide.vscode@1.0.4
+  com.unity.ide.visualstudio@1.0.5
+  com.unity.ide.rider@1.0.4
+  com.unity.modules.androidjni@1.0.0
+The following packages were updated:
+  com.unity.collab-proxy from version 1.2.9 to 1.2.16
+  com.unity.timeline from version 0.0.0-builtin to 1.0.0
