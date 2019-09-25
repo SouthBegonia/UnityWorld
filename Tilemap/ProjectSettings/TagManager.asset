@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3770214245
+    locked: 0
+  - name: Walkable
+    uniqueID: 2276563917
+    locked: 0
+  - name: Front
+    uniqueID: 1920843985
+    locked: 0

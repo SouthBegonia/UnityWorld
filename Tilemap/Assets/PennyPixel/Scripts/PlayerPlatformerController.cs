@@ -1,20 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerPlatformerController : PhysicsObject {
 
     public float maxSpeed = 7;
     public float jumpTakeOffSpeed = 7;
+    public int gemCollection = 0;
+    
 
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+    public Text collectionText;
 
     // Use this for initialization
     void Awake () 
     {
         spriteRenderer = GetComponent<SpriteRenderer> (); 
         animator = GetComponent<Animator> ();
+
+        Debug.Log("GemTotal = " + GameObject.Find("Gem").gameObject.GetComponentsInChildren<GemBehaviour>().Length);
     }
 
     protected override void ComputeVelocity()
@@ -51,5 +57,12 @@ public class PlayerPlatformerController : PhysicsObject {
         animator.SetFloat ("velocityX", Mathf.Abs (velocity.x) / maxSpeed);
 
         targetVelocity = move * maxSpeed;
+    }
+
+    public void OnUIchange()
+    {
+        collectionText.text = "Collection: " + gemCollection;
+        if (gemCollection == 100)
+            collectionText.color = Color.yellow;
     }
 }

@@ -8,6 +8,7 @@ public class GemBehaviour : MonoBehaviour
 	public GameObject gemVisuals;
 	public GameObject collectedParticleSystem;
 	public CircleCollider2D gemCollider2D;
+    public PlayerPlatformerController player;
 
 	private float durationOfCollectedParticleSystem;
 
@@ -26,6 +27,9 @@ public class GemBehaviour : MonoBehaviour
 
 	void GemCollected()
 	{
+        player.gemCollection++;
+        player.OnUIchange();
+
 		gemCollider2D.enabled = false;
 		gemVisuals.SetActive (false);
 		collectedParticleSystem.SetActive (true);
