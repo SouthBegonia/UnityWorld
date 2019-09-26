@@ -19,7 +19,7 @@ public class PlayerPlatformerController : PhysicsObject {
     {
         spriteRenderer = GetComponent<SpriteRenderer> (); 
         animator = GetComponent<Animator> ();
-
+        
         Debug.Log("GemTotal = " + GameObject.Find("Gem").gameObject.GetComponentsInChildren<GemBehaviour>().Length);
     }
 
