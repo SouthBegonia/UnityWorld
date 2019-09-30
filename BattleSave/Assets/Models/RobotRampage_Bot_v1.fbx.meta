@@ -1,0 +1,193 @@
+fileFormatVersion: 2
+guid: fb900ac847b684cda925ff9b43688031
+timeCreated: 1467060588
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Body
+    100002: Clamp1
+    100004: Forearm.L
+    100006: Forearm.L 1
+    100008: Forearm.R
+    100010: Forearm.R_end
+    100012: Gun
+    100014: Hand.Calmp.1
+    100016: Hand.Calmp.1_end
+    100018: Hand.Clamp.2
+    100020: Hand.Clamp.2_end
+    100022: Hand1
+    100024: Hand2
+    100026: Head
+    100028: Head 1
+    100030: Head_end
+    100032: Jaw
+    100034: MagArm
+    100036: MagArm.001
+    100038: MagArm.002
+    100040: MagArm.003
+    100042: Pottom Post
+    100044: //RootNode
+    100046: Shoulder.L
+    100048: Shoulder.L 1
+    100050: Shoulder.R
+    100052: Shoulder.R 1
+    100054: Torso
+    100056: Armature
+    100058: Camera
+    100060: Lamp
+    100062: Lamp.001
+    100064: MagArm.000
+    400000: Body
+    400002: Clamp1
+    400004: Forearm.L
+    400006: Forearm.L 1
+    400008: Forearm.R
+    400010: Forearm.R_end
+    400012: Gun
+    400014: Hand.Calmp.1
+    400016: Hand.Calmp.1_end
+    400018: Hand.Clamp.2
+    400020: Hand.Clamp.2_end
+    400022: Hand1
+    400024: Hand2
+    400026: Head
+    400028: Head 1
+    400030: Head_end
+    400032: Jaw
+    400034: MagArm
+    400036: MagArm.001
+    400038: MagArm.002
+    400040: MagArm.003
+    400042: Pottom Post
+    400044: //RootNode
+    400046: Shoulder.L
+    400048: Shoulder.L 1
+    400050: Shoulder.R
+    400052: Shoulder.R 1
+    400054: Torso
+    400056: Armature
+    400058: Camera
+    400060: Lamp
+    400062: Lamp.001
+    400064: MagArm.000
+    2300000: Clamp1
+    2300002: Forearm.L 1
+    2300004: Gun
+    2300006: Hand1
+    2300008: Hand2
+    2300010: Head 1
+    2300012: Jaw
+    2300014: MagArm
+    2300016: MagArm.001
+    2300018: MagArm.002
+    2300020: MagArm.003
+    2300022: Pottom Post
+    2300024: Shoulder.L 1
+    2300026: Shoulder.R 1
+    2300028: Torso
+    2300030: MagArm.000
+    3300000: Clamp1
+    3300002: Forearm.L 1
+    3300004: Gun
+    3300006: Hand1
+    3300008: Hand2
+    3300010: Head 1
+    3300012: Jaw
+    3300014: MagArm
+    3300016: MagArm.001
+    3300018: MagArm.002
+    3300020: MagArm.003
+    3300022: Pottom Post
+    3300024: Shoulder.L 1
+    3300026: Shoulder.R 1
+    3300028: Torso
+    3300030: MagArm.000
+    4300000: Torso
+    4300002: MagArm.003
+    4300004: Pottom Post
+    4300006: Head
+    4300008: Jaw
+    4300010: Shoulder.L
+    4300012: Forearm.L
+    4300014: Hand1
+    4300016: Hand2
+    4300018: Clamp1
+    4300020: Gun
+    4300022: MagArm.002
+    4300024: MagArm.001
+    4300026: MagArm.000
+    7400000: Armature|Die
+    7400002: Armature|Fire
+    7400004: Armature|Hit
+    7400006: Armature|CritHit
+    7400008: Lamp.001|Hit
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

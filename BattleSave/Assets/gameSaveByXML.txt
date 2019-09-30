@@ -1,0 +1,24 @@
+<save name="saveFile1">
+  <target>
+    <targetPosition>0</targetPosition>
+    <targetType>0</targetType>
+  </target>
+  <target>
+    <targetPosition>1</targetPosition>
+    <targetType>2</targetType>
+  </target>
+  <target>
+    <targetPosition>2</targetPosition>
+    <targetType>0</targetType>
+  </target>
+  <target>
+    <targetPosition>3</targetPosition>
+    <targetType>0</targetType>
+  </target>
+  <target>
+    <targetPosition>4</targetPosition>
+    <targetType>0</targetType>
+  </target>
+  <shoots>9</shoots>
+  <hits>0</hits>
+</save>
