@@ -22,7 +22,7 @@
 - [Unity着色器 - UnityShader](https://github.com/SouthBegonia/UnityWorld/tree/master/Unity%20Shader)
 - [Unity2D中的物理关节 - Physics Joints in Unity2D](https://github.com/SouthBegonia/UnityWorld/tree/master/Physics%20Joints%20in%20Unity2D)
 - [Tilemap的注意事项 - Tilemap](https://github.com/SouthBegonia/UnityWorld/tree/master/Tilemap)
-- [音频管理系统 - AudioPlay](https://github.com/SouthBegonia/UnityWorld/AudioPlay)
+- [音频管理系统 - AudioPlay](https://github.com/SouthBegonia/UnityWorld/tree/master/AudioPlay)
 
 ## 其他
 
