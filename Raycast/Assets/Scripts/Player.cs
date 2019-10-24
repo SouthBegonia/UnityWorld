@@ -5,14 +5,20 @@ using UnityEngine;
 //鼠标单击屏幕产生射线，设定distance检测碰撞的物体：
 public class Player : MonoBehaviour
 {
+    public static Player instance;
     private Ray camerRay;                       //声明射线   
     private RaycastHit cameraHit;               //声明射线检测
 
     [Range(1, 20)]
-    public float RayDistance = 20f;
+    public float RayDistance;
     public Material material;
 
-    private Vector3 mousePos = new Vector3();   //记录将鼠标
+    private Vector3 mousePos;   //记录将鼠标
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Update()
     {
@@ -41,5 +47,6 @@ public class Player : MonoBehaviour
 
         //绘制射线
         Debug.DrawRay(camerRay.origin, camerRay.direction * RayDistance, Color.red);
+        //Debug.DrawRay(camerRay.origin , camerRay.direction, Color.red, 1f);
     }
 }

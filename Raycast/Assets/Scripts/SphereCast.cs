@@ -14,7 +14,7 @@ public class SphereCast : MonoBehaviour
         radius = GetComponent<SphereCollider>().radius;
         SphereCollider = GetComponent<SphereCollider>();
     }
-    // Update is called once per frame
+
     void Update()
     {
         //SphereCastAll方法：返回的时RaycastHit[]

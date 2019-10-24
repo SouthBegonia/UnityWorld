@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //相交球检测
-public class OverlapCollider : MonoBehaviour
+public class OverlapSphere : MonoBehaviour
 {
     private SphereCollider  SphereCollider;
 
@@ -20,7 +20,7 @@ public class OverlapCollider : MonoBehaviour
         {
             foreach(Collider collider in hits)
             {
-                if (collider == this.GetComponent<SphereCollider>())
+                if (collider == SphereCollider)
                     continue;
                 Debug.Log("OverlapSphere Hit collider = " + collider.gameObject.name);
             }
