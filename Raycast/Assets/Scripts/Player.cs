@@ -5,13 +5,14 @@ using UnityEngine;
 //鼠标单击屏幕产生射线，设定distance检测碰撞的物体：
 public class Player : MonoBehaviour
 {
-    Ray camerRay;                       //声明射线   
-    RaycastHit cameraHit;               //声明射线检测
+    private Ray camerRay;                       //声明射线   
+    private RaycastHit cameraHit;               //声明射线检测
 
     [Range(1, 20)]
     public float RayDistance = 20f;
+    public Material material;
 
-    Vector3 mousePos = new Vector3();   //记录将鼠标
+    private Vector3 mousePos = new Vector3();   //记录将鼠标
 
     void Update()
     {
@@ -33,6 +34,7 @@ public class Player : MonoBehaviour
             if (Physics.Raycast(camerRay, out cameraHit, RayDistance, LayerMask.GetMask("Anchor")))
             {
                 Debug.Log(cameraHit.transform.gameObject.name);
+                cameraHit.transform.gameObject.GetComponent<MeshRenderer>().material = material;
                 
             }          
         }
