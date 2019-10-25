@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
     private void HandleAttack()
     {
         //攻击阶段一： idle ---> attack_1
-        if (stateInfo.IsName("Idle") && count == 0)
+        if ((stateInfo.IsName("Idle") ||stateInfo.IsName("Idle_2")) && count == 0)
         {
             count = 1;
             animator.SetInteger("attack", count);
@@ -76,12 +76,12 @@ public class Player : MonoBehaviour
 
         }
 
-        //攻击阶段完毕： attack_3 ---> idle
-        if (stateInfo.IsName("attack_3") && count == 3 && stateInfo.normalizedTime>0.9f)
-        {
-            count = 0;
-            animator.SetInteger("attack", count);
-        }
+        ////攻击阶段完毕： attack_3 ---> idle
+        //if (stateInfo.IsName("attack_3") && count == 3 && stateInfo.normalizedTime>1f)
+        //{
+        //    count = 0;
+        //    animator.SetInteger("attack", count);
+        //}
     }
 
     //private void HandleAttack()
