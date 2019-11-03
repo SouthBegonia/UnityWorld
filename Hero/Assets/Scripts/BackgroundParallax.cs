@@ -9,13 +9,12 @@ public class BackgroundParallax : MonoBehaviour
 	public float smoothing;						//平滑度 How smooth the parallax effect should be.
 
 
-	private Transform cam;						// Shorter reference to the main camera's transform.
-	private Vector3 previousCamPos;				// The postion of the camera in the previous frame.
+	private Transform cam;						//主相机
+	private Vector3 previousCamPos;				//主相机坐标
 
 
 	void Awake ()
 	{
-		// Setting up the reference shortcut.
 		cam = Camera.main.transform;
 	}
 
