@@ -692,7 +692,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 103bc4df5cabec94293d91f302eda608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackMoveDelta: {x: 0, y: 0, z: 0}
 --- !u!95 &649195038
 Animator:
   serializedVersion: 3
@@ -858,11 +857,11 @@ MonoBehaviour:
   m_ScreenY: 0.694
   m_CameraDistance: 10
   m_DeadZoneWidth: 0.327
-  m_DeadZoneHeight: 1
+  m_DeadZoneHeight: 0.66
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
   m_SoftZoneWidth: 0.8
-  m_SoftZoneHeight: 1
+  m_SoftZoneHeight: 0.66
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1
@@ -6001,7 +6000,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1528428702}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3930931, y: -0.054999977, z: -10}
+  m_LocalPosition: {x: 1.1708708, y: -0.054999977, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
