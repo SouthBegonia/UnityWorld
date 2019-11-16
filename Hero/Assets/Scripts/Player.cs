@@ -89,11 +89,9 @@ public class Player : MonoBehaviour
 
         AttackOnGround();
 
-        //非特殊情况才输入移动
-        if (state.canInput)
-            InputMove();
+        InputMove();
 
-
+        //Player方向矫正
         if (transform.parent.transform.eulerAngles != Vector3.zero)
         {
             transform.parent.transform.eulerAngles = Vector3.zero;
@@ -103,14 +101,6 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
 
-        //if (state.isAttacking)
-        //{
-        //    transform.parent.position += attackMoveDelta;
-        //    attackMoveDelta.x = Mathf.Lerp(attackMoveDelta.x, 0f, 0.1f);
-
-        //    if (Mathf.Abs(attackMoveDelta.x) < 0.001)
-        //        attackMoveDelta.x = 0f;
-        //}
 
     }
 
@@ -145,71 +135,65 @@ public class Player : MonoBehaviour
             moveX = 0;
 
         //输入在任何时候（地面/空中）都可以移动玩家：
-        transform.parent.position += new Vector3(moveX * SpdMul, 0, 0) * Time.deltaTime;
+        if (state.canInput)
+        {
+            transform.parent.position += new Vector3(InputX * SpdMul, 0, 0) * Time.deltaTime;
+            animator.SetInteger("Horizontal", InputX);
+        }
 
         //但只有在地面时才进行玩家转向
         // && !state.isAttacking
-        if (state.canTurn)
+        if (state.canTurn && state.canInput)
         {
-            //transform.parent.position += new Vector3(moveX, 0, 0) * Time.deltaTime;
-            animator.SetInteger("Horizontal", moveX);
-
-            if (moveX != 0)
+            if (moveX > 0)
             {
-                if (moveX > 0)
-                {
-                    direction.x = 1;
-
-                    transform.parent.localScale = Vector3.one;
-                    //if (Mathf.Abs(GetAttackMoveDelta()) < 0.04)
-                    //{
-                    //    AddAttackMoveDelta(0.06f);
-                    //}
-                }
-                else if (moveX < 0)
-                {
-                    direction.x = -1;
-                    transform.parent.localScale = new Vector3(-1, 1, 1);
-                }
+                direction.x = 1;
+                transform.parent.localScale = Vector3.one;
             }
-
+            else if (moveX < 0)
+            {
+                direction.x = -1;
+                transform.parent.localScale = new Vector3(-1, 1, 1);
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        //在地面上方可输入跳跃或滑动
+        if (state.isOnGround && state.canInput)
         {
-            //滑步
-            if (Input.GetKey(KeyCode.S) && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
-            {
-                if (state.isOnGround && state.canSlide)
-                {
-                    animator.SetTrigger("slide");
-                    rigidbody2d.AddForce(new Vector2(moveX * 30f, 0f));
-                    rigidbody2d.velocity += new Vector2(moveX * 1.7f, 0f);
-
-                    state.canTurn = false;
-                    state.canSlide = false;
-                    StartCoroutine(StopSliding());
-                }
-
-            }
-            else
-            {
-                //跳跃
-                if (state.canJump && state.isOnGround)
-                {
-                    //障眼法：jump动画时间和滞空时间大致相同，避免复杂状态
-                    animator.SetBool("onGround", false);
-                    //rigidbody2d.AddForce(Vector2.up);
-                    rigidbody2d.AddForce(new Vector2(moveX * 20f, 10f));
-                    rigidbody2d.velocity += Vector2.up * 2f;
-                    state.canTurn = true;
-
-                }
-            }
-
+            InputJumpOrSlide();
         }
     }
 
+
+    private void InputJumpOrSlide()
+    {
+        //滑步
+        if (state.canSlide && Input.GetKey(KeyCode.S))
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                state.canTurn = false;
+                state.canSlide = false;
+                state.canJump = false;
+                state.canInput = false;
+                animator.SetTrigger("slide");
+                
+                //rigidbody2d.AddForce(new Vector2(direction.x * 30f, 0f));
+                //rigidbody2d.velocity += new Vector2(direction.x * 2f, 0f);
+                AddMoveDelta(direction, 2f, 0f);
+                StartCoroutine(StopSliding());
+            }
+        }
+        else if (state.canJump && Input.GetKeyDown(KeyCode.Space) && !Input.GetKey(KeyCode.S))
+        {
+            //障眼法：jump动画时间和滞空时间大致相同，避免复杂状态
+            animator.SetBool("onGround", false);
+            //rigidbody2d.AddForce(Vector2.up);
+            rigidbody2d.AddForce(new Vector2(direction.x * 20f, 10f));
+            rigidbody2d.velocity += Vector2.up * 2f;
+            state.canTurn = true;
+        }
+    }
 
     //空中攻击
     private void AttackOnAir()
@@ -238,8 +222,6 @@ public class Player : MonoBehaviour
             //attack_air_3持续进行直至接触地面，自动切换到attack_air_4
             //对attack_air_4动画延时结束
             StartCoroutine(Attck_3CD());
-
-
         }
 
 
@@ -277,6 +259,8 @@ public class Player : MonoBehaviour
             {
                 //state.canAttackAgain = true;
             }
+
+
         }
     }
 
@@ -293,6 +277,8 @@ public class Player : MonoBehaviour
             state.isAttacking = false;
             state.canJump = true;
             state.canInput = true;
+            state.canTurn = true;
+            ResetMoveDelta();
         }
 
 
@@ -303,6 +289,7 @@ public class Player : MonoBehaviour
             state.isAttacking = true;
             state.canJump = false;
             state.canInput = false;
+            state.canTurn = false;
 
             //攻击阶段一： idle ---> attack_1
             if (count == 0)
@@ -323,13 +310,15 @@ public class Player : MonoBehaviour
                 //攻击阶段三： attack_2 ---> attack_3
                 count = 3;
                 animator.SetInteger("attack", count);
+                //AddMoveDelta(direction, 0.5f, 0f);
             }
             else if (count == 3)
             {
+                //AddMoveDelta(direction, 1.7f, 0f);
                 if (state.canAttackAgain)
                 {
                     //此处不可再上面攻击阶段三写：添加位移是即时的，但应等attack_3播放一定时长再产生位移
-                    AddMoveDelta(direction, 1.7f, 0f);
+                    AddMoveDelta(direction, 1f, 0f);
                     state.canAttackAgain = false;
                 }
 
@@ -351,22 +340,33 @@ public class Player : MonoBehaviour
         //切勿设置velocity：因为物体的vel不一定是在 direction方向（rigidbody内查看），强行设置会造成误差累计，最终可能造成滑移
         //同理，AddFore也要考虑物体本身方向
         rigidbody2d.velocity += dir * velMul;
-        rigidbody2d.AddForce(dir * ForceMul);
+        //rigidbody2d.AddForce(dir * ForceMul);
+    }
+
+    //位移归零：
+    //由于对rigidbody直接添加速度，力等，多次累计会使其归零速度极慢，因此在动作完成后都应该对其手动归零
+    private void ResetMoveDelta()
+    {
+        rigidbody2d.velocity = Vector2.zero;
     }
 
 
     IEnumerator StopSliding()
     {
         //0.4s为slide的时长
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.5f);
         state.canTurn = true;
-        rigidbody2d.velocity = Vector2.zero;
+        state.canJump = true;
+        state.canInput = true;
+        animator.ResetTrigger("slide");
+        ResetMoveDelta();
         StartCoroutine(SlideCD());
     }
 
     IEnumerator SlideCD()
     {
         yield return new WaitForSeconds(0.3f);
+        //state.canTurn = true;
         state.canSlide = true;
     }
 
@@ -378,6 +378,7 @@ public class Player : MonoBehaviour
         count = 0;
         animator.SetInteger("attack", count);
         state.canInput = true;
+        state.canTurn = true;
         state.isAttacking = false;
         state.canJump = true;
         state.canAttackAgain = true;
