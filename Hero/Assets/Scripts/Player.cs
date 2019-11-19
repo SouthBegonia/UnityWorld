@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
 
     //PlayerBody
     private BoxCollider2D boxCollider;
+    private Cinemachine.CinemachineCollisionImpulseSource MyInpulse;
 
     private void Start()
     {
@@ -63,6 +64,8 @@ public class Player : MonoBehaviour
         moveX = 0;
         SpdMul = 1f;
         direction = new Vector2(rigidbody2d.transform.localScale.x, 0);
+
+        MyInpulse = GetComponent<Cinemachine.CinemachineCollisionImpulseSource>();
     }
 
     private void Update()
@@ -221,6 +224,9 @@ public class Player : MonoBehaviour
         {
             //attack_air_3持续进行直至接触地面，自动切换到attack_air_4
             //对attack_air_4动画延时结束
+
+            //相机抖动
+            MyInpulse.GenerateImpulse();
             StartCoroutine(Attck_3CD());
         }
 
