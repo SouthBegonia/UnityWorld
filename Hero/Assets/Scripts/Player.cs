@@ -9,7 +9,9 @@ public struct PlayerState
     public bool canAttackAgain;
     public bool canJump;
     public bool canSlide;
+    public bool canBeHurt;
 
+    public bool isAlive;
     public bool isAttacking;
     public bool isOnGround;
 }
@@ -24,14 +26,16 @@ public struct PlayerState
 //    sliding,
 //}
 
-public class Player : MonoBehaviour
+public class Player : Fighter
 {
+
+    public static Player Instance;
+
 
     //Player动作状态机
     private int count = 0;
     private Animator animator;
     private AnimatorStateInfo stateInfo;
-
 
     //Player父物体
     private Rigidbody2D rigidbody2d;
@@ -47,7 +51,16 @@ public class Player : MonoBehaviour
     private BoxCollider2D boxCollider;
     private Cinemachine.CinemachineCollisionImpulseSource MyInpulse;
 
-    private void Start()
+    public Transform pos;
+
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+
+    private  void Start()
     {
         animator = GetComponent<Animator>();
         rigidbody2d = gameObject.GetComponentInParent<Rigidbody2D>();
@@ -60,18 +73,24 @@ public class Player : MonoBehaviour
         state.canAttackAgain = true;
         state.isOnGround = true;
         state.isAttacking = false;
+        state.canBeHurt = true;
+        state.isAlive = true;
 
         moveX = 0;
         SpdMul = 1f;
         direction = new Vector2(rigidbody2d.transform.localScale.x, 0);
 
         MyInpulse = GetComponent<Cinemachine.CinemachineCollisionImpulseSource>();
+
+        //初始化生命值系统
+        InitHealth();
     }
 
     private void Update()
     {
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
+        //根据所在位置(空中/地面)自动改变移动速度倍率
         if (state.isOnGround)
         {
             if (state.isAttacking)
@@ -88,19 +107,33 @@ public class Player : MonoBehaviour
         }
 
 
-        AttackOnAir();
+        //生命值小于0后死亡
+        if (state.isAlive && Health <= 0)
+            Death();
 
-        AttackOnGround();
-
-        InputMove();
+        //受伤害期间不可进行任何输入
+        if (state.canBeHurt && state.isAlive)
+        {
+            AttackOnAir();
+            AttackOnGround();
+            InputMove();
+        }
 
         //Player方向矫正
         if (transform.parent.transform.eulerAngles != Vector3.zero)
         {
             transform.parent.transform.eulerAngles = Vector3.zero;
         }
-    }
 
+       
+        //Test----------------------------
+        Damage damage = new Damage { HitPoint = 10f, Pos = pos.position,pushForce=1f };
+        if (Input.GetMouseButtonDown(1) && state.isAlive)
+            GetHurt(damage);
+
+
+    }
+    
     private void FixedUpdate()
     {
 
@@ -125,6 +158,8 @@ public class Player : MonoBehaviour
         }
     }
 
+
+    #region 输入及攻击系统
     //移动输入
     private void InputMove()
     {
@@ -180,9 +215,10 @@ public class Player : MonoBehaviour
                 state.canJump = false;
                 state.canInput = false;
                 animator.SetTrigger("slide");
-                
-                //rigidbody2d.AddForce(new Vector2(direction.x * 30f, 0f));
-                //rigidbody2d.velocity += new Vector2(direction.x * 2f, 0f);
+
+                //滑步中无敌
+                state.canBeHurt = false;
+
                 AddMoveDelta(direction, 2f, 0f);
                 StartCoroutine(StopSliding());
             }
@@ -225,6 +261,9 @@ public class Player : MonoBehaviour
             //attack_air_3持续进行直至接触地面，自动切换到attack_air_4
             //对attack_air_4动画延时结束
 
+            //最终一击期间无敌
+            state.canBeHurt = false;
+
             //相机抖动
             MyInpulse.GenerateImpulse();
             StartCoroutine(Attck_3CD());
@@ -253,7 +292,7 @@ public class Player : MonoBehaviour
             }
             else if (stateInfo.IsName("attack_air_2") && count == 5 && stateInfo.normalizedTime > 0.4f)
             {
-                //攻击阶段三： attack_2 ---> attack_3
+                //攻击阶段三：
                 count = 6;
                 animator.SetInteger("attack", count);
                 SetMoveDelta(Vector2.down, 3f, 0f);
@@ -341,7 +380,7 @@ public class Player : MonoBehaviour
     }
 
     //添加位移函数：仅用在地面
-    private void AddMoveDelta(Vector2 dir, float velMul, float ForceMul)
+    public void AddMoveDelta(Vector2 dir, float velMul, float ForceMul)
     {
         //切勿设置velocity：因为物体的vel不一定是在 direction方向（rigidbody内查看），强行设置会造成误差累计，最终可能造成滑移
         //同理，AddFore也要考虑物体本身方向
@@ -364,6 +403,7 @@ public class Player : MonoBehaviour
         state.canTurn = true;
         state.canJump = true;
         state.canInput = true;
+        state.canBeHurt = true;
         animator.ResetTrigger("slide");
         ResetMoveDelta();
         StartCoroutine(SlideCD());
@@ -388,5 +428,110 @@ public class Player : MonoBehaviour
         state.isAttacking = false;
         state.canJump = true;
         state.canAttackAgain = true;
+        state.canBeHurt = true;
     }
+
+    #endregion
+
+    #region 伤害系统
+
+    //传入伤害参数，对Player造成伤害及后退
+    protected override void GetHurt(Damage damage)
+    {
+        //在地面受到伤害
+        if(state.isOnGround && state.isAlive && state.canBeHurt)
+        {
+            if (Time.time - lastHurtTime > InvincibleTime)
+            {                
+                //重置无敌时间、生命值减少
+                lastHurtTime = Time.time;
+                Health -= damage.HitPoint;
+
+                //受伤后清零其他状态及其parameters
+                GettingHurtState();
+
+                //开启受伤状态及CD协程
+                state.canBeHurt = false;
+                StartCoroutine(HurtCD());
+
+                //开启受伤动画
+                animator.SetTrigger("hurt");
+
+                //计算出敌人与Player坐标差，根据x方向判断受伤害后退方向
+                Vector2 delta;
+                float deltaX = (damage.Pos - transform.position).x;          
+                if (deltaX > 0)
+                    delta = new Vector3(-1f, transform.parent.position.y);
+                else
+                    delta = new Vector3(1f, transform.parent.position.y);
+                SetMoveDelta(Vector2.zero, 0, 0);
+                AddMoveDelta(delta, damage.pushForce, 0f);
+            }
+        }
+
+        //在空中受到伤害
+        if(!state.isOnGround && state.isAlive && state.canBeHurt)
+        {
+            if (Time.time - lastHurtTime > InvincibleTime)
+            {
+                //重置无敌时间、生命值减少
+                lastHurtTime = Time.time;
+                Health -= damage.HitPoint;
+
+                //受伤后清零其他状态及其parameters
+                GettingHurtState();
+
+                //开启受伤状态及CD协程
+                state.canBeHurt = false;
+                StartCoroutine(HurtCD());
+
+                //开启受伤动画
+                animator.SetTrigger("hurt");
+
+                //计算出敌人与Player坐标差，根据x方向设置受伤害后退方向
+                //空中受到伤害y<0
+                Vector2 delta;
+                float deltaX = (damage.Pos - transform.position).x;
+                if (deltaX > 0)
+                    delta = new Vector3(-1f, -1);
+                else
+                    delta = new Vector3(1f, -1);
+                SetMoveDelta(Vector2.zero, 0, 0);
+                AddMoveDelta(delta, damage.pushForce, 0f);
+            }
+        }
+    }
+
+    //受到伤害时清零其他状态：
+    private void GettingHurtState()
+    {
+        //清零攻击参数
+        count = 0;
+        animator.SetInteger("attack", count);
+        state.isAttacking = false;
+
+        //清零Input相关参数
+        state.canJump = true;
+        state.canInput = true;
+        state.canTurn = true;
+        animator.SetInteger("Horizontal", 0);
+    }
+
+    //死亡函数
+    protected override void Death()
+    {        
+        Debug.Log("Die");
+        animator.SetTrigger("die");
+        state.isAlive = false;
+        state.canBeHurt = false;
+    }
+
+    //
+    IEnumerator HurtCD()
+    {
+        yield return new WaitForSeconds(InvincibleTime);
+        state.canBeHurt = true;
+    }
+
+    #endregion
 }
