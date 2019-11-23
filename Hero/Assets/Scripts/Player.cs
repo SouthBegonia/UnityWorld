@@ -13,6 +13,7 @@ public struct PlayerState
 
     public bool isAlive;
     public bool isAttacking;
+    public bool isUnderAttacking;
     public bool isOnGround;
 }
 
@@ -36,6 +37,8 @@ public class Player : Fighter
     private int count = 0;
     private Animator animator;
     private AnimatorStateInfo stateInfo;
+    private SpriteRenderer PlayerSprite;
+
 
     //Player父物体
     private Rigidbody2D rigidbody2d;
@@ -43,6 +46,7 @@ public class Player : Fighter
 
     private int moveX;
     private float SpdMul;
+    private float BlinkTime;
 
     private PlayerState state;
 
@@ -65,6 +69,8 @@ public class Player : Fighter
         animator = GetComponent<Animator>();
         rigidbody2d = gameObject.GetComponentInParent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+        PlayerSprite = GetComponent<SpriteRenderer>();
+
 
         state.canInput = true;
         state.canJump = true;
@@ -75,6 +81,7 @@ public class Player : Fighter
         state.isAttacking = false;
         state.canBeHurt = true;
         state.isAlive = true;
+        state.isUnderAttacking = false;
 
         moveX = 0;
         SpdMul = 1f;
@@ -119,6 +126,12 @@ public class Player : Fighter
             InputMove();
         }
 
+        //受伤害闪烁
+        if (state.isUnderAttacking)
+            SpriteBlink();
+        else
+            PlayerSprite.enabled = true;
+
         //Player方向矫正
         if (transform.parent.transform.eulerAngles != Vector3.zero)
         {
@@ -160,6 +173,7 @@ public class Player : Fighter
 
 
     #region 输入及攻击系统
+
     //移动输入
     private void InputMove()
     {
@@ -180,7 +194,6 @@ public class Player : Fighter
         }
 
         //但只有在地面时才进行玩家转向
-        // && !state.isAttacking
         if (state.canTurn && state.canInput)
         {
             if (moveX > 0)
@@ -202,7 +215,7 @@ public class Player : Fighter
         }
     }
 
-
+    //滑步及跳跃输入：
     private void InputJumpOrSlide()
     {
         //滑步
@@ -304,8 +317,6 @@ public class Player : Fighter
             {
                 //state.canAttackAgain = true;
             }
-
-
         }
     }
 
@@ -452,6 +463,7 @@ public class Player : Fighter
 
                 //开启受伤状态及CD协程
                 state.canBeHurt = false;
+                state.isUnderAttacking = true;
                 StartCoroutine(HurtCD());
 
                 //开启受伤动画
@@ -483,6 +495,7 @@ public class Player : Fighter
 
                 //开启受伤状态及CD协程
                 state.canBeHurt = false;
+                state.isUnderAttacking = true;
                 StartCoroutine(HurtCD());
 
                 //开启受伤动画
@@ -526,11 +539,25 @@ public class Player : Fighter
         state.canBeHurt = false;
     }
 
-    //
+    //受伤闪烁
+    public void SpriteBlink()
+    {
+        BlinkTime += Time.deltaTime * 2f;
+        if (BlinkTime % 0.05f > 0.03f)
+        {
+            PlayerSprite.enabled = false;
+        }
+        else
+            PlayerSprite.enabled = true;
+    }
+
+    //受伤硬直时间：
     IEnumerator HurtCD()
     {
-        yield return new WaitForSeconds(InvincibleTime);
+        //0.3s后可Input输入
+        yield return new WaitForSeconds(0.5f);
         state.canBeHurt = true;
+        state.isUnderAttacking = false;
     }
 
     #endregion
