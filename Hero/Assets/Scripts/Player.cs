@@ -171,6 +171,15 @@ public class Player : Fighter
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Background"))
+        {
+            //从跳跃状态落地，变为Player层
+            gameObject.layer = 10;
+        }
+    }
+
 
     #region 输入及攻击系统
 
@@ -232,6 +241,10 @@ public class Player : Fighter
                 //滑步中无敌
                 state.canBeHurt = false;
 
+                //滑步中处于Ignore层忽略与Enemy的碰撞
+                //transform.parent.gameObject.layer = 11;
+                gameObject.layer = 11;
+
                 AddMoveDelta(direction, 2f, 0f);
                 StartCoroutine(StopSliding());
             }
@@ -244,6 +257,9 @@ public class Player : Fighter
             rigidbody2d.AddForce(new Vector2(direction.x * 20f, 10f));
             rigidbody2d.velocity += Vector2.up * 2f;
             state.canTurn = true;
+
+            //跳跃中处于Ignore层
+            gameObject.layer = 11;
         }
     }
 
@@ -416,6 +432,12 @@ public class Player : Fighter
         state.canInput = true;
         state.canBeHurt = true;
         animator.ResetTrigger("slide");
+
+        //滑步后更正为Player层
+        //transform.parent.gameObject.layer = 10;
+        gameObject.layer = 10;
+
+
         ResetMoveDelta();
         StartCoroutine(SlideCD());
     }

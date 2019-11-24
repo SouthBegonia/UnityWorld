@@ -16,20 +16,16 @@ public class Fighter : MonoBehaviour
     public float Health;        //生命值
     public  float HealthMax = 100f;   //最大生命值
     public float InvincibleTime = 10f;       //免疫时间
-    protected BoxCollider2D hitCollider;  //自身触发器
+    //protected BoxCollider2D hitCollider;  //自身触发器
     //private Rigidbody2D rigidbody;
 
     protected float lastHurtTime;
 
     protected virtual void InitHealth()
     {
-        hitCollider = GetComponent<BoxCollider2D>();
-        //rigidbody = GetComponentInParent<Rigidbody2D>();
         lastHurtTime = -InvincibleTime;
-
         Health = HealthMax;
     }
-
 
     protected virtual void GetHurt(Damage damage)
     {
@@ -39,11 +35,9 @@ public class Fighter : MonoBehaviour
             Health -= damage.HitPoint;
             //Vector2 delta = new Vector3(-damage.Pos.x * damage.pushForce, transform.parent.position.y);
             //rigidbody.velocity += delta;
-
-            if (Health <= 0)
-                Death();
         }
-            
+        if (Health <= 0)
+            Death();        
     }
 
     protected virtual void Death()
