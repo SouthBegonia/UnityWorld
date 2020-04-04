@@ -95,6 +95,9 @@ public class Player : Fighter
 
     private void Update()
     {
+
+
+
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
         //根据所在位置(空中/地面)自动改变移动速度倍率
@@ -143,7 +146,6 @@ public class Player : Fighter
         Damage damage = new Damage { HitPoint = 10f, Pos = pos.position,pushForce=1f };
         if (Input.GetMouseButtonDown(1) && state.isAlive)
             GetHurt(damage);
-
 
     }
     
