@@ -14,6 +14,7 @@ public class PlayerInspector : Editor
     bool showSkinSel;
     bool showShoe;
 
+
     private void OnEnable()
     {
         // 获取当前自定义Inspector的对象
@@ -22,11 +23,9 @@ public class PlayerInspector : Editor
 
     public override void OnInspectorGUI()
     {
-        //base.OnInspectorGUI();
-
         // 设置页面布局方向：垂直/水平
         EditorGUILayout.BeginVertical();
-
+        
 
         // 绘制Player的基本信息
         GUIStyle PlayerInfoStyle = new GUIStyle()
@@ -39,7 +38,7 @@ public class PlayerInspector : Editor
         player.id = EditorGUILayout.IntField("Player ID", player.id);
         player.playerName = EditorGUILayout.TextField("Player Name", player.playerName);
 
-
+        
         EditorGUILayout.Space();
         EditorGUILayout.Space();
         EditorGUILayout.Space();
@@ -51,6 +50,7 @@ public class PlayerInspector : Editor
             fontSize = 15,
             alignment = TextAnchor.MiddleCenter,
             fontStyle = FontStyle.Bold,
+            wordWrap = true,          
         };
         EditorGUILayout.LabelField("---背景故事---", PlayerBackStoryStyle);
         player.backStory = EditorGUILayout.TextArea(player.backStory, GUILayout.MinHeight(50));

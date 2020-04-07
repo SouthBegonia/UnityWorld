@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Tooltip("ssss")]
     public int id;
 
     public string backStory;
@@ -25,20 +26,10 @@ public class Player : MonoBehaviour
     public int nowSkin = 0;
     public string[] skins = new string[] { "Skin 1", "Skin 2", "Skin 3", "Skin 4" };
 
-    private void Awake()
-    {
-        
-    }
-
 
     private void Start()
     {
         health = maxHealth;
-
-    }
-
-    private void Update()
-    {
 
     }
 
