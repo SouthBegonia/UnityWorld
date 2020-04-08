@@ -32,6 +32,20 @@ public class demo1 : MonoBehaviour
     [TextArea]
     public string gameDescribe = "";
 
+
+    public bool IsAlive;
+    public enum PlayerState
+    {
+        idle,
+        walk,
+        jump
+    };
+
+    public PlayerState Playerstate;
+
+    /// <summary>
+    /// Inspector中数值变动时调用
+    /// </summary>
     private void OnValidate()
     {
         if (health < 0)

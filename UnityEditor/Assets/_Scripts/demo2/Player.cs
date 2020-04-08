@@ -26,10 +26,30 @@ public class Player : MonoBehaviour
     public int nowSkin = 0;
     public string[] skins = new string[] { "Skin 1", "Skin 2", "Skin 3", "Skin 4" };
 
+    //[HideInInspector]
+    //public GameObject[] Ornaments = new GameObject[4];
+
+    //public GameObject obj;
+
+    private void OnEnable()
+    {
+
+    }
 
     private void Start()
     {
         health = maxHealth;
+        //Ornaments = new GameObject[4]
+        //{
+        //new GameObject("饰品1"),
+        //new GameObject("饰品2"),
+        //new GameObject("饰品3"),
+        //new GameObject("饰品4"),
+        //};
+    }
+
+    private void Update()
+    {
 
     }
 

@@ -259,14 +259,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 9527
-  backStory: 
+  backStory: "\u6CA1\u5565\u53EF\u8BB2\u7684\u6545\u4E8B..."
   playerName: Joker
   health: 80
   maxHealth: 100
-  damage: 13.5
-  weaponDmg1: 0
-  weaponDmg2: 0
-  weaponDmg3: 0
+  damage: 12
+  weaponDmg1: 10
+  weaponDmg2: 15
+  weaponDmg3: 20
   shoeName: "\u91D1\u7334"
   shoeSize: 30
   shoeType: "\u76AE\u978B"

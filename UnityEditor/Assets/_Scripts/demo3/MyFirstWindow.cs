@@ -33,7 +33,7 @@ public class MyFirstWindow : EditorWindow
         GUI.skin.label.fontSize = 24;
         GUI.skin.label.alignment = TextAnchor.MiddleCenter;
         GUILayout.Label("Bug Reporter");
-
+        
         // Bug Name
         GUILayout.Space(10);
         bugReporterName = EditorGUILayout.TextField("Bug Name", bugReporterName);

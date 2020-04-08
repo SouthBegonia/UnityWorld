@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditorInternal;
+
 
 /// <summary>
 /// 为Player脚本的Inspector页面进行定制
@@ -13,6 +15,7 @@ public class PlayerInspector : Editor
     bool showWeapons;
     bool showSkinSel;
     bool showShoe;
+    bool showOrnaments;
 
 
     private void OnEnable()
@@ -23,9 +26,11 @@ public class PlayerInspector : Editor
 
     public override void OnInspectorGUI()
     {
+        //base.OnInspectorGUI();
+
         // 设置页面布局方向：垂直/水平
         EditorGUILayout.BeginVertical();
-        
+
 
         // 绘制Player的基本信息
         GUIStyle PlayerInfoStyle = new GUIStyle()
@@ -34,11 +39,11 @@ public class PlayerInspector : Editor
             fontStyle = FontStyle.Bold,
             alignment = TextAnchor.MiddleCenter,
         };
-        EditorGUILayout.LabelField("---基础信息---",PlayerInfoStyle);
+        EditorGUILayout.LabelField(new GUIContent("---基础信息---", "Player的基本信息"), PlayerInfoStyle);
         player.id = EditorGUILayout.IntField("Player ID", player.id);
         player.playerName = EditorGUILayout.TextField("Player Name", player.playerName);
 
-        
+
         EditorGUILayout.Space();
         EditorGUILayout.Space();
         EditorGUILayout.Space();
@@ -50,9 +55,9 @@ public class PlayerInspector : Editor
             fontSize = 15,
             alignment = TextAnchor.MiddleCenter,
             fontStyle = FontStyle.Bold,
-            wordWrap = true,          
+            wordWrap = true,
         };
-        EditorGUILayout.LabelField("---背景故事---", PlayerBackStoryStyle);
+        EditorGUILayout.LabelField(new GUIContent("---背景故事---", "描述Player的故事"), PlayerBackStoryStyle);
         player.backStory = EditorGUILayout.TextArea(player.backStory, GUILayout.MinHeight(50));
 
         EditorGUILayout.Space();
@@ -70,7 +75,7 @@ public class PlayerInspector : Editor
         player.health = EditorGUILayout.Slider("Health", player.health, 0, 100);
 
         // 根据生命值设置生命条的背景颜色
-        if (player.health/player.maxHealth <0.3)
+        if (player.health / player.maxHealth < 0.3)
             GUI.color = Color.red;
         else
             GUI.color = Color.green;
@@ -92,7 +97,7 @@ public class PlayerInspector : Editor
 
         // 绘制武器信息：设置内容折叠
         showWeapons = EditorGUILayout.Foldout(showWeapons, "武器");
-        if(showWeapons)
+        if (showWeapons)
         {
             player.weaponDmg1 = EditorGUILayout.FloatField("Weapon 1 Damage", player.weaponDmg1);
             player.weaponDmg2 = EditorGUILayout.FloatField("Weapon 2 Damage", player.weaponDmg2);
@@ -102,7 +107,7 @@ public class PlayerInspector : Editor
 
         // 绘制选择皮肤页面
         showSkinSel = EditorGUILayout.Foldout(showSkinSel, "皮肤");
-        if(showSkinSel)
+        if (showSkinSel)
         {
             player.nowSkin = GUILayout.SelectionGrid(player.nowSkin, player.skins, 1);
             //player.playerSkins =  EditorGUI.ObjectField(new Rect(0, 0, 30, 30),player.playerSkins,typeof(GameObject),);
@@ -111,7 +116,7 @@ public class PlayerInspector : Editor
 
         // 绘制鞋子信息
         showShoe = EditorGUILayout.Foldout(showShoe, "鞋子");
-        if(showShoe)
+        if (showShoe)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Name", GUILayout.MaxWidth(50));
@@ -123,9 +128,20 @@ public class PlayerInspector : Editor
             EditorGUILayout.EndHorizontal();
         }
 
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
+        //// 饰品
+        //showOrnaments = EditorGUILayout.Foldout(showOrnaments, "饰品");
+        //if (showOrnaments)
+        //{
+        //    for (int i = 0; i < player.Ornaments.Length; i++)
+        //    {
+        //        //Debug.Log(i);
+        //        player.Ornaments[i] = (GameObject)EditorGUILayout.ObjectField("kkk", player.Ornaments[i], typeof(GameObject), true);
+        //    }
+        //}
+        //player.obj  = (GameObject)EditorGUILayout.ObjectField("Buggy Game Object", player.obj, typeof(GameObject), true);
+
+        EditorGUILayout.Space(20);
+
 
         // 绘制按钮重置信息
         if (GUILayout.Button("重置Player信息"))
