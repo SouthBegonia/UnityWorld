@@ -1,14 +1,12 @@
 # 前言
-对于Unity编辑器的扩展方法众多，本文仅从最常用的一些方法入手，例如Inspector脚本栏的扩展、顶菜单栏的扩展等，图文并茂阐述其完整用法。
-
-本文大部分内容整理自 [独立游戏开发 - indienova](https://indienova.com/u/dev) 所著的 **Unity使用技巧集合**，但仅选取了最常用的一些方法，并在自身项目上加以实现。
+对于Unity编辑器的扩展方法众多，扩展对象包括Inspector页面及顶部菜单栏。定制方法有两种：
+- Attributes属性进行定制
+- 继承Editor类，重写OnInspectorGUI()进行定制
 
 项目地址：[UnityEditor - SouthBegonia](https://github.com/SouthBegonia/UnityWorld/tree/master/UnityEditor)
 
-本文仅供学习交流，如有任何侵权行为立即删除。
-
-## 脚本栏的扩展
-该部分的扩展方法集中在Inspector中脚本面板，主要体现在代码实现脚本栏中可视变量的规范化、便捷化
+## Attributes属性进行定制
+该部分的扩展方法集中在Inspector中脚本面板，使用了Unity中的 **Attributes 属性** ，使得脚本在Inspector面板中规范化、便捷化。
 
 ### [Header] 属性标题
 为后续区域代码拟订一个标题，用于区分和概述该区域代码含义
@@ -121,6 +119,25 @@ public void PrintHealth()
 ```
 ![](https://img2020.cnblogs.com/blog/1688704/202004/1688704-20200405151911049-1273731685.png)
 
+### [ContextMenuItem] 字段上下文菜单
+区别于上面的`ContextMenu`是在脚本名字处右键打开上下文菜单，该方法适用于在某一字段名字上右键打开上下文菜单：参数类型string，前name，后function
+```
+[ContextMenuItem("ResetHealth", "ResetHealth")]
+public int health = 100;
+
+public void ResetHealth()
+{	
+	health = maxHealth;	
+}
+```
+![](https://img2020.cnblogs.com/blog/1688704/202004/1688704-20200412142502084-422869231.png)
+
+
+## 重写OnInspectorGUI()进行定制
+除了于上文运用Attributes属性对脚本栏进行定制，也可以将脚本 **继承自Editor类，并重写 OnInspectorGUI()**，从而实现在Inspector页面进行GUI绘制。大部分方法可以使用`EditorGUILayout`类，或是`GUILayout`类，与GUI在Scene中绘制的原理大致相同。
+
+![](https://img2020.cnblogs.com/blog/1688704/202004/1688704-20200412142514722-107888367.png)
+完整代码：[PlayerInspector.cs](https://github.com/SouthBegonia/UnityWorld/blob/master/UnityEditor/Assets/_Scripts/demo2/PlayerInspector.cs)
 
 ## 菜单栏的扩展
 
@@ -132,12 +149,22 @@ static void PrintSomething()
 {
     // 注意：仅有静态函数才可使用该属性
     Debug.Log("当前Unity版本：" + Application.unityVersion);
-    
 }
 ```
+三种重载方法：
+```
+public MenuItem(string itemName);	
+public MenuItem(string itemName, bool isValidateFunction);	//不要把isValidateFunction设为true
+public MenuItem(string itemName, bool isValidateFunction, int priority);	//priority为该项在菜单栏中显示顺序
+```
 ![](https://img2020.cnblogs.com/blog/1688704/202004/1688704-20200405151918374-1617159848.png)
+
+# 总述
+两种方法皆是对Inspector脚本页面进行定制的方法：Attributes是官方提供的定制属性类，简单便捷五脏俱全；而对Editor类的继承重写则具有多的可扩展性，也相对较麻烦，此外**继承重写Editor的方法不能与Attributes属性共存**，所以在进行各种的定制前请**慎重选择定制的方法**。
 
 # 参考
 - [独立游戏开发 - IndiaNova](https://indienova.com/u/dev)
 - [InspectorFoldoutGroup - PixeyeHQ](https://github.com/PixeyeHQ/InspectorFoldoutGroup)
 - [你不可不知的Unity C#代码小技巧 - Michael Wang](https://mp.weixin.qq.com/s?__biz=MzU5MjQ1NTEwOA==&mid=2247503312&idx=1&sn=f547e5a6dd9c8551ef028c330b5a74f1&chksm=fe1df97bc96a706df98e6d761aefbaff1270432676727eca883c6a426fafeaa1fa76728d26f3&mpshare=1&scene=1&srcid=&sharer_sharetime=1579407428670&sharer_shareid=3700fe0c888383356811eb94c58328eb#rd)
+- [Unity Editor基础篇 - Unity墙外世界](https://mp.weixin.qq.com/s/4kporY-PCScRAESy4WSpmA)
+- [Unity: make your lists functional with ReorderableList - valentin](https://va.lent.in/unity-make-your-lists-functional-with-reorderablelist/)
