@@ -13,8 +13,9 @@
 
 ### 其他：
 
--  Blog首页：[SouthBegonia's  Blog](https://www.cnblogs.com/SouthBegonia/)
+-  博客：[SouthBegonia's  Blog](https://www.cnblogs.com/SouthBegonia/)
 -  游戏试玩下载(大部分)：[Unity Games](https://pan.baidu.com/s/1YhGINK1zqLKmD6bp1C29tA) (提取码wekp)
+-  Gitee：[UnityWorld - SouthBegonia's Gitee](https://gitee.com/southbegonia/UnityWorld)
 -  单个项目文件下载方法：[DownGit](https://github.com/MinhasKamal/DownGit) 
 
 -------------
