@@ -80,3 +80,4 @@
 - [UnityAPI](https://github.com/SouthBegonia/UnityWorld/tree/master/UnityAPI)
 - [规范化游戏开发文档](https://github.com/SouthBegonia/UnityWorld/blob/master/Standardized%20Game%20Development.md)
 - [Unity3D 跨平台原理](https://github.com/SouthBegonia/UnityWorld/blob/master/How%20Unity3D%20operate%20on%20various%20platforms.md)
+- [探讨电影的黑边遮幅在游戏中的表现](https://www.cnblogs.com/SouthBegonia/p/12732566.html)
