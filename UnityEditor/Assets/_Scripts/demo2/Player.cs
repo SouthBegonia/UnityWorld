@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [Tooltip("ssss")]
     public int id;
 
     public string backStory;

@@ -15,6 +15,7 @@ public class demo1 : MonoBehaviour
     public string playerName;
 
     [Space]
+    [ContextMenuItem("ResetHealth", "ResetHealth")]
     public int health = 100;
 
     [Range(0, 1000)]
@@ -64,5 +65,10 @@ public class demo1 : MonoBehaviour
     public void PrintHealth()
     {
         Debug.Log("Health = " + health);
+    }
+
+    public void ResetHealth()
+    {
+        health = maxHealth;
     }
 }

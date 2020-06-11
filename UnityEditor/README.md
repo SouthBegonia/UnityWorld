@@ -163,8 +163,10 @@ public MenuItem(string itemName, bool isValidateFunction, int priority);	//prior
 两种方法皆是对Inspector脚本页面进行定制的方法：Attributes是官方提供的定制属性类，简单便捷五脏俱全；而对Editor类的继承重写则具有多的可扩展性，也相对较麻烦，此外**继承重写Editor的方法不能与Attributes属性共存**，所以在进行各种的定制前请**慎重选择定制的方法**。
 
 # 参考
+
 - [独立游戏开发 - IndiaNova](https://indienova.com/u/dev)
 - [InspectorFoldoutGroup - PixeyeHQ](https://github.com/PixeyeHQ/InspectorFoldoutGroup)
 - [你不可不知的Unity C#代码小技巧 - Michael Wang](https://mp.weixin.qq.com/s?__biz=MzU5MjQ1NTEwOA==&mid=2247503312&idx=1&sn=f547e5a6dd9c8551ef028c330b5a74f1&chksm=fe1df97bc96a706df98e6d761aefbaff1270432676727eca883c6a426fafeaa1fa76728d26f3&mpshare=1&scene=1&srcid=&sharer_sharetime=1579407428670&sharer_shareid=3700fe0c888383356811eb94c58328eb#rd)
 - [Unity Editor基础篇 - Unity墙外世界](https://mp.weixin.qq.com/s/4kporY-PCScRAESy4WSpmA)
 - [Unity: make your lists functional with ReorderableList - valentin](https://va.lent.in/unity-make-your-lists-functional-with-reorderablelist/)
+- [勾選Bool後才出現的變數！Unity Editor Script入門教學 - OneCredit](https://www.bilibili.com/video/BV1E54y1B7Z5)

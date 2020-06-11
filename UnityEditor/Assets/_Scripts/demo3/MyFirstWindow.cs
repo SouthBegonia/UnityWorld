@@ -16,7 +16,7 @@ public class MyFirstWindow : EditorWindow
         this.titleContent = new GUIContent("Bug Reporter");
     }
 
-    [MenuItem("调试/Bug Reporter")]
+    [MenuItem("调试/Bug Reporter",false,1)]
     static void ShowWindow()
     {
         // 打开Bug Repoter的窗口
