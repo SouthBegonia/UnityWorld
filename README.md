@@ -45,18 +45,19 @@
 # Unity 其他
 
 - **算法类：**
-	- [集群模拟 - Boids](https://github.com/SouthBegonia/UnityWorld/tree/master/Boids)
+  	- [集群模拟 - Boids](https://github.com/SouthBegonia/UnityWorld/tree/master/Boids)
+  	- [2D冲锋残影 - 2D-Controller](https://github.com/SouthBegonia/2D-Controller)
 
 
 - **组件 / 脚本类：**
-	- [绘制正五边形网络](https://www.cnblogs.com/SouthBegonia/p/11788070.html)
-	- [Unity2D中的物理关节 - Physics Joints in Unity2D](https://github.com/SouthBegonia/UnityWorld/tree/master/Physics%20Joints%20in%20Unity2D)
-	- [Tilemap的注意事项 - Tilemap](https://github.com/SouthBegonia/UnityWorld/tree/master/Tilemap)
-	- [射线检测 - Raycast](https://github.com/SouthBegonia/UnityWorld/tree/master/Raycast)
-	- [HasExitTime详解](https://www.cnblogs.com/SouthBegonia/p/11748429.html)
-	- [LayerMask简析](https://www.cnblogs.com/SouthBegonia/p/11861083.html)
-	- [Cinemachine实现相机抖动](https://www.cnblogs.com/SouthBegonia/p/11891117.html)
-	- [旋转方法总结](https://www.cnblogs.com/SouthBegonia/p/12700062.html)
+- [绘制正五边形网络](https://www.cnblogs.com/SouthBegonia/p/11788070.html)
+  - [Unity2D中的物理关节 - Physics Joints in Unity2D](https://github.com/SouthBegonia/UnityWorld/tree/master/Physics%20Joints%20in%20Unity2D)
+  - [Tilemap的注意事项 - Tilemap](https://github.com/SouthBegonia/UnityWorld/tree/master/Tilemap)
+  - [射线检测 - Raycast](https://github.com/SouthBegonia/UnityWorld/tree/master/Raycast)
+  - [HasExitTime详解](https://www.cnblogs.com/SouthBegonia/p/11748429.html)
+  - [LayerMask简析](https://www.cnblogs.com/SouthBegonia/p/11861083.html)
+  - [Cinemachine实现相机抖动](https://www.cnblogs.com/SouthBegonia/p/11891117.html)
+  - [旋转方法总结](https://www.cnblogs.com/SouthBegonia/p/12700062.html)
 
 
 - **框架 / 管理系统类：**
