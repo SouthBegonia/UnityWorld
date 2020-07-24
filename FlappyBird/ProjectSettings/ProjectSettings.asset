@@ -643,11 +643,11 @@ PlayerSettings:
   facebookStatus: 1
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
-  apiCompatibilityLevel: 2
-  cloudProjectId: 98fea00c-e735-4c39-be90-f5a0fe6b233f
+  apiCompatibilityLevel: 6
+  cloudProjectId: 47b9fb98-2ac0-47fc-bbae-cafbde39509e
   framebufferDepthMemorylessMode: 0
   projectName: UGFGameDevelopTemplate
-  organizationId: catimmortal
+  organizationId: shadow-zzw
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
