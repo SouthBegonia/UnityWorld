@@ -393,31 +393,39 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 11405216, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_AvailableProcedureTypeNames.Array.size
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 11405216, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_AvailableProcedureTypeNames.Array.data[0]
-      value: GDT.ProcedureChangeScene
+      value: FlappyBird.ProcedureChangeScene
       objectReference: {fileID: 0}
     - target: {fileID: 11405216, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_EntranceProcedureTypeName
-      value: GDT.ProcedureLaunch
+      value: FlappyBird.ProcedureLaunch
       objectReference: {fileID: 0}
     - target: {fileID: 11405216, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_AvailableProcedureTypeNames.Array.data[1]
-      value: GDT.ProcedureCheckVersion
+      value: FlappyBird.ProcedureCheckVersion
       objectReference: {fileID: 0}
     - target: {fileID: 11405216, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_AvailableProcedureTypeNames.Array.data[2]
-      value: GDT.ProcedureLaunch
+      value: FlappyBird.ProcedureLaunch
       objectReference: {fileID: 0}
     - target: {fileID: 11405216, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_AvailableProcedureTypeNames.Array.data[3]
-      value: GDT.ProcedurePreload
+      value: FlappyBird.ProcedureMain
       objectReference: {fileID: 0}
     - target: {fileID: 11405216, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_AvailableProcedureTypeNames.Array.data[4]
-      value: GDT.ProcedureSplash
+      value: FlappyBird.ProcedureMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405216, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_AvailableProcedureTypeNames.Array.data[5]
+      value: FlappyBird.ProcedurePreload
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405216, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_AvailableProcedureTypeNames.Array.data[6]
+      value: FlappyBird.ProcedureSplash
       objectReference: {fileID: 0}
     - target: {fileID: 11413340, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_SoundGroups.Array.size
@@ -466,15 +474,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11454530, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_UIGroupHelperTypeName
-      value: GDT.UGuiGroupHelper
+      value: FlappyBird.UGuiGroupHelper
       objectReference: {fileID: 0}
     - target: {fileID: 11461470, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_LocalizationHelperTypeName
-      value: GDT.XmlLocalizationHelper
+      value: FlappyBird.XmlLocalizationHelper
       objectReference: {fileID: 0}
     - target: {fileID: 11463816, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_MaxLoadAssetRandomDelaySeconds
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11485274, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_ConfigHelperTypeName
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 11499388, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_NeverSleep
@@ -486,11 +498,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11499388, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_JsonHelperTypeName
-      value: GDT.LitJsonHelper
+      value: FlappyBird.LitJsonHelper
       objectReference: {fileID: 0}
     - target: {fileID: 11499388, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_EditorResourceMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11499388, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_LogHelperTypeName
+      value: UnityGameFramework.Runtime.DefaultLogHelper
+      objectReference: {fileID: 0}
+    - target: {fileID: 11499388, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_ZipHelperTypeName
+      value: UnityGameFramework.Runtime.DefaultZipHelper
+      objectReference: {fileID: 0}
+    - target: {fileID: 11499388, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_ProfilerHelperTypeName
+      value: UnityGameFramework.Runtime.DefaultProfilerHelper
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}

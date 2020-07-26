@@ -1,7 +1,7 @@
 ﻿using ProtoBuf;
 using System;
 
-namespace GDT
+namespace FlappyBird
 {
     /// <summary>
     /// 客户端发往服务器 的 心跳包

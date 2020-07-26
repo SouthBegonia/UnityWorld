@@ -1,4 +1,4 @@
-﻿namespace GDT
+﻿namespace FlappyBird
 {
     /// <summary>
     /// 网络消息包类型

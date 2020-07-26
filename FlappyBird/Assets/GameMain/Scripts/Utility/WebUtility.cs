@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GDT
+namespace FlappyBird
 {
     public static class WebUtility
     {

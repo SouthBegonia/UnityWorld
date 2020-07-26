@@ -1,7 +1,7 @@
 ﻿using GameFramework.Procedure;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
-namespace GDT
+namespace FlappyBird
 {
     /// <summary>
     /// 欢迎动画流程

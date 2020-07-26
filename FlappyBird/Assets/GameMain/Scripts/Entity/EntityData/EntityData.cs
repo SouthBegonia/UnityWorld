@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace GDT
+namespace FlappyBird
 {
     /// <summary>
     /// 实体数据

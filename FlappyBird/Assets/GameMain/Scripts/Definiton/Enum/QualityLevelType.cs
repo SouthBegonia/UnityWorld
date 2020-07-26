@@ -1,4 +1,4 @@
-﻿namespace GDT
+﻿namespace FlappyBird
 {
     /// <summary>
     /// 画质等级

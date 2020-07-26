@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace GDT
+namespace FlappyBird
 {
     /// <summary>
     /// 网络频道辅助器

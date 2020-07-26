@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityGameFramework.Runtime;
 
-namespace GDT
+namespace FlappyBird
 {
     /// <summary>
     /// 实体逻辑脚本

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityGameFramework.Runtime;
 
-namespace GDT
+namespace FlappyBird
 {
     /// <summary>
     /// 自定义数据组件

@@ -3,13 +3,13 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace GDT.Editor
+namespace FlappyBird.Editor
 {
     public class DeviceModelConfigEditorWindow : EditorWindow
     {
         private DeviceModelConfig m_Config = null;
 
-        [MenuItem("GDT/Device Model Config Editor")]
+        [MenuItem("FlappyBird/Device Model Config Editor")]
         public static void EditDeviceModelConfig()
         {
             const string DeviceModelConfigFullName = "Assets/GameMain/Configs/DeviceModelConfig.asset";

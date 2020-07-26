@@ -2,14 +2,14 @@
 using System;
 using UnityGameFramework.Runtime;
 
-namespace GDT
+namespace FlappyBird
 {
     public static class DataTableExtension
     {
         /// <summary>
         /// 数据行前缀名（根据项目命名空间决定）
         /// </summary>
-        private const string DataRowClassPrefixName = "GDT.DR";
+        private const string DataRowClassPrefixName = "FlappyBird.DR";
         private static readonly string[] ColumnSplit = new string[] { "\t" };
 
         /// <summary>

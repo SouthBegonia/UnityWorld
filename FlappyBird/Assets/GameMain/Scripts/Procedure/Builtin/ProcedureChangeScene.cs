@@ -5,7 +5,7 @@ using GameFramework.Procedure;
 using UnityGameFramework.Runtime;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
-namespace GDT
+namespace FlappyBird
 {
 
     /// <summary>
@@ -83,6 +83,12 @@ namespace GDT
             //TODO：在这里根据切换到的场景编号进行对应的流程切换
             switch (gotoSceneId)
             {
+                case 1:
+                    ChangeState<ProcedureMenu>(procedureOwner);
+                    break;
+                case 2:
+                    ChangeState<ProcedureMain>(procedureOwner);
+                    break;
                 default:
                     break;
             }

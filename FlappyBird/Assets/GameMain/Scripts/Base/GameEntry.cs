@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GDT
+namespace FlappyBird
 {
     /// <summary>
     /// 游戏入口。

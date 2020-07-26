@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace GDT.Editor
+namespace FlappyBird.Editor
 {
     [CustomEditor(typeof(DeviceModelConfig))]
     public class DeviceModelConfigInspector : UnityEditor.Editor

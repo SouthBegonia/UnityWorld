@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GDT
+namespace FlappyBird
 {
     public static partial class Constant
     {

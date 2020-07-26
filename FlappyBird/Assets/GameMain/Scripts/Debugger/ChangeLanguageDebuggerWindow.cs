@@ -3,7 +3,7 @@ using GameFramework.Localization;
 using UnityEngine;
 using UnityGameFramework.Runtime;
 
-namespace GDT
+namespace FlappyBird
 {
     public class ChangeLanguageDebuggerWindow : IDebuggerWindow
     {

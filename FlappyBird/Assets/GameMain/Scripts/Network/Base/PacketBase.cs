@@ -1,7 +1,7 @@
 ﻿using GameFramework.Network;
 using ProtoBuf;
 
-namespace GDT
+namespace FlappyBird
 {
     /// <summary>
     /// 网络消息包基类

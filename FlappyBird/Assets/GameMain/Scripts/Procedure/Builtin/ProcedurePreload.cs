@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityGameFramework.Runtime;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
-namespace GDT
+namespace FlappyBird
 {
     /// <summary>
     /// 预加载流程
@@ -59,8 +59,8 @@ namespace GDT
             }
 
             // TODO：这里开始，切换到你的场景，场景编号可在DefaultConfig中配置
-            //procedureOwner.SetData<VarInt>(Constant.ProcedureData.NextSceneId, GameEntry.Config.GetInt("Scene.???"));
-            //ChangeState<ProcedureChangeScene>(procedureOwner);
+            procedureOwner.SetData<VarInt>(Constant.ProcedureData.NextSceneId, GameEntry.Config.GetInt("Scene.Menu"));
+            ChangeState<ProcedureChangeScene>(procedureOwner);
         }
 
         private void PreloadResources()

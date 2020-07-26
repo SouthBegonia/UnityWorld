@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityGameFramework.Editor.AssetBundleTools;
 
-namespace GDT.Editor
+namespace FlappyBird.Editor
 {
     public sealed class ProjectBuildEventHandler : IBuildEventHandler
     {

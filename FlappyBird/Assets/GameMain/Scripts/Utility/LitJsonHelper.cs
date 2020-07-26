@@ -2,7 +2,7 @@
 using LitJson;
 using System;
 
-namespace GDT
+namespace FlappyBird
 {
     /// <summary>
     /// LitJSON 函数集辅助器。

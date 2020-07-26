@@ -1,4 +1,4 @@
-﻿namespace GDT
+﻿namespace FlappyBird
 {
     /// <summary>
     /// 资源路径相关的实用函数集

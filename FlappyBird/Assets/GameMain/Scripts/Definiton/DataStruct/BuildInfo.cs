@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GDT
+namespace FlappyBird
 {
     /// <summary>
     /// 项目构建信息

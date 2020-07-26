@@ -3,7 +3,7 @@ using GameFramework.DataTable;
 using GameFramework.Sound;
 using UnityGameFramework.Runtime;
 
-namespace GDT
+namespace FlappyBird
 {
     public static class SoundExtension
     {

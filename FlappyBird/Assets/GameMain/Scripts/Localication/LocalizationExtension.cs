@@ -1,7 +1,7 @@
 ﻿using GameFramework;
 using UnityGameFramework.Runtime;
 
-namespace GDT
+namespace FlappyBird
 {
     public static class LocalizationExtension
     {

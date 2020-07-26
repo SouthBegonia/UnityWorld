@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityGameFramework.Runtime;
 
-namespace GDT
+namespace FlappyBird
 {
     public static class UIExtension
     {

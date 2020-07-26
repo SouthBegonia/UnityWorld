@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityGameFramework.Editor;
 using UnityGameFramework.Editor.AssetBundleTools;
 
-namespace GDT.Editor
+namespace FlappyBird.Editor
 {
     /// <summary>
     /// 游戏框架配置文件路径类
