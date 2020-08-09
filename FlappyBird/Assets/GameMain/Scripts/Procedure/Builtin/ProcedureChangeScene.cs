@@ -89,6 +89,7 @@ namespace FlappyBird
                 case 2:
                     ChangeState<ProcedureMain>(procedureOwner);
                     break;
+
                 default:
                     break;
             }

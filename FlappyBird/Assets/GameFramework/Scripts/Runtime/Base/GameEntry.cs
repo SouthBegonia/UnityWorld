@@ -13,9 +13,8 @@ using UnityEditor;
 #endif
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityGameFramework.Runtime;
 
-namespace FlappyBird
+namespace UnityGameFramework.Runtime
 {
     /// <summary>
     /// 游戏入口。

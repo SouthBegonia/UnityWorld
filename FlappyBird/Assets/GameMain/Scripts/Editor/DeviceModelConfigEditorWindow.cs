@@ -9,7 +9,7 @@ namespace FlappyBird.Editor
     {
         private DeviceModelConfig m_Config = null;
 
-        [MenuItem("FlappyBird/Device Model Config Editor")]
+        [MenuItem("GDT/Device Model Config Editor")]
         public static void EditDeviceModelConfig()
         {
             const string DeviceModelConfigFullName = "Assets/GameMain/Configs/DeviceModelConfig.asset";
