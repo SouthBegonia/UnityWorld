@@ -78,11 +78,15 @@ namespace FlappyBird
             entityComponent.ShowEntity(data.Id, logicType, AssetUtility.GetEntityAsset(drEntity.AssetName), entityGroup, data);
         }
 
-        //TODO：简便显示实体的封装示例
-        //public static void ShowAircraft(this EntityComponent entityComponent, AircraftData data)
-        //{
-        //    entityComponent.ShowEntity(typeof(Aircraft), "Aircraft", data);
-        //}
+        /// <summary>
+        /// 显式背景实体
+        /// </summary>
+        /// <param name="entityComponent"></param>
+        /// <param name="data"></param>
+        public static void ShowBg(this EntityComponent entityComponent, BgData data)
+        {
+            entityComponent.ShowEntity(typeof(Bg), "Bg", data);
+        }
 
         public static int GenerateSerialId(this EntityComponent entityComponent)
         {
