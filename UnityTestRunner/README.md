@@ -9,6 +9,12 @@ public void Test()
 }
 ```
 
-![Place](./Pic/Place.jpg)
+![Place](./Pic/Place.png)
 
 ![Logo](./Pic/logo.png)
+
+![myGif1](.\Pic\myGif.gif)
+
+
+
+![myGif2](./Pic/myGif.gif)
