@@ -9,4 +9,4 @@ public void Test()
 }
 ```
 
-![Place](\pic\Place.jpg)
+![Place](.\pic\Place.jpg)
