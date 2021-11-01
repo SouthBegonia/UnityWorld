@@ -1,20 +1,5 @@
-# A
-
-## B
-
-```c#
-public void Test()
-{
-    // TODO
-}
-```
-
 ![Place](./Pic/Place.png)
 
-![Logo](./Pic/logo.png)
-
-![myGif1](.\Pic\myGif.gif)
-
-
-
 ![myGif2](./Pic/myGif.gif)
+
+![image-20211101151929498](Pic/image-20211101151929498.png)
