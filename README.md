@@ -44,9 +44,8 @@
 
 # Unity 其他
 
-- **算法类：**
-	- [集群模拟 - Boids](https://github.com/SouthBegonia/UnityWorld/tree/master/Boids)
-	- [2D冲锋残影 - 2D-Controller](https://github.com/SouthBegonia/2D-Controller)
+- **优化：**
+	- [Unity优化总览](https://github.com/SouthBegonia/Unity_Optimization)
 
 
 - **组件 / 脚本类：**
@@ -73,6 +72,10 @@
 
 - **Shader类：**
 	- [Unity着色器 - UnityShader](https://github.com/SouthBegonia/UnityWorld/tree/master/Unity%20Shader)
+
+- **算法类：**
+	- [集群模拟 - Boids](https://github.com/SouthBegonia/UnityWorld/tree/master/Boids)
+	- [2D冲锋残影 - 2D-Controller](https://github.com/SouthBegonia/2D-Controller)
 
 ------------
 
